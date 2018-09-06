@@ -1,0 +1,127 @@
+<ActionBar backgroundColor="transparent" [title]="item.name" class="action-bar bkg">
+    <NavigationButton visibility="{{userService.user.super == 2?'visible':'collapse'}}" android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
+    <ActionItem visibility="{{pagenumber==2&&!showwebview&&!showmap?'visible':'hidden'}}" ios.position="right" (tap)="abremapa()">
+        <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf041;"></Button>
+    </ActionItem>
+    <ActionItem visibility="{{!isLoading&&pagenumber==1?'visible':'hidden'}}" ios.position="right" (tap)="showCalendar()">
+        <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="{{showcalendar?'&#xf0ca;':'&#xf073;'}}"></Button>
+    </ActionItem>
+    <ActionItem visibility="{{!isLoading&&pagenumber==1&&showcalendar?'visible':'hidden'}}" ios.position="right" (tap)="gotocurday()">
+        <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf05b;"></Button>
+    </ActionItem>
+
+    <ActionItem ios.position="right" (tap)="userService.logout()">
+        <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xF08B;"></Button>
+    </ActionItem>
+</ActionBar>
+<StackLayout>
+   <StackLayout [visibility]="isLoading ? 'visible' : 'collapse'" class="page bkg">
+    <ActivityIndicator [busy]="isLoading" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+</StackLayout>
+<StackLayout (swipe)=" onSwipe($event)" class="page bkg" visibility="{{!showwebview&&!showmap&&!isLoading? 'visible': 'collapse'}}">
+    <GridLayout (swipe)="onSwipe($event)" visibility="{{!isLoading&&pagenumber!=2?'visible':'collapse'}}" columns="auto,*,auto" rows="auto">
+        <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="prevevt()" color="{{cureventindex<=0?'gray':'white'}}" text="&#xf0a5;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="0"></Button>
+        <Label class="whitetext" horizontalAlignment="center" col="1" style="padding:10;font-size: 15" text="{{route.snapshot.params[ 'cidade']+ '-'+route.snapshot.params['uf'] }}"></Label>
+        <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="nextevt()" color="{{cureventindex==_events.length-1?'gray':'white'}}" text="&#xf0a4;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1"
+            col="2"></Button>
+    </GridLayout>
+
+    <GridLayout (swipe)="onSwipe($event)" visibility="{{!isLoading&&pagenumber==0? 'visible': 'collapse'}}" rows="*,auto,auto">
+        <ScrollView style="margin-top: 10">
+            <StackLayout (swipe)="onSwipe($event)">
+                <WrapLayout (swipe)="onSwipe($event)" horizontalAlignment="center">
+                    <Label horizontalAlignment="center" visibility="{{item.menu.length==0? 'visible': 'collapse'}}" text="NENHUM EVENTO AGENDADO"></Label>
+
+                    <ng-container *ngFor="let est of item.menu">
+                        <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(est)">
+                            <Image width="70" class="icones" src="{{ 'https://www.athena3d.com.br/bomdeir/imgs/'+est.row.nome+ '.png'}}"></Image>
+                            <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="est.row.nome"></Label>
+                        </StackLayout>
+                    </ng-container>
+                </WrapLayout>
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+
+    <StackLayout visibility="{{!isLoading&&pagenumber==1?'visible':'collapse'}}">
+
+        <ListView [items]="eventos" class="list-group " visibility="{{!showcalendar?'visible':'collapse'}}">
+            <ng-template let-item="item">
+                <GridLayout (swipe)="onSwipe($event)" (tap)="eventoclick(item)" backgroundColor="transparent" borderColor="white" borderRadius="5" borderWidth="1" columns="auto * auto" class="m-10">
+                    <StackLayout margin="10" padding="10" col="0">
+                        <Label class="whitetext" horizontalAlignment="center" text="{{item.row.abrevmes }}" color="red" textWrap="true"></Label>
+                        <Label class="whitetext" horizontalAlignment="center" text="{{item.row.diames }}" style="font-weight: bold" textWrap="true" color="orange"></Label>
+                        <Label class="whitetext" horizontalAlignment="center" text="{{item.row.abrevsem }}" textWrap="true"></Label>
+                    </StackLayout>
+                    <StackLayout padding="10" col="1">
+                        <Label class="whitetext" style="font-weight: bold;font-size:18 " text="{{item.row.nome }}" textWrap="true"></Label>
+                        <Label class="whitetext" text="{{item.row.time+' - '+item.row.timefim+' '+item.row.nomelocal}}"></Label>
+                    </StackLayout>
+                    <Label class="whitetext" verticalAlignment="center" paddingRight="10" class="fa" text="&#xf105;" col="2"></Label>
+
+                </GridLayout>
+            </ng-template>
+        </ListView>
+
+
+        <RadCalendar visibility="{{showcalendar?'visible':'collapse'}}" #myCalendar [monthViewStyle]="monthViewStyle" (inlineEventSelected)="tapevento($event)" [eventsViewMode]="eventsViewMode" [eventSource]="eventSource" (dateSelected)="onDateSelected($event)"
+            [viewMode]="viewMode"></RadCalendar>
+    </StackLayout>
+
+
+    <ScrollView visibility="{{pagenumber==2?'visible':'collapse'}}">
+        <GridLayout (swipe)="onSwipe($event)" class="m-10" rows="auto auto auto auto auto auto auto ">
+            <StackLayout style="background-color:rgb(58, 54, 54)" borderColor="white" borderRadius="5" borderWidth="1" orientation="horizontal" class="h3 m-5" row="0">
+                <StackLayout padding="10">
+                    <Label class="whitetext" horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.abrevmes:'' }}" color="red"></Label>
+                    <Label class="whitetext" horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.diames:'' }}" style="font-weight: bold" color="orange"></Label>
+                    <Label class="whitetext" horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.abrevsem:'' }}" color="blue"></Label>
+                </StackLayout>
+                <Label class="whitetext" padding="10" style="font-weight: bold;font-size:18 " text="{{curevento!=undefined?curevento.row.nome:'' }}" textWrap="true"></Label>
+            </StackLayout>
+            <StackLayout style="background-color:rgb(58, 54, 54)" borderColor="white" borderRadius="5" borderWidth="1" padding="10" class="h3 m-5" row="1">
+                <Label class="whitetext" text="Detalhes" style="font-weight: bold"></Label>
+                <Label class="whitetext" text="{{curevento!=undefined?curevento.row.descricao:'' }}" textWrap="true"></Label>
+            </StackLayout>
+            <StackLayout style="background-color:rgb(58, 54, 54)" borderColor="white" borderRadius="5" borderWidth="1" orientation="horizontal" class="h3 m-5" row="2">
+                <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf017; "></Label>
+                <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.time+' - '+curevento.row.timefim:'' }}" textWrap="true"></Label>
+            </StackLayout>
+            <StackLayout style="background-color:rgb(58, 54, 54)" borderColor="white" borderRadius="5" borderWidth="1" class="h3 m-5" row="3" (tap)="abremapa()">
+                <StackLayout orientation="horizontal" class="h3 m-5">
+                    <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf041;"></Label>
+                    <StackLayout padding="10">
+                        <Label class="whitetext" text="{{curevento!=undefined?curevento.row.nomelocal:'' }}" textWrap="true" style="font-weight: bold"></Label>
+                        <Label style="color:aqua " text="{{curevento!=undefined?curevento.row.logradouro+', '+curevento.row.numero+' - '+curevento.row.complemento+' - '+curevento.row.cep+' - '+curevento.row.bairro+' - '+curevento.row.localidade+' - '+curevento.row.uf:'' }}"
+                            textWrap="true"></Label>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout orientation="horizontal" class="h3 m-5">
+                    <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf015;"></Label>
+                    <Label padding="10" (tap)="abresite()" text="{{curevento!=undefined?curevento.row.site:'' }}" style="color:aqua " underline="true"></Label>
+                </StackLayout>
+                <StackLayout orientation="horizontal" class="h3 m-5" (tap)="ligafone()">
+                    <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf095;"></Label>
+                    <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.fone:'' }}" style="color:aqua " underline="true"></Label>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout padding="10" style="background-color:rgb(58, 54, 54)" borderColor="white" borderRadius="5" borderWidth="1" class="h3 m-5" row="4">
+                <Label class="whitetext" text="Estilo " style="font-weight: bold"></Label>
+                <Label class="whitetext" text="{{curevento!=undefined?curevento.row.estilo:'' }}" textWrap="true"></Label>
+            </StackLayout>
+            <StackLayout padding="10" style="background-color:rgb(58, 54, 54)" borderColor="white" borderRadius="5" borderWidth="1" class="h3 m-5" row="5">
+                <Label class="whitetext" text="Artista " style="font-weight: bold"></Label>
+                <Label class="whitetext" text="{{curevento!=undefined?curevento.row.artista:'' }}" textWrap="true"></Label>
+            </StackLayout>
+
+        </GridLayout>
+    </ScrollView>
+</StackLayout>
+<StackLayout (swipe)="onSwipe($event)" visibility="{{showwebview?'visible':'collapse'}}">
+    <WebView #myWebView (touch)="webViewTouch($event)" (pan)="webViewPan($event)"></WebView>
+</StackLayout>
+<GridLayout (swipe)="onSwipe($event)" visibility="{{showmap?'visible':'hidden'}}">
+    <MapView #mapView [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="zoom" [minZoom]="minZoom" [maxZoom]="maxZoom" [bearing]="bearing" [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding" (mapReady)="onMapReady($event)" (markerSelect)="onMarkerEvent($event)"
+        (markerBeginDragging)="onMarkerEvent($event)" (markerEndDragging)="onMarkerEvent($event)" (markerDrag)="onMarkerEvent($event)" (markerInfoWindowTapped)="onMarkerEvent($event)" (coordinateTapped)="onCoordinateTapped($event)" (cameraChanged)="onCameraChanged($event)"></MapView>
+</GridLayout> 
+</StackLayout>

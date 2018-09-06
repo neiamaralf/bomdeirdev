@@ -1,0 +1,17 @@
+<ActionBar title="PESQUISAR CEP" class="action-bar bkg">
+    <ActionItem ios.systemIcon="12" android.systemIcon="ic_menu_search" ios.position="right" (tap)="buscacep()"></ActionItem>
+</ActionBar>
+<StackLayout id="stck" class="page bkg">
+    <TextField id="endereco" style="background-color: white" hint="Endereço" [(ngModel)]="cepsearch.endereco"></TextField>
+    <TextField id="cidade" style="background-color: white" hint="Cidade" [(ngModel)]="cepsearch.cidade"></TextField>
+    <ListPicker id="lstpick" style="background-color:transparent;color: white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
+    </ListPicker>
+    <ListView [items]="cepres" class="list-group" style="background-color:transparent">
+        <ng-template let-item="item">
+            <StackLayout style="background-color:transparent" (tap)="onclick(item)">
+                <Label text="{{item.logradouro+' - '+item.localidade}}" class="p-12 whitetext"></Label>
+                <Label text="{{item.bairro+' - '+item.cep}}" class="p-10 whitetext"></Label>
+            </StackLayout>
+        </ng-template>
+    </ListView>
+</StackLayout>

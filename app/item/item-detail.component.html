@@ -1,0 +1,21 @@
+<ActionBar [title]="item.name" class="action-bar bkg">
+    <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
+    <ActionItem ios.position="right" (tap)="userService.logout()">
+        <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xF08B;"></Button>
+    </ActionItem>
+</ActionBar>
+
+<GridLayout class="page bkg" rows="*,auto,auto">
+    <ScrollView style="margin-top: 10">
+        <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
+            <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
+                <ng-container *ngFor="let item of item.menu">
+                    <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" [nsRouterLink]="['/subitem', item.id]">
+                        <Image width="70" class="icones" src="{{ 'https://www.athena3d.com.br/bomdeir/imgs/'+item.name+ '.png'}}"></Image>
+                        <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
+                    </StackLayout>
+                </ng-container>
+            </WrapLayout>
+        </StackLayout>
+    </ScrollView>
+</GridLayout>
