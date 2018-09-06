@@ -3,8 +3,6 @@ import { UserService } from "../../shared/user/user.service";
 import { Page } from "ui/page";
 import { Color } from "color";
 import { View } from "ui/core/view";
-import { RouterExtensions } from "nativescript-angular/router";
-import * as switchModule from "tns-core-modules/ui/switch";
 
 @Component({
   selector: "my-app",
@@ -47,7 +45,7 @@ export class LoginComponent implements OnInit {
     this.isLoggingIn = !this.isLoggingIn;
     let container = <View>this.container.nativeElement;
     container.animate({
-      backgroundColor: this.isLoggingIn ? new Color("white") : new Color("#601217"),
+      backgroundColor: this.isLoggingIn ? new Color("darkgray") : new Color("#601217"),
       duration: 200
     });
   }

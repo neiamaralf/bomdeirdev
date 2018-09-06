@@ -1,5 +1,5 @@
 <ActionBar title="BomDeIr" class="action-bar bkg">
-    <NavigationButton visibility="{{userService.user.super == 2&&(showlocais||showaddlocal)?'visible':'collapse'}}" android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
+    <NavigationButton visibility="{{userService.user.super == 2&&(showlocais||showaddlocal)?'visible':'collapse'}}" text="Go Back" android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
     <ActionItem visibility="{{userService.user.super == 2&&tipo=='onde'&&!showlocais?'visible':'collapse'}}" ios.position="right" (tap)="listacidades()">
         <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0c9;"></Button>
     </ActionItem>
@@ -60,7 +60,7 @@
                     </StackLayout>
                 </ng-container>
             </StackLayout>
-            <SegmentedBar id="segmbar" selectedBackgroundColor="blue" class="fa page" row="1" [items]="myItems" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChange($event)" class="m-5"></SegmentedBar>
+            <SegmentedBar id="segmbar" selectedBackgroundColor="blue"  row="1" [items]="myItems" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChange($event)" class="m-5 page fa" ></SegmentedBar>
         </GridLayout>
 
         <GridLayout class="page" visibility="{{tipo=='admin'?'visible':'collapse'}}" rows="*,auto,auto" backgroundColor="transparent">

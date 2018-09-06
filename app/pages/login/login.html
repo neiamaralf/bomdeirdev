@@ -1,6 +1,6 @@
-   <StackLayout class="bkg" height="100%">
-      <StackLayout verticalAlignment="center" [visibility]="userService.user.goodtoken?'hidden':'visible'" #container class="cmain page">
-         <ios>
+<GridLayout rows="*" [visibility]="userService.user.goodtoken?'hidden':'visible'" class="bkg">
+    <StackLayout row="0" #container class="cmain page" backgroundColor="darkgray">
+        <ios>
             <Image visibility="{{!admin?'visible':'collapse'}}" src="res://AppIcon" stretch="aspectFill" height="80" width="80" horizontalAlignment="center"></Image>
         </ios>
         <android>
@@ -14,6 +14,5 @@
         </FlexboxLayout>
         <Button [text]="isLoggingIn ? 'Entrar' : 'Cadastrar'" class="submit-button" (tap)="submit()"></Button>
         <Button visibility="{{admin?'visible':'collapse'}}" [text]="isLoggingIn ? 'Cadastrar' : 'Voltar ao Login'" (tap)="toggleDisplay()"></Button>
-    </StackLayout>  
-   </StackLayout>
-  
+    </StackLayout>
+</GridLayout>
