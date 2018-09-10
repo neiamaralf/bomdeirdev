@@ -8,6 +8,10 @@ export class DbService {
 
   }
 
+  __encodeURI(url:string){        
+    return encodeURI(url)
+}
+
   put(jsondata) {
     return this.http.put(Config.apiUrl + "put.php", { jsondata }, { headers: this.getCommonHeaders("application/json") })
      

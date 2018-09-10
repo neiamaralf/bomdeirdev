@@ -17,7 +17,7 @@
 
                     <ng-container *ngFor="let est of item.menu">
                         <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(est)">
-                            <Image width="70" class="icones" src="{{userService.user.super==0? 'https://www.athena3d.com.br/bomdeir/imgs/'+est.name+ '.png':''}}"></Image>
+                            <Image width="70" class="icones" src="{{userService.user.super==0? 'https://www.athena3d.com.br/bomdeir/imgs/'+userService.db.__encodeURI(est.name)+ '.png':''}}"></Image>
                             <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="est.name"></Label>
                         </StackLayout>
                     </ng-container>
@@ -27,7 +27,7 @@
     </GridLayout>
     <Label class="whitetext" textWrap="true" textAlignment="center" horizontalAlignment="center" visibility="{{userService.user.super!=0&&item.menu.length==0&&!isLoading? 'visible': 'collapse'}}" text="NADA ADICIONADO, CLIQUE NO + PARA ADICIONAR"></Label>
 
-    <ListView id="lvId" style="background-color: transparent" visibility="{{userService.user.super!=0&&!isLoading? 'visible': 'collapse'}}" [items]="item.menu" class="list-group">
+    <ListView height="100%" id="lvId" style="background-color: transparent" visibility="{{userService.user.super!=0&&!isLoading? 'visible': 'collapse'}}" [items]="item.menu" class="list-group">
         <ng-template let-item="item">
             <Label (tap)="onclick(item)" [text]="item.name" class="btn btn-primary btn-active roundbt whitetext"></Label>
         </ng-template>

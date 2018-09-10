@@ -23,10 +23,7 @@ class local {
     templateUrl: "./items.component.html",
 })
 export class ItemsComponent implements OnInit {
-    __encodeURI(url:string){
-        
-        return encodeURI(url)
-    }
+    
     items: Item[];
     tipo: any;
     locais: Array<local> = [];
