@@ -56,6 +56,6 @@ components that have the btn class name.
 }
 
 .bkg {
-    background-image: url('res://Background');
+    background-image: url('res://background');
     background-size: cover
 }
