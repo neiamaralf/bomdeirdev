@@ -13,12 +13,20 @@ import { ItemService } from "./item.service";
 import { Item } from "./item";
 import { StackLayout } from "ui/layouts/stack-layout";
 import { Label } from "ui/label";
+import { action } from "ui/dialogs";
+import { ImageAsset } from 'tns-core-modules/image-asset';
+import * as imageSource from "image-source"
+import * as imagepicker from "nativescript-imagepicker";
+import { ImageCropper } from 'nativescript-imagecropper';
+import { takePicture, requestPermissions } from 'nativescript-camera';
 
 @Component({
   moduleId: module.id,
   templateUrl: "./eventos.html",
 })
 export class EventosComponent implements OnInit {
+  public imagemEvento: ImageAsset = null;
+  private imageCropper: ImageCropper;
   public artistas: any[];
   titulo: string = "ARTISTA"
   public estilos: any[];
@@ -54,12 +62,13 @@ export class EventosComponent implements OnInit {
     this.artistas = [];
     this.estilos = [];
     this.locais = [];
-    this.label1.className="whitetext";
-    this.label2.className="whitetext";
-    this.label3.className="whitetext";
+    this.label1.className = "whitetext";
+    this.label2.className = "whitetext";
+    this.label3.className = "whitetext";
   }
 
   ngOnInit() {
+    this.imageCropper = new ImageCropper();
     this.params.set("acao", this.route.snapshot.params["acao"]);
     var itemid = this.route.snapshot.params["itemid"];
     this.params.set("itemid", itemid);
@@ -201,6 +210,9 @@ export class EventosComponent implements OnInit {
         this.titulo = "HORÁRIO FIM"
         break;
       case 6:
+        this.titulo = "IMAGEM"
+        break;
+      case 7:
         this.titulo = "DADOS DO EVENTO";
         var txt: TextField = <TextField>this.page.getViewById("titulo");
         setTimeout(() => {
@@ -213,6 +225,99 @@ export class EventosComponent implements OnInit {
         break;
     }
     this.searchPhrase = "";
+  }
+  imageUrl:any;
+  tobase64(imageAsset: ImageAsset) {
+    let source = new imageSource.ImageSource();
+    source.fromAsset(imageAsset).then((source) => {
+      console.log("source:")
+      console.dir(source)
+      this.imageCropper.show(source, { width: source.width, height: source.height }).then((args) => {
+        if (args.image !== null) {
+          //this.imagemEvento=source.t;
+          console.log("args:")
+          console.dir(args)
+          console.log("args.image:")
+          console.dir(args.image)
+          this.imageUrl = args.image;
+          //this.imagemEvento=new ImageAsset()
+          // this.imageUrl = args.image;
+        }
+      })
+        .catch(function (e) {
+          console.log(e);
+        });
+    });
+    imageAsset.getImageAsync(function (nativeImage) {
+      let scale = 1;
+      let height = 0;
+      let width = 0;
+      if (imageAsset.android) {
+        height = nativeImage.getHeight();
+        width = nativeImage.getWidth();
+      } else {
+        scale = nativeImage.scale;
+        width = nativeImage.size.width * scale;
+        height = nativeImage.size.height * scale;
+      }
+      console.log(`Displayed Size: ${width}x${height} with scale ${scale}`);
+      console.log(`Image Size: ${width / scale}x${height / scale}`);
+      var img = imageSource.fromNativeSource(nativeImage);
+      console.log(img.toBase64String("png"));     
+    });
+  }
+
+  public onSelImgGaleria() {
+    let context = imagepicker.create({
+      mode: "single"
+    });
+    context
+      .authorize()
+      .then(() => {
+        this.imagemEvento = null;
+        return context.present();
+      })
+      .then((selection) => {
+        console.log("Imagem selecionada: " + JSON.stringify(selection));
+        this.imagemEvento = selection.length > 0 ? selection[0] : null;
+        this.tobase64(this.imagemEvento);
+      }).catch(function (e) {
+        console.log(e);
+      });
+  }
+
+
+  onSelImgCamera(args) {
+    requestPermissions().then(
+      () => {
+        takePicture({ width: 300, height: 300, keepAspectRatio: true, saveToGallery: true })
+          .then((imageAsset: any) => {
+            this.imagemEvento = imageAsset;
+            this.tobase64(this.imagemEvento);
+          }, (error) => {
+            console.log("Error: " + error);
+          });
+      },
+      () => alert('permissions rejected')
+    );
+  }
+
+  uploadfotodlg(args) {
+
+    let options = {
+      title: "Origem da imagem",
+      message: "Escolha a origem da imagem",
+      cancelButtonText: "Cancelar",
+      actions: ["Câmera", "Galeria"]
+    };
+
+    action(options).then((result) => {
+      if (result == "Câmera")
+        this.onSelImgCamera(args)
+      else if (result == "Galeria")
+        this.onSelImgGaleria()
+    });
+
   }
 
   goback() {
