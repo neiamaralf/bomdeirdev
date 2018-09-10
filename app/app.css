@@ -47,7 +47,7 @@ components that have the btn class name.
     width: 40pt
 }
 
-fa1 {
+.fa2 {
     font-family: "FontAwesome", 'fontawesome-webfont';
     font-size: 36pt;
     padding: 0;
