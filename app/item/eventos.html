@@ -1,30 +1,43 @@
 <ActionBar [title]="titulo" class="action-bar bkg">
     <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
-    <ActionItem visibility="{{!isLoading &&pagenumber==6?'visible':'hidden'}}" ios.systemIcon="3" android.systemIcon="ic_menu_save" ios.position="right" (tap)="save()"></ActionItem>
-    <ActionItem visibility="{{!isLoading&&artistas.length>0&&locais.length>0 &&pagenumber<6?'visible':'hidden'}}" ios.position="right" (tap)="avancar()">
+    <ActionItem visibility="{{!isLoading &&pagenumber==6?'visible':'hidden'}}" ios.systemIcon="3" android.systemIcon="ic_menu_save"
+        ios.position="right" (tap)="save()"></ActionItem>
+    <ActionItem visibility="{{!isLoading&&artistas.length>0&&locais.length>0 &&pagenumber<6?'visible':'hidden'}}" ios.position="right"
+        (tap)="avancar()">
         <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0a4;"></Button>
     </ActionItem>
 </ActionBar>
-<StackLayout [visibility]="!isLoading&&(artistas.length==0||locais.length==0) ? 'visible' : 'collapse'" class="page bkg">
-    <Label text="ADICIONE AO MENOS UM ARTISTA E UM LOCAL" textAlignment="center" class="whitetext"></Label>
-</StackLayout>
-<StackLayout [visibility]="isLoading ? 'visible' : 'collapse'" class="page bkg">
-    <ActivityIndicator [busy]="isLoading" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-</StackLayout>
-<StackLayout [visibility]="!isLoading&&artistas.length>0&&locais.length>0 ? 'visible' : 'hidden'" id="stck" class="page bkg">
-    <SearchBar [hint]="Searchhint" backgroundColor="transparent" visibility="{{pagenumber<3?'visible':'collapse'}}" [text]="searchPhrase" (textChange)="onTextChanged($event)" (submit)="onSubmit($event)" color="black" textFieldBackgroundColor="white" textFieldHintColor="gray"></SearchBar>
-    <ListPicker id="artistas" visibility="{{pagenumber==0?'visible':'collapse'}}" backgroundColor="transparent" color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
-    </ListPicker>
-    <ListPicker id="estilos" visibility="{{pagenumber==1?'visible':'collapse'}}" backgroundColor="transparent" color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
-    </ListPicker>
-    <ListPicker id="locais" visibility="{{pagenumber==2?'visible':'collapse'}}" backgroundColor="transparent" color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
-    </ListPicker>
-    <DatePicker backgroundColor="transparent" style="color: white" visibility="{{pagenumber==3?'visible':'collapse'}}" (loaded)="onPickerLoaded($event)" (dateChange)="onDateChanged($event)" verticalAlignment="center"></DatePicker>
-    <TimePicker backgroundColor="transparent" color="white" visibility="{{pagenumber==4?'visible':'collapse'}}" (loaded)="onDTPickerLoaded($event)" (timeChange)="onTimeChanged($event)" verticalAlignment="center"></TimePicker>
-    <TimePicker backgroundColor="transparent" color="white" visibility="{{pagenumber==5?'visible':'collapse'}}" (loaded)="onDTPickerLoaded($event)" (timeChange)="onTimeChanged($event)" verticalAlignment="center"></TimePicker>
-    <TextField id="titulo" visibility="{{pagenumber==6?'visible':'collapse'}}" style="background-color: white" hint="Título" [(ngModel)]="evento.titulo"></TextField>
-    <TextField id="descricao" visibility="{{pagenumber==6?'visible':'collapse'}}" style="background-color: white" hint="Descrição" [(ngModel)]="evento.descricao"></TextField>
-    <Label class="whitetext" visibility="{{pagenumber==6?'visible':'collapse'}}" text="{{'Data   : '+date}}"></Label>
-    <Label class="whitetext" visibility="{{pagenumber==6?'visible':'collapse'}}" text="{{'Horário Início  : '+time}}"></Label>
-    <Label class="whitetext" visibility="{{pagenumber==6?'visible':'collapse'}}" text="{{'Horário Fim  : '+timeend}}"></Label>
+<StackLayout>
+    <StackLayout [visibility]="!isLoading&&(artistas.length==0||locais.length==0) ? 'visible' : 'collapse'" class="page bkg">
+        <Label text="ADICIONE AO MENOS UM ARTISTA E UM LOCAL" textAlignment="center" class="whitetext"></Label>
+    </StackLayout>
+    <StackLayout [visibility]="isLoading ? 'visible' : 'collapse'" class="page bkg">
+        <ActivityIndicator [busy]="isLoading" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </StackLayout>
+    <StackLayout [visibility]="!isLoading&&artistas.length>0&&locais.length>0 ? 'visible' : 'hidden'" id="stck" class="page bkg">
+        <SearchBar [hint]="Searchhint" backgroundColor="transparent" visibility="{{pagenumber<3?'visible':'collapse'}}" [text]="searchPhrase"
+            (textChange)="onTextChanged($event)" (submit)="onSubmit($event)" color="black" textFieldBackgroundColor="white" textFieldHintColor="gray"></SearchBar>
+        <ListPicker id="artistas" visibility="{{pagenumber==0?'visible':'collapse'}}" backgroundColor="transparent" color="white"
+            (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
+        </ListPicker>
+        <ListPicker id="estilos" visibility="{{pagenumber==1?'visible':'collapse'}}" backgroundColor="transparent" color="white"
+            (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
+        </ListPicker>
+        <ListPicker id="locais" visibility="{{pagenumber==2?'visible':'collapse'}}" backgroundColor="transparent" color="white" (selectedIndexChange)="selectedIndexChanged($event)"
+            class="p-12">
+        </ListPicker>
+        <DatePicker backgroundColor="transparent" style="color: white" visibility="{{pagenumber==3?'visible':'collapse'}}" (loaded)="onPickerLoaded($event)"
+            (dateChange)="onDateChanged($event)" verticalAlignment="center"></DatePicker>
+        <TimePicker backgroundColor="transparent" color="white" visibility="{{pagenumber==4?'visible':'collapse'}}" (loaded)="onDTPickerLoaded($event)"
+            (timeChange)="onTimeChanged($event)" verticalAlignment="center"></TimePicker>
+        <TimePicker backgroundColor="transparent" color="white" visibility="{{pagenumber==5?'visible':'collapse'}}" (loaded)="onDTPickerLoaded($event)"
+            (timeChange)="onTimeChanged($event)" verticalAlignment="center"></TimePicker>
+        <TextField id="titulo" visibility="{{pagenumber==6?'visible':'collapse'}}" style="background-color: white" hint="Título"
+            [(ngModel)]="evento.titulo"></TextField>
+        <TextField id="descricao" visibility="{{pagenumber==6?'visible':'collapse'}}" style="background-color: white" hint="Descrição"
+            [(ngModel)]="evento.descricao"></TextField>
+        <Label class="whitetext" visibility="{{pagenumber==6?'visible':'collapse'}}" text="{{'Data   : '+date}}"></Label>
+        <Label class="whitetext" visibility="{{pagenumber==6?'visible':'collapse'}}" text="{{'Horário Início  : '+time}}"></Label>
+        <Label class="whitetext" visibility="{{pagenumber==6?'visible':'collapse'}}" text="{{'Horário Fim  : '+timeend}}"></Label>
+    </StackLayout>
 </StackLayout>
