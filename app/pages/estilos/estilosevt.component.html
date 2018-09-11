@@ -83,12 +83,12 @@
                     <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.time+' - '+curevento.row.timefim:'' }}"
                         textWrap="true"></Label>
                 </StackLayout>
-                <StackLayout class="h3 itemlista" row="3" (tap)="abremapa()">
+                <StackLayout class="h3 itemlista" row="3" >
                     <StackLayout orientation="horizontal">
                         <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf041;"></Label>
                         <StackLayout padding="10">
                             <Label class="whitetext" text="{{curevento!=undefined?curevento.row.nomelocal:'' }}" textWrap="true" style="font-weight: bold"></Label>
-                            <Label style="color:aqua " text="{{curevento!=undefined?curevento.row.logradouro+', '+curevento.row.numero+' - '+curevento.row.complemento+' - '+curevento.row.cep+' - '+curevento.row.bairro+' - '+curevento.row.localidade+' - '+curevento.row.uf:'' }}"
+                            <Label style="color:aqua" (tap)="abremapa()" text="{{curevento!=undefined?curevento.row.logradouro+', '+curevento.row.numero+' - '+curevento.row.complemento+' - '+curevento.row.cep+' - '+curevento.row.bairro+' - '+curevento.row.localidade+' - '+curevento.row.uf:'' }}"
                                 textWrap="true"></Label>
                         </StackLayout>
                     </StackLayout>
