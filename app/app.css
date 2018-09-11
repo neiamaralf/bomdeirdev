@@ -36,6 +36,15 @@ components that have the btn class name.
     background-color: rgb(105, 117, 115);
 }
 
+.itemlista{
+    background-color:rgb(58, 54, 54);
+    margin:5;
+    padding:10;
+    border-color:white;
+    border-radius: 5;
+    border-width: 1;
+}
+
 .fa {
     font-family: "FontAwesome", 'fontawesome-webfont';
 }

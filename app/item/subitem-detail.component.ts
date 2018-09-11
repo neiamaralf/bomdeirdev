@@ -15,7 +15,7 @@ import { Page } from "tns-core-modules/ui/page";
 })
 export class SubItemDetailComponent {
     item: Item;
-    isLoading = true;
+    carregando = true;
 
     constructor(
         private itemService: ItemService,
@@ -34,7 +34,7 @@ export class SubItemDetailComponent {
     }
 
     obterlista() {
-        this.isLoading = true;
+        this.carregando = true;
         if (this.userService.user.super == 2) {
             this.router.navigate(["/buscas/" + this.item.id + "/" + this.item.iddono + "/" + this.userService.user.id + "/" + this.item.key]);
         }
@@ -52,7 +52,7 @@ export class SubItemDetailComponent {
                         console.log("item...");
                         console.dir(this.item);
                     }
-                    this.isLoading = false;
+                    this.carregando = false;
                 });
     }
 

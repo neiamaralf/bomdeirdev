@@ -35,7 +35,7 @@ export class EventosComponent implements OnInit {
   curartista: any = null;
   curestilo: any = null;
   curlocal: any = null;
-  isLoading: boolean = true;
+  carregando: boolean = true;
   label1: Label = new Label();
   label2: Label = new Label();
   label3: Label = new Label();
@@ -171,10 +171,10 @@ export class EventosComponent implements OnInit {
             this.label3.text = 'Local : ' + this.curlocal.row.nome;
             this.label3.visibility = 'collapse';
             layout.addChild(this.label3);
-            this.isLoading = false;
+            this.carregando = false;
           }
         }
-        else this.isLoading = false;
+        else this.carregando = false;
 
         if (callback != null)
           callback();

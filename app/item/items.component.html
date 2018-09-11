@@ -1,6 +1,6 @@
 <ActionBar title="BomDeIr" class="action-bar bkg">
-    <ActionItem visibility="{{userService.user.super == 2&&(showlocais||showaddlocal)?'visible':'collapse'}}" ios.position="left" android.position="left"
-        (tap)="goback()">
+    <ActionItem visibility="{{userService.user.super == 2&&(showlocais||showaddlocal)?'visible':'collapse'}}" ios.position="left"
+        android.position="left" (tap)="goback()">
         <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xF053;"></Button>
     </ActionItem>
     <!--
@@ -8,7 +8,7 @@
         android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
 
     -->
-   
+
     <ActionItem visibility="{{userService.user.super == 2&&tipo=='onde'&&!showlocais?'visible':'collapse'}}" ios.position="right"
         (tap)="listacidades()">
         <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0c9;"></Button>
@@ -21,6 +21,7 @@
     </ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
+    <ActivityIndicator [visibility]="carregando ? 'visible' : 'collapse'" height="100%" [busy]="carregando"></ActivityIndicator>
     <StackLayout backgroundColor="transparent" visibility="{{showaddlocal?'visible':'collapse'}}">
         <SearchBar id="sblocal" hint="Digite a cidade" [text]="searchPhrase" (textChange)="onTextChanged($event)" (submit)="onSubmit($event)"
             color="black" textFieldBackgroundColor="white" textFieldHintColor="gray"></SearchBar>
@@ -32,28 +33,20 @@
             </ng-template>
         </ListView>
     </StackLayout>
-    <StackLayout class="page bkg" [visibility]="carregando ? 'visible' : 'collapse'">
-        <ActivityIndicator [busy]="carregando" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-
-    </StackLayout>
-    <StackLayout class="page" [visibility]="!carregando ? 'visible' : 'collapse'" backgroundColor="transparent">
-        <StackLayout visibility="{{showlocais&&!showaddlocal?'visible':'collapse'}}" (swipe)="onSwipe($event)" class="page">
-
-            <ListView id="locais" [items]="locais" padding="10">
+    <StackLayout [visibility]="!carregando ? 'visible' : 'collapse'" backgroundColor="transparent">
+        <StackLayout padding="5" backgroundColor="transparent" visibility="{{showlocais&&!showaddlocal?'visible':'collapse'}}" (swipe)="onSwipe($event)">
+            <ListView separatorColor="transparent" height="100%" backgroundColor="transparent" id="locais" [items]="locais" padding="10">
                 <ng-template let-item="item" let-i="index">
-                    <GridLayout padding="10" columns="*,auto" style="background-color:rgb(58, 54, 54)" borderColor="white" borderRadius="5" borderWidth="1"
-                        (swipe)="onSwipe($event)" (tap)="localclic(item,i)">
+                    <GridLayout class="itemlista" columns="*,auto" (swipe)="onSwipe($event)" (tap)="localclic(item,i)">
                         <Label paddingLeft="10" col="0" verticalAlignment="center" text="{{ item.cidade+' - '+item.uf}}" class="list-group-item-heading whitetext"></Label>
-                        <Button col="1" class="fa1" text="{{'\uf1f8'}}" backgroundColor="transparent" borderColor="transparent" borderWidth="1" color="red"
-                            (tap)="dellocal(i)"></Button>
-
+                        <Button col="1" class="fa1" text="{{'\uf1f8'}}" backgroundColor="transparent" borderColor="transparent" borderWidth="1" color="red" (tap)="dellocal(i)"></Button>
                     </GridLayout>
                 </ng-template>
             </ListView>
         </StackLayout>
 
-        <GridLayout id="container" visibility="{{tipo=='onde'&&!showlocais&&!showaddlocal?'visible':'collapse'}}" rows="*, auto">
-            <StackLayout class="page bkg" row="0">
+        <GridLayout backgroundColor="transparent" id="container" visibility="{{tipo=='onde'&&!showlocais&&!showaddlocal?'visible':'collapse'}}" rows="*, auto">
+            <StackLayout  backgroundColor="transparent" row="0">
                 <ng-container *ngFor="let local of locais; let i = index">
                     <StackLayout visibility="{{i==tabSelectedIndex?'visible':'collapse'}}" class="fa" backgroundColor="transparent">
                         <GridLayout rows="*,auto,auto" backgroundColor="transparent">

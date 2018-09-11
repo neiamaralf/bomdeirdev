@@ -7,9 +7,9 @@
     </ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
-    <ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    <ActivityIndicator height="100%" [busy]="carregando" [visibility]="carregando ? 'visible' : 'collapse'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 
-    <GridLayout style="background-color: transparent" (swipe)="onSwipe($event)" visibility="{{userService.user.super==0&&!isLoading? 'visible': 'collapse'}}" rows="*,auto,auto">
+    <GridLayout style="background-color: transparent" (swipe)="onSwipe($event)" visibility="{{userService.user.super==0&&!carregando? 'visible': 'collapse'}}" rows="*,auto,auto">
         <ScrollView style="margin-top: 10">
             <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
                 <WrapLayout (swipe)="onSwipe($event)" horizontalAlignment="center" backgroundColor="transparent">
@@ -25,9 +25,9 @@
             </StackLayout>
         </ScrollView>
     </GridLayout>
-    <Label class="whitetext" textWrap="true" textAlignment="center" horizontalAlignment="center" visibility="{{userService.user.super!=0&&item.menu.length==0&&!isLoading? 'visible': 'collapse'}}" text="NADA ADICIONADO, CLIQUE NO + PARA ADICIONAR"></Label>
+    <Label class="whitetext" textWrap="true" textAlignment="center" horizontalAlignment="center" visibility="{{userService.user.super!=0&&item.menu.length==0&&!carregando? 'visible': 'collapse'}}" text="NADA ADICIONADO, CLIQUE NO + PARA ADICIONAR"></Label>
 
-    <ListView height="100%" id="lvId" style="background-color: transparent" visibility="{{userService.user.super!=0&&!isLoading? 'visible': 'collapse'}}" [items]="item.menu" class="list-group">
+    <ListView separatorColor="transparent" height="100%" id="lvId" style="background-color: transparent" visibility="{{userService.user.super!=0&&!carregando? 'visible': 'collapse'}}" [items]="item.menu" class="list-group">
         <ng-template let-item="item">
             <Label (tap)="onclick(item)" [text]="item.name" class="btn btn-primary btn-active roundbt whitetext"></Label>
         </ng-template>

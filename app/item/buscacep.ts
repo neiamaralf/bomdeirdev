@@ -15,7 +15,7 @@ export class BuscaCepComponent implements OnInit {
   cep: any;
   public estadoss: any[];
   curestado: any;
-  isLoading: boolean = true;
+  carregando: boolean = true;
   cepres: any;
   cepsearch = fromObject({
     cidade: "",
@@ -72,7 +72,7 @@ export class BuscaCepComponent implements OnInit {
           this.curestado = pickUF.items[pickUF.selectedIndex];
           console.dir(array);
         }
-        this.isLoading = false;
+        this.carregando = false;
       });
   }
 

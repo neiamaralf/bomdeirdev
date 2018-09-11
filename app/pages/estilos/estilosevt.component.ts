@@ -29,7 +29,7 @@ export class EstilosEvtComponent implements OnInit {
   currentlocation: LocationData = { latitude: 0, longitude: 0, altitude: 0 };
   pagenumber: number = 0;
   item: Item;
-  isLoading: boolean = false;
+  carregando: boolean = false;
   showcalendar: boolean = false;
   showwebview: boolean = false;
   showmap: boolean = false;
@@ -241,7 +241,7 @@ export class EstilosEvtComponent implements OnInit {
     var minutos = data.getUTCMinutes() < 10 ? "0" + data.getUTCMinutes() : data.getUTCMinutes();
     var horafim = datafim.getUTCHours() < 10 ? "0" + datafim.getUTCHours() : datafim.getUTCHours();
     var minutosfim = datafim.getUTCMinutes() < 10 ? "0" + datafim.getUTCMinutes() : datafim.getUTCMinutes();
-
+    item.row.ano=data.getUTCFullYear();
     item.row.data = diames + "\\" + mes + "\\" + data.getUTCFullYear() + " - " + semana[data.getDay()];
     item.row.time = hora + ":" + minutos;
     item.row.timefim = horafim + ":" + minutosfim;
@@ -259,7 +259,7 @@ export class EstilosEvtComponent implements OnInit {
   }
 
   loadlist(array, key, idestilo) {
-    this.isLoading = true;
+    this.carregando = true;
     this.userService.db
       .get(encodeURI("key=" + key +
         "&idcategoria=" + this.route.snapshot.params["idcategoria"] +
@@ -318,7 +318,7 @@ export class EstilosEvtComponent implements OnInit {
 
           console.dir(array);
         }
-        this.isLoading = false;
+        this.carregando = false;
       });
   }
 

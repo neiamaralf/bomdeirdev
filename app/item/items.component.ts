@@ -164,7 +164,7 @@ export class ItemsComponent implements OnInit {
                     });
                     console.dir(this.cidades);
                 }
-                //this.isLoading = false;
+                //this.carregando = false;
             });
     }
 
