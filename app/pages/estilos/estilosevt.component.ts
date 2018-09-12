@@ -241,7 +241,7 @@ export class EstilosEvtComponent implements OnInit {
     var minutos = data.getUTCMinutes() < 10 ? "0" + data.getUTCMinutes() : data.getUTCMinutes();
     var horafim = datafim.getUTCHours() < 10 ? "0" + datafim.getUTCHours() : datafim.getUTCHours();
     var minutosfim = datafim.getUTCMinutes() < 10 ? "0" + datafim.getUTCMinutes() : datafim.getUTCMinutes();
-    item.row.ano=data.getUTCFullYear();
+    item.row.ano = data.getUTCFullYear();
     item.row.data = diames + "\\" + mes + "\\" + data.getUTCFullYear() + " - " + semana[data.getDay()];
     item.row.time = hora + ":" + minutos;
     item.row.timefim = horafim + ":" + minutosfim;
@@ -250,11 +250,11 @@ export class EstilosEvtComponent implements OnInit {
     item.row.diames = diames;
   }
 
-  webViewTouch(event){
-    
+  webViewTouch(event) {
+
   }
 
-  webViewPan(event){
+  webViewPan(event) {
 
   }
 
@@ -291,20 +291,20 @@ export class EstilosEvtComponent implements OnInit {
               toString: () => { return row.nome; },
             })
             if (key == "eventosregiao") {
-              let startDate: Date,
-                endDate: Date,
-                event: CalendarEvent;
+              //let startDate: Date,
+              //endDate: Date,
+              //event: CalendarEvent;
               var t = row.datahorario.split(/[- :]/);
-              console.log("hora=" + t[3])
-              startDate = new Date(row.datahorario);
-              console.log(startDate.toString());
+              //console.log("hora=" + t[3])
+              //startDate = new Date(row.datahorario);
+              //console.log(startDate.toString());
               console.log((new Date()).toUTCString());
-              endDate = new Date(row.datafim);
+              //endDate = new Date(row.datafim);
 
-              let colors: Array<Color> = [new Color(200, 188, 26, 214), new Color(220, 255, 109, 130), new Color(255, 55, 45, 255), new Color(199, 17, 227, 10), new Color(255, 255, 54, 3)];
+              //let colors: Array<Color> = [new Color(200, 188, 26, 214), new Color(220, 255, 109, 130), new Color(255, 55, 45, 255), new Color(199, 17, 227, 10), new Color(255, 255, 54, 3)];
 
-              event = new CalendarEvent(row.nome + ":" + row.id, startDate, endDate, false, colors[(i++) * 10 % (colors.length - 1)]);
-              this._events.push(event);
+              //event = new CalendarEvent(row.nome + ":" + row.id, startDate, endDate, false, colors[(i++) * 10 % (colors.length - 1)]);
+              //this._events.push(event);
               this.configureevento(array[array.length - 1])
 
 
@@ -313,7 +313,7 @@ export class EstilosEvtComponent implements OnInit {
           });
           if (key == "eventosregiao") {
             this.cureventindex = 0;
-            this._calendar.nativeElement.goToDate(this._events[this.cureventindex].startDate)
+            //this._calendar.nativeElement.goToDate(this._events[this.cureventindex].startDate)
           }
 
           console.dir(array);
@@ -326,20 +326,12 @@ export class EstilosEvtComponent implements OnInit {
     this._calendar.nativeElement.goToDate(new Date())
   }
 
-  goback() {
-    if (this.showwebview)
-      this.showwebview = false;
-    else if (this.showmap)
-      this.showmap = false;
-    else if (this.pagenumber == 0)
-      this.routerExtensions.backToPreviousPage();
-    else
-      this.pagenumber--;
-  }
-
   abresite() {
+    console.log("site");
     let webview: WebView = this.webViewRef.nativeElement;
-    webview.src = this.curevento.row.site;
+    //webview.src = this.curevento.row.site;
+    //console.dir(webview);
+    //this.showmap = false;
     this.showwebview = true;
   }
 
@@ -364,6 +356,7 @@ export class EstilosEvtComponent implements OnInit {
   }
 
   abremapa() {
+    console.log("abremapa");
     this.locationService.getlatlongFromEnd(this.curevento.row)
       .subscribe(res => {
         this.locationService.getLocationOnce()
@@ -462,6 +455,17 @@ export class EstilosEvtComponent implements OnInit {
     console.dir(this.curevento);
   }
 
+  goback() {
+    if (this.showwebview)
+      this.showwebview = false;
+    else if (this.showmap)
+      this.showmap = false;
+    else if (this.pagenumber == 0)
+      this.routerExtensions.backToPreviousPage();
+    else
+      this.pagenumber--;
+  }
+
   onSwipe(args: SwipeGestureEventData) {
     console.log("Swipe!");
     console.log("Object that triggered the event: " + args.object);
@@ -470,14 +474,7 @@ export class EstilosEvtComponent implements OnInit {
     console.log("Swipe Direction: " + args.direction);
     switch (args.direction) {
       case 1:
-        if (this.pagenumber == 0)
-          this.goback();
-        else if (this.pagenumber > 1)
-          this.pagenumber--;
-        else if (this.pagenumber == 1) {
-
-          this.pagenumber--;
-        }
+        this.goback();
         break;
       case 2:
         if (this.pagenumber == 1) {

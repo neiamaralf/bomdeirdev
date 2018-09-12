@@ -18,12 +18,16 @@
     <ActivityIndicator [visibility]="carregando ? 'visible' : 'collapse'" height="100%" [busy]="carregando"></ActivityIndicator>
     <StackLayout visibility="{{!showwebview&&!showmap&&!carregando? 'visible': 'collapse'}}">
         <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber!=2?'visible':'collapse'}}" columns="auto,*,auto" rows="auto">
-            <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="prevevt()" color="{{cureventindex<=0?'gray':'white'}}"
+            <!--
+                <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="prevevt()" color="{{cureventindex<=0?'gray':'white'}}"
                 text="&#xf0a5;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="0"></Button>
+                        -->
             <Label class="whitetext" horizontalAlignment="center" col="1" style="padding:10;font-size: 15" text="{{route.snapshot.params[ 'cidade']+ '-'+route.snapshot.params['uf'] }}"></Label>
-            <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="nextevt()" color="{{cureventindex==_events.length-1?'gray':'white'}}"
+            <!--
+               <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="nextevt()" color="{{cureventindex==_events.length-1?'gray':'white'}}"
                 text="&#xf0a4;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="2"></Button>
-        </GridLayout>
+                     -->
+            </GridLayout>
         <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber==0? 'visible': 'collapse'}}" rows="*,auto,auto">
             <ScrollView style="margin-top: 10">
                 <StackLayout (swipe)="onSwipe($event)">
@@ -96,9 +100,9 @@
                         <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf015;"></Label>
                         <Label padding="10" (tap)="abresite()" text="{{curevento!=undefined?curevento.row.site:'' }}" style="color:aqua " underline="true"></Label>
                     </StackLayout>
-                    <StackLayout orientation="horizontal" (tap)="ligafone()">
+                    <StackLayout orientation="horizontal">
                         <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf095;"></Label>
-                        <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.fone:'' }}" style="color:aqua " underline="true"></Label>
+                        <Label class="whitetext"  (tap)="ligafone()" padding="10" text="{{curevento!=undefined?curevento.row.fone:'' }}" style="color:aqua " underline="true"></Label>
                     </StackLayout>
                 </StackLayout>
                 <StackLayout class="h3 itemlista" row="4">
@@ -112,8 +116,8 @@
             </GridLayout>
         </ScrollView>
     </StackLayout>
-    <StackLayout (swipe)="onSwipe($event)" visibility="{{showwebview?'visible':'collapse'}}">
-        <WebView #myWebView (touch)="webViewTouch($event)" (pan)="webViewPan($event)"></WebView>
+    <StackLayout height="100%" (swipe)="onSwipe($event)" visibility="{{showwebview?'visible':'collapse'}}">
+        <WebView height="100%" src="{{curevento!=undefined?curevento.row.site:''}}" #myWebView (touch)="webViewTouch($event)" (pan)="webViewPan($event)"></WebView>
     </StackLayout>
     <GridLayout (swipe)="onSwipe($event)" visibility="{{showmap?'visible':'hidden'}}">
         <MapView #mapView [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="zoom" [minZoom]="minZoom" [maxZoom]="maxZoom"
