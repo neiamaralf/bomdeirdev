@@ -48,13 +48,13 @@
                 class="list-group " visibility="{{!showcalendar?'visible':'collapse'}}">
                 <ng-template let-item="item">
                     <GridLayout class="itemlista" (swipe)="onSwipe($event)" (tap)="eventoclick(item)" columns="auto * auto">
-                        <StackLayout margin="10" padding="10" col="0">
+                        <StackLayout col="0">
                             <Label horizontalAlignment="center" text="{{item.row.ano }}" color="black"></Label>
                             <Label horizontalAlignment="center" text="{{item.row.abrevmes }}" color="red" textWrap="true"></Label>
                             <Label horizontalAlignment="center" text="{{item.row.diames }}" style="font-weight: bold" textWrap="true" color="orange"></Label>
                             <Label class="whitetext" horizontalAlignment="center" text="{{item.row.abrevsem }}" textWrap="true"></Label>
                         </StackLayout>
-                        <StackLayout padding="10" col="1">
+                        <StackLayout paddingLeft="10" col="1">
                             <Label class="whitetext" style="font-weight: bold;font-size:18 " text="{{item.row.nome }}" textWrap="true"></Label>
                             <Label class="whitetext" text="{{item.row.time+' - '+item.row.timefim+' '+item.row.nomelocal}}"></Label>
                         </StackLayout>
@@ -69,7 +69,7 @@
         <ScrollView visibility="{{pagenumber==2?'visible':'collapse'}}">
             <GridLayout (swipe)="onSwipe($event)" rows="auto auto auto auto auto auto auto ">
                 <StackLayout class="h3 itemlista" orientation="horizontal" row="0">
-                    <StackLayout padding="10">
+                    <StackLayout>
                         <Label horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.ano:'' }}" color="black"></Label>
                         <Label horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.abrevmes:'' }}" color="red"></Label>
                         <Label horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.diames:'' }}" style="font-weight: bold" color="orange"></Label>
