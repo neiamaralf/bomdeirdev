@@ -291,20 +291,27 @@ export class EstilosEvtComponent implements OnInit {
               toString: () => { return row.nome; },
             })
             if (key == "eventosregiao") {
-              //let startDate: Date,
-              //endDate: Date,
-              //event: CalendarEvent;
+              var startDate: Date
+              ,endDate: Date
+              ,event: CalendarEvent;
               var t = row.datahorario.split(/[- :]/);
+              console.dir(t)
               //console.log("hora=" + t[3])
-              //startDate = new Date(row.datahorario);
-              //console.log(startDate.toString());
-              console.log((new Date()).toUTCString());
-              //endDate = new Date(row.datafim);
+              startDate = new Date(t[0],t[1]-1,t[2],t[3],t[4],t[5],0);
+             /* console.log(startDate.toISOString());
+              console.log(startDate.toJSON());
+              console.log(startDate.toLocaleDateString());
+              console.log(startDate.toLocaleString());
+              console.log(startDate.toLocaleTimeString());
+              console.log(startDate.toTimeString());*/
+              t = row.datafim.split(/[- :]/);
 
-              //let colors: Array<Color> = [new Color(200, 188, 26, 214), new Color(220, 255, 109, 130), new Color(255, 55, 45, 255), new Color(199, 17, 227, 10), new Color(255, 255, 54, 3)];
+              endDate = new Date(t[0],t[1]-1,t[2],t[3],t[4],t[5],0);
 
-              //event = new CalendarEvent(row.nome + ":" + row.id, startDate, endDate, false, colors[(i++) * 10 % (colors.length - 1)]);
-              //this._events.push(event);
+              let colors: Array<Color> = [new Color(200, 188, 26, 214), new Color(220, 255, 109, 130), new Color(255, 55, 45, 255), new Color(199, 17, 227, 10), new Color(255, 255, 54, 3)];
+
+              event = new CalendarEvent(row.nome + ":" + row.id, startDate, endDate, false, colors[(i++) * 10 % (colors.length - 1)]);
+              this._events.push(event);
               this.configureevento(array[array.length - 1])
 
 
@@ -313,7 +320,7 @@ export class EstilosEvtComponent implements OnInit {
           });
           if (key == "eventosregiao") {
             this.cureventindex = 0;
-            //this._calendar.nativeElement.goToDate(this._events[this.cureventindex].startDate)
+            this._calendar.nativeElement.goToDate(this._events[this.cureventindex].startDate)
           }
 
           console.dir(array);

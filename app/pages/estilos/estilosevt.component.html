@@ -18,15 +18,15 @@
     <ActivityIndicator [visibility]="carregando ? 'visible' : 'collapse'" height="100%" [busy]="carregando"></ActivityIndicator>
     <StackLayout visibility="{{!showwebview&&!showmap&&!carregando? 'visible': 'collapse'}}">
         <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber!=2?'visible':'collapse'}}" columns="auto,*,auto" rows="auto">
-            <!--
+            
                 <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="prevevt()" color="{{cureventindex<=0?'gray':'white'}}"
                 text="&#xf0a5;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="0"></Button>
-                        -->
+                       
             <Label class="whitetext" horizontalAlignment="center" col="1" style="padding:10;font-size: 15" text="{{route.snapshot.params[ 'cidade']+ '-'+route.snapshot.params['uf'] }}"></Label>
-            <!--
+            
                <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="nextevt()" color="{{cureventindex==_events.length-1?'gray':'white'}}"
                 text="&#xf0a4;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="2"></Button>
-                     -->
+                    
             </GridLayout>
         <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber==0? 'visible': 'collapse'}}" rows="*,auto,auto">
             <ScrollView style="margin-top: 10">
