@@ -467,7 +467,7 @@ export class EstilosEvtComponent implements OnInit {
       this.showwebview = false;
     else if (this.showmap)
       this.showmap = false;
-    else if (this.pagenumber < 0)
+    else if (this.pagenumber == 0)
       this.routerExtensions.backToPreviousPage();
     else
       this.pagenumber--;
