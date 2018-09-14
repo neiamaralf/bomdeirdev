@@ -18,16 +18,16 @@
     <ActivityIndicator [visibility]="carregando ? 'visible' : 'collapse'" height="100%" [busy]="carregando"></ActivityIndicator>
     <StackLayout visibility="{{!showwebview&&!showmap&&!carregando? 'visible': 'collapse'}}">
         <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber!=2?'visible':'collapse'}}" columns="auto,*,auto" rows="auto">
-            
-                <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="prevevt()" color="{{cureventindex<=0?'gray':'white'}}"
+
+            <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="prevevt()" color="{{cureventindex<=0?'gray':'white'}}"
                 text="&#xf0a5;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="0"></Button>
-                       
+
             <Label class="whitetext" horizontalAlignment="center" col="1" style="padding:10;font-size: 15" text="{{route.snapshot.params[ 'cidade']+ '-'+route.snapshot.params['uf'] }}"></Label>
-            
-               <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="nextevt()" color="{{cureventindex==_events.length-1?'gray':'white'}}"
+
+            <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="nextevt()" color="{{cureventindex==_events.length-1?'gray':'white'}}"
                 text="&#xf0a4;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="2"></Button>
-                    
-            </GridLayout>
+
+        </GridLayout>
         <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber==0? 'visible': 'collapse'}}" rows="*,auto,auto">
             <ScrollView style="margin-top: 10">
                 <StackLayout (swipe)="onSwipe($event)">
@@ -87,7 +87,7 @@
                     <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.time+' - '+curevento.row.timefim:'' }}"
                         textWrap="true"></Label>
                 </StackLayout>
-                <StackLayout class="h3 itemlista" row="3" >
+                <StackLayout class="h3 itemlista" row="3">
                     <StackLayout orientation="horizontal">
                         <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf041;"></Label>
                         <StackLayout padding="10">
@@ -102,7 +102,8 @@
                     </StackLayout>
                     <StackLayout orientation="horizontal">
                         <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf095;"></Label>
-                        <Label class="whitetext"  (tap)="ligafone()" padding="10" text="{{curevento!=undefined?curevento.row.fone:'' }}" style="color:aqua " underline="true"></Label>
+                        <Label class="whitetext" (tap)="ligafone()" padding="10" text="{{curevento!=undefined?curevento.row.fone:'' }}" style="color:aqua "
+                            underline="true"></Label>
                     </StackLayout>
                 </StackLayout>
                 <StackLayout class="h3 itemlista" row="4">
@@ -112,6 +113,29 @@
                 <StackLayout class="h3 itemlista" row="5">
                     <Label class="whitetext" text="Artista " style="font-weight: bold"></Label>
                     <Label class="whitetext" text="{{curevento!=undefined?curevento.row.artista:'' }}" textWrap="true"></Label>
+                </StackLayout>
+                <StackLayout class="h3 itemlista" row="6">
+                    <Label class="whitetext" text="Clima " style="font-weight: bold"></Label>
+                    <GridLayout columns="*,auto">
+                        <StackLayout col="0">
+                            <Label class="whitetext iconeclima" text="{{curevento!=undefined?dadosclima[curevento.row.clima].charcod:''}}" textWrap="true"></Label>
+                            <Label class="whitetext" horizontalAlignment="center" text="{{curevento!=undefined?dadosclima[curevento.row.clima].texto:''}}"
+                                textWrap="true"></Label>
+                        </StackLayout>
+                        <StackLayout col="1">
+                            <StackLayout orientation="horizontal">
+                                <Label class="whitetext iconeclimapq" text="&#xf053;"></Label>
+                                <Label class="whitetext iconeclimapq" text="{{curevento!=undefined?curevento.row.minima:''}}"></Label>
+                                <Label class="whitetext iconeclimapq" text="&#xf03c;"></Label>
+                            </StackLayout>
+                            <StackLayout orientation="horizontal">
+                                <Label class="whitetext iconeclimapq" text="&#xf055;"></Label>
+                                <Label class="whitetext iconeclimapq" text="{{curevento!=undefined?curevento.row.maxima:''}}"></Label>
+                                <Label class="whitetext iconeclimapq" text="&#xf03c;"></Label>
+                            </StackLayout>
+
+                        </StackLayout>
+                    </GridLayout>
                 </StackLayout>
             </GridLayout>
         </ScrollView>

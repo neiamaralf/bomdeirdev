@@ -41,9 +41,19 @@ export class DbService {
     return this.http.get(encodeURI(url), { headers: this.getCommonHeaders(contenttype) });
   }
 
+  posturl()
+  {
+    this.http.post("https://www.athena3d.com.br/bomdeir/clima.php", "", { headers: this.getCommonHeaders("application/xml") })
+    .subscribe(function (response) {
+      }, function (e) {
+      console.log("Error: " +e);
+  });
+  }
+
   getCommonHeaders(contenttype) {
     let headers = new HTTP.HttpHeaders();
     headers.append("Content-Type", contenttype);
+    headers.append("Accept", "text/html");
     return headers;
   }
 }

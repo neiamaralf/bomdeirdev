@@ -227,6 +227,16 @@ export class EstilosEvtComponent implements OnInit {
     const events: Array<CalendarEvent> = calendar.getEventsForDate(date);
   }
 
+  get(url) {
+    return fetch(
+      url
+    ).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      return json;
+    });
+  }
+
   configureevento(item) {
     var t = item.row.datahorario.split(/[- :]/);
     var data = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
@@ -246,8 +256,13 @@ export class EstilosEvtComponent implements OnInit {
     item.row.time = hora + ":" + minutos;
     item.row.timefim = horafim + ":" + minutosfim;
     item.row.abrevmes = meses[data.getUTCMonth()];
+
     item.row.abrevsem = abrevsem[data.getDay()];
     item.row.diames = diames;
+    item.row.clima = ''
+    item.row.clima = 'ec'
+
+
   }
 
   webViewTouch(event) {
@@ -292,21 +307,21 @@ export class EstilosEvtComponent implements OnInit {
             })
             if (key == "eventosregiao") {
               var startDate: Date
-              ,endDate: Date
-              ,event: CalendarEvent;
+                , endDate: Date
+                , event: CalendarEvent;
               var t = row.datahorario.split(/[- :]/);
               console.dir(t)
               //console.log("hora=" + t[3])
-              startDate = new Date(t[0],t[1]-1,t[2],t[3],t[4],t[5],0);
-             /* console.log(startDate.toISOString());
-              console.log(startDate.toJSON());
-              console.log(startDate.toLocaleDateString());
-              console.log(startDate.toLocaleString());
-              console.log(startDate.toLocaleTimeString());
-              console.log(startDate.toTimeString());*/
+              startDate = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5], 0);
+              /* console.log(startDate.toISOString());
+               console.log(startDate.toJSON());
+               console.log(startDate.toLocaleDateString());
+               console.log(startDate.toLocaleString());
+               console.log(startDate.toLocaleTimeString());
+               console.log(startDate.toTimeString());*/
               t = row.datafim.split(/[- :]/);
 
-              endDate = new Date(t[0],t[1]-1,t[2],t[3],t[4],t[5],0);
+              endDate = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5], 0);
 
               let colors: Array<Color> = [new Color(200, 188, 26, 214), new Color(220, 255, 109, 130), new Color(255, 55, 45, 255), new Color(199, 17, 227, 10), new Color(255, 255, 54, 3)];
 
@@ -443,40 +458,172 @@ export class EstilosEvtComponent implements OnInit {
           });
 
       });
+    //String.fromCharCode(this.dadosclima['ec'].charcod)
 
   }
 
-   WEATHER_ICONS = {
-    day: {
-      'ps': 0xf00d,
-      'n': 0xf002,
-      'drizzle': 0xf009,
-      'rain': 0xf008,
-      'thunderstorm': 0x010,
-      'snow': 0xf00a,
-      'mist': 0xf0b6
+  dadosclima = {
+    ec: {
+      texto: "Encoberto com Chuvas Isoladas",
+      charcod: String.fromCharCode(0xf006)
     },
-    night: {
-      'clear': 0xf02e,
-      'clouds': 0xf086,
-      'drizzle': 0xf029,
-      'rain': 0xf028,
-      'thunderstorm': 0xf02d,
-      'snow': 0xf02a,
-      'mist': 0xf04a
+    ci: {
+      texto: "Chuvas Isoladas",
+      charcod: String.fromCharCode(0xf017)
     },
-    neutral: {
-      'temperature': 0xf055,
-      'wind': 0xf050,
-      'cloud': 0xf041,
-      'pressure': 0xf079,
-      'humidity': 0xf07a,
-      'rain': 0xf019,
-      'sunrise': 0xf046,
-      'sunset': 0xf052
+    c: {
+      texto: "Chuva",
+      charcod: String.fromCharCode(0xf019)
+    },
+    in: {
+      texto: "Instável",
+      charcod: String.fromCharCode(0xf00e)
+    },
+    pp: {
+      texto: "Possibilidade de Pancadas de Chuva",
+      charcod: String.fromCharCode(0xf015)
+    },
+    cm: {
+      texto: "Chuva pela Manhã",
+      charcod: String.fromCharCode(0xf008)
+    },
+    cn: {
+      texto: "Chuva a Noite",
+      charcod: String.fromCharCode(0xf028)
+    },
+    pt: {
+      texto: "Pancadas de Chuva a Tarde",
+      charcod: String.fromCharCode(0xf035)
+    },
+    pm: {
+      texto: "Pancadas de Chuva pela Manhã",
+      charcod: String.fromCharCode(0xf007)
+    },
+    np: {
+      texto: "Nublado e Pancadas de Chuva",
+      charcod: String.fromCharCode(0xf004)
+    },
+    pc: {
+      texto: "Pancadas de Chuva",
+      charcod: String.fromCharCode(0xf018)
+    },
+    pn: {
+      texto: "Parcialmente Nublado",
+      charcod: String.fromCharCode(0xf002)
+    },
+    cv: {
+      texto: "Chuvisco",
+      charcod: String.fromCharCode(0xf01b)
+    },
+    ch: {
+      texto: "Chuvoso",
+      charcod: String.fromCharCode(0xf01a)
+    },
+    t: {
+      texto: "Tempestade",
+      charcod: String.fromCharCode(0xf01e)
+    },
+    ps: {
+      texto: "Predomínio de Sol",
+      charcod: String.fromCharCode(0xf00d)
+    },
+    e: {
+      texto: "Encoberto",
+      charcod: String.fromCharCode(0xf00c)
+    },
+    n: {
+      texto: "Nublado",
+      charcod: String.fromCharCode(0xf013)
+    },
+    cl: {
+      texto: "Céu Claro",
+      charcod: String.fromCharCode(0xf00d)
+    },
+    nv: {
+      texto: "Nevoeiro",
+      charcod: String.fromCharCode(0xf03d)
+    },
+    g: {
+      texto: "Geada",
+      charcod: String.fromCharCode(0xf077)
+    },
+    ne: {
+      texto: "Neve",
+      charcod: String.fromCharCode(0xf076)
+    },
+    nd: {
+      texto: "Não Definido",
+      charcod: '?'
+    },
+    pnt: {
+      texto: "Pancadas de Chuva a Noite",
+      charcod: String.fromCharCode(0xf024)
+    },
+    psc: {
+      texto: "Possibilidade de Chuva",
+      charcod: String.fromCharCode(0xf01c)
+    },
+    pcm: {
+      texto: "Possibilidade de Chuva pela Manhã",
+      charcod: String.fromCharCode(0xf00b)
+    },
+    pct: {
+      texto: "Possibilidade de Chuva a Tarde",
+      charcod: String.fromCharCode(0xf039)
+    },
+    pcn: {
+      texto: "Possibilidade de Chuva a Noite",
+      charcod: String.fromCharCode(0xf02b)
+    },
+    npt: {
+      texto: "Nublado com Pancadas a Tarde",
+      charcod: String.fromCharCode(0xf032)
+    },
+    npn: {
+      texto: "Nublado com Pancadas a Noite",
+      charcod: String.fromCharCode(0xf027)
+    },
+    ncn: {
+      texto: "Nublado com Possibilidade de Chuva a Noite",
+      charcod: String.fromCharCode(0xf029)
+    },
+    nct: {
+      texto: "Nublado com Possibilidade de Chuva a Tarde ",
+      charcod: String.fromCharCode(0xf037)
+    },
+    ncm: {
+      texto: "Nublado com Possibilidade de Chuva pela Manhã",
+      charcod: String.fromCharCode(0xf009)
+    },
+    npm: {
+      texto: "Nublado com Pancadas pela Manhã",
+      charcod: String.fromCharCode(0xf010)
+    },
+    npp: {
+      texto: "Nublado com Possibilidade de Chuva",
+      charcod: String.fromCharCode(0xf01d)
+    },
+    vn: {
+      texto: "Variação de Nebulosidade",
+      charcod: String.fromCharCode(0xf03e)
+    },
+    ct: {
+      texto: "Chuva a Tarde",
+      charcod: String.fromCharCode(0xf036)
+    },
+    ppn: {
+      texto: "Possibilidade de Pancada de Chuva a Noite",
+      charcod: String.fromCharCode(0xf02c)
+    },
+    ppt: {
+      texto: "Possibilidade de Pancada de Chuva a Tarde",
+      charcod: String.fromCharCode(0xf03a)
+    },
+    ppm: {
+      texto: "Possibilidade de Pancada de Chuva pela Manhã",
+      charcod: String.fromCharCode(0xf00e)
     }
-  };
-
+  }
   onclick(item) {
     // this.routerExtensions.navigate(["/item/"+item.id], { clearHistory: false });
     //this.curevento=[];
@@ -484,11 +631,37 @@ export class EstilosEvtComponent implements OnInit {
     this.eventos = [];
     this.loadlist(this.eventos, "eventosregiao", item.row.id.toString());
     console.dir(item);
+
     this.pagenumber++;
   }
 
   eventoclick(item) {
     this.curevento = item;
+    this.userService.db
+      .geturl("https://www.athena3d.com.br/bomdeir/clima.php?cidade=" + this.userService.db.__encodeURI(item.row.localidade), "application/xml")
+      .subscribe(res => {
+        console.log("aqui")
+        var idcidade;
+        if ((<any>res).cidade.length != undefined) {
+          console.dir((<any>res).cidade[0]);
+          for (let i = 0; i < (<any>res).cidade.length; i++) {
+            if ((<any>res).cidade[i].uf == item.row.uf) {
+              idcidade = (<any>res).cidade[i].id;
+            }
+          };
+        }
+        else
+          idcidade = (<any>res).cidade.id;
+        this.userService.db
+          .geturl("https://www.athena3d.com.br/bomdeir/clima.php?idcidade=" + idcidade, "application/xml")
+          .subscribe(res => {
+            this.curevento.row.clima=(<any>res).previsao[0].tempo;
+            this.curevento.row.minima=(<any>res).previsao[0].minima;
+            this.curevento.row.maxima=(<any>res).previsao[0].maxima;
+            console.dir((<any>res).previsao[0]);
+          });
+      });
+
     this.pagenumber++;
     console.dir(this.curevento);
   }

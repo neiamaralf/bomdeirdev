@@ -45,6 +45,18 @@ components that have the btn class name.
     border-width: 1;
 }
 
+.iconeclima {
+    font-family: 'Weather Icons', 'weathericons-regular-webfont';
+    font-size: 48;
+    text-align: center;
+  }
+
+  .iconeclimapq {
+    font-family: 'Weather Icons', 'weathericons-regular-webfont';
+    font-size: 36;
+    text-align: center;
+  }
+
 .fa {
     font-family: "FontAwesome", 'fontawesome-webfont';
 }
