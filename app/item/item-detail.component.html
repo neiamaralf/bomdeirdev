@@ -11,7 +11,7 @@
             <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
                 <ng-container *ngFor="let item of item.menu">
                     <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" [nsRouterLink]="['/subitem', item.id]">
-                        <Image width="70" class="icones" src="{{ 'https://www.athena3d.com.br/bomdeir/imgs/'+userService.db.__encodeURI(item.name)+ '.png'}}"></Image>
+                        <Image  class="icones" src="{{ 'res://'+item.name}}"></Image>
                         <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
                     </StackLayout>
                 </ng-container>

@@ -17,7 +17,7 @@
 
                     <ng-container *ngFor="let est of item.menu">
                         <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(est)">
-                            <Image width="70" class="icones" src="{{userService.user.super==0? 'https://www.athena3d.com.br/bomdeir/imgs/'+userService.db.__encodeURI(est.name)+ '.png':''}}"></Image>
+                            <Image width="25%" class="icones" src="{{userService.user.super==0? 'res://'+est.name:''}}"></Image>
                             <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="est.name"></Label>
                         </StackLayout>
                     </ng-container>

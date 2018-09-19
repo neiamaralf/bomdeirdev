@@ -39,14 +39,16 @@
                 <ng-template let-item="item" let-i="index">
                     <GridLayout class="itemlista" columns="*,auto" (swipe)="onSwipe($event)" (tap)="localclic(item,i)">
                         <Label paddingLeft="10" col="0" verticalAlignment="center" text="{{ item.cidade+' - '+item.uf}}" class="list-group-item-heading whitetext"></Label>
-                        <Button col="1" class="fa1" text="{{'\uf1f8'}}" backgroundColor="transparent" borderColor="transparent" borderWidth="1" color="red" (tap)="dellocal(i)"></Button>
+                        <Button col="1" class="fa1" text="{{'\uf1f8'}}" backgroundColor="transparent" borderColor="transparent" borderWidth="1" color="red"
+                            (tap)="dellocal(i)"></Button>
                     </GridLayout>
                 </ng-template>
             </ListView>
         </StackLayout>
 
-        <GridLayout backgroundColor="transparent" id="container" visibility="{{tipo=='onde'&&!showlocais&&!showaddlocal?'visible':'collapse'}}" rows="*, auto">
-            <StackLayout  backgroundColor="transparent" row="0">
+        <GridLayout backgroundColor="transparent" id="container" visibility="{{tipo=='onde'&&!showlocais&&!showaddlocal?'visible':'collapse'}}"
+            rows="*, auto">
+            <StackLayout backgroundColor="transparent" row="0">
                 <ng-container *ngFor="let local of locais; let i = index">
                     <StackLayout visibility="{{i==tabSelectedIndex?'visible':'collapse'}}" class="fa" backgroundColor="transparent">
                         <GridLayout rows="*,auto,auto" backgroundColor="transparent">
@@ -55,8 +57,8 @@
                                     <Label class="whitetext" style="padding:10;font-size: 15" horizontalAlignment="center" textWrap="true" text="{{local.cidade + ' - '+local.uf}}"></Label>
                                     <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
                                         <ng-container *ngFor="let item of items">
-                                            <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(item)">
-                                                <Image width="70" class="icones" src="{{ 'https://www.athena3d.com.br/bomdeir/imgs/'+userService.db.__encodeURI(item.name)+ '.png'}}"></Image>
+                                            <StackLayout (tap)="onclick(item)" (swipe)="onSwipe($event)" horizontalAlignment="center">
+                                                <Image width="25%" class="icones" src="{{ 'res://'+item.name}}"></Image>
                                                 <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
                                             </StackLayout>
                                         </ng-container>
@@ -77,7 +79,7 @@
                     <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
                         <ng-container *ngFor="let item of items">
                             <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(item)">
-                                <Image width="70" class="icones" src="{{ 'https://www.athena3d.com.br/bomdeir/imgs/'+userService.db.__encodeURI(item.name)+ '.png'}}"></Image>
+                                <Image width="25%" class="icones" src="{{'res://'+item.name}}"></Image>
                                 <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
                             </StackLayout>
                         </ng-container>

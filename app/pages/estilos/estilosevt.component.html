@@ -35,7 +35,7 @@
                         <Label horizontalAlignment="center" visibility="{{item.menu.length==0? 'visible': 'collapse'}}" text="NENHUM EVENTO AGENDADO"></Label>
                         <ng-container *ngFor="let est of item.menu">
                             <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(est)">
-                                <Image width="70" class="icones" src="{{ 'https://www.athena3d.com.br/bomdeir/imgs/'+userService.db.__encodeURI(est.row.nome)+ '.png'}}"></Image>
+                                <Image width="25%" class="icones" src="{{'res://'+est.row.nome}}"></Image>
                                 <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="est.row.nome"></Label>
                             </StackLayout>
                         </ng-container>

@@ -58,8 +58,7 @@ export class EstilosEvtComponent implements OnInit {
     const id = this.route.snapshot.params["idcategoria"];
     this.tipo = this.route.snapshot.params["tipo"];
     this.item = this.itemService.getItem(id);
-    this.item.menu = [];
-    this.loadlist(this.item.menu, "estilosevt", "-1");
+    
     this._monthViewStyle = this.getMonthViewStyle();
     this._eventsViewMode = calendarModule.CalendarEventsViewMode.Inline;
     this.eventos.push({
@@ -709,6 +708,8 @@ export class EstilosEvtComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.item.menu = [];
+    this.loadlist(this.item.menu, "estilosevt", "-1");
     //this.item = this.itemService.getItem();
     //console.log("items");
     //console.dir(this.items);
