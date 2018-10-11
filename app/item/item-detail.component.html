@@ -11,7 +11,7 @@
             <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
                 <ng-container *ngFor="let item of item.menu">
                     <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" [nsRouterLink]="['/subitem', item.id]">
-                        <Image  class="icones" src="{{ 'res://'+item.name}}"></Image>
+                        <Image width="25%" class="icones" src="{{ 'res://'+item.name}}"></Image>
                         <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
                     </StackLayout>
                 </ng-container>

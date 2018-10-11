@@ -29,7 +29,7 @@ export class EstilosEvtComponent implements OnInit {
   currentlocation: LocationData = { latitude: 0, longitude: 0, altitude: 0 };
   pagenumber: number = 0;
   item: Item;
-  carregando: boolean = false;
+  carregando: boolean = true;
   showcalendar: boolean = false;
   showwebview: boolean = false;
   showmap: boolean = false;
