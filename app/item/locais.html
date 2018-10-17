@@ -3,12 +3,12 @@
 </ActionBar>
 <StackLayout class="page bkg">
 
-    <TextField id="nome" class="whitetext" hint="Nome" [(ngModel)]="dados.nome"></TextField>
-    <TextField class="whitetext" hint="Número" keyboardType="number" [(ngModel)]="dados.numero"></TextField>
-    <TextField class="whitetext" hint="Complemento" [(ngModel)]="dados.complemento"></TextField>
-    <TextField class="whitetext" hint="Fone" keyboardType="phone" [(ngModel)]="dados.fone"></TextField>
-    <TextField class="whitetext" hint="Email" keyboardType="email" [(ngModel)]="dados.email"></TextField>
-    <TextField class="whitetext" hint="site" keyboardType="url" [(ngModel)]="dados.site"></TextField>
+    <TextField id="nome" hint="Nome" [(ngModel)]="dados.nome"></TextField>
+    <TextField  hint="Número" keyboardType="number" [(ngModel)]="dados.numero"></TextField>
+    <TextField  hint="Complemento" [(ngModel)]="dados.complemento"></TextField>
+    <TextField  hint="Fone" keyboardType="phone" [(ngModel)]="dados.fone"></TextField>
+    <TextField  hint="Email" keyboardType="email" [(ngModel)]="dados.email"></TextField>
+    <TextField  hint="site" keyboardType="url" [(ngModel)]="dados.site"></TextField>
 
     <Label class="whitetext" [text]="dados.cep"></Label>
     <Label class="whitetext" [text]="dados.logradouro"></Label>

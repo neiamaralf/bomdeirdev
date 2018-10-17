@@ -15,15 +15,7 @@ Button {
     border-radius: 10;
 }
 
-TextField {
-    margin-left: 16;
-    margin-right: 16;
-    margin-bottom: 0;
-    margin-top: 20;
-    height: 30;
-    border-radius: 10;
-    padding:5;
-}
+
 
 .submit-button {
     background-color: #CB1D00;
