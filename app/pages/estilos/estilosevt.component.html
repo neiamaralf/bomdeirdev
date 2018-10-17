@@ -118,8 +118,8 @@
                     <Label class="whitetext" text="Clima " style="font-weight: bold"></Label>
                     <GridLayout columns="*,auto">
                         <StackLayout col="0">
-                            <Label class="whitetext iconeclima" text="{{curevento!=undefined?dadosclima[curevento.row.clima].charcod:''}}" textWrap="true"></Label>
-                            <Label class="whitetext" horizontalAlignment="center" text="{{curevento!=undefined?dadosclima[curevento.row.clima].texto:''}}"
+                            <Label class="whitetext iconeclima" text="{{curevento!=undefined?dadosclima[curevento.row.clima]!=undefined?dadosclima[curevento.row.clima].charcod:'':''}}" textWrap="true"></Label>
+                            <Label class="whitetext" horizontalAlignment="center" text="{{curevento!=undefined?dadosclima[curevento.row.clima]!=undefined?dadosclima[curevento.row.clima].texto:'':''}}"
                                 textWrap="true"></Label>
                         </StackLayout>
                         <StackLayout col="1">

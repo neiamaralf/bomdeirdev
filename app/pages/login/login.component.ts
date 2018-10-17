@@ -12,7 +12,7 @@ import { View } from "ui/core/view";
 export class LoginComponent implements OnInit {
   isLoggingIn = true;
   admin = false;
-  email = "f"
+  email = ""
   senha = ""
 
   @ViewChild("container") container: ElementRef;
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     this.isLoggingIn = !this.isLoggingIn;
     let container = <View>this.container.nativeElement;
     container.animate({
-      backgroundColor: this.isLoggingIn ? new Color("darkgray") : new Color("#601217"),
+      backgroundColor: this.isLoggingIn ? new Color("black") : new Color("#601217"),
       duration: 200
     });
   }

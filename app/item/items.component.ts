@@ -23,7 +23,7 @@ class local {
     templateUrl: "./items.component.html",
 })
 export class ItemsComponent implements OnInit {
-    
+
     items: Item[];
     tipo: any;
     locais: Array<local> = [];
@@ -46,52 +46,67 @@ export class ItemsComponent implements OnInit {
         private route: ActivatedRoute,
         private page: Page,
         private locationService: LocationService) {
-        this.carregando = true;
         console.log("user");
         console.dir(userService.user);
         itemService.inititems();
-        
-            
+
+
         //appsettings.remove('locais');
 
-        var __this = this;
+       
         this.tipo = this.route.snapshot.params["tipo"];
-        this.locationService.getEndFromlatlong(this.loc, function (res) {
-            //console.dir(res);
-            (<any>__this.loc).cidade = (<any>res).results[0].address_components[0].short_name;
-            (<any>__this.loc).uf = (<any>res).results[0].address_components[1].short_name;
-            
-            // __this.routerExtensions.navigate(["/items/" + (<any>__this.loc).cidade + "/" + (<any>__this.loc).uf + "/" + page], { clearHistory: false });
-            //console.dir((<any>__this.loc));
-            if (!appsettings.hasKey("locais") && (<any>__this.loc).cidade != "0") {
-                __this.locais.push(
-                    {
-                        cidade: (<any>__this.loc).cidade,
-                        uf: (<any>__this.loc).uf
-                    }
-                )
-                appsettings.setString("locais", JSON.stringify(__this.locais));
-            }
-            else if (appsettings.hasKey("locais")) {
-                __this.locais = JSON.parse(appsettings.getString("locais"));
-
-            }
-            __this.myItems = [];
-            __this.locais.forEach(function (row, index) {
-                const item = new SegmentedBarItem();
-                item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
-                item.title = index == 0 ? '\uf041' : '\uf111';
-                ItemsComponent.__this.myItems.push(item);
-
-            });
-            
-            
-            __this.carregando = false;
-        });
-
-
-        console.dir(this.locais);
+        
     }
+
+    ngOnInit(): void {
+        ItemsComponent.__this = this;
+        this.items = this.itemService.getItems();
+        if (this.userService.user.super == 2) {
+            this.items = [];
+            var __this = this;
+            __this.carregando = true;
+            this.locationService.getEndFromlatlong(this.loc, function (res) {
+                //console.dir(res);
+                (<any>__this.loc).cidade = (<any>res).results[0].address_components[0].short_name;
+                (<any>__this.loc).uf = (<any>res).results[0].address_components[1].short_name;
+    
+                // __this.routerExtensions.navigate(["/items/" + (<any>__this.loc).cidade + "/" + (<any>__this.loc).uf + "/" + page], { clearHistory: false });
+                //console.dir((<any>__this.loc));
+                if (!appsettings.hasKey("locais") && (<any>__this.loc).cidade != "0") {
+                    __this.locais.push(
+                        {
+                            cidade: (<any>__this.loc).cidade,
+                            uf: (<any>__this.loc).uf
+                        }
+                    )
+                    appsettings.setString("locais", JSON.stringify(__this.locais));
+                }
+                else if (appsettings.hasKey("locais")) {
+                    __this.locais = JSON.parse(appsettings.getString("locais"));
+    
+                }
+                __this.myItems = [];
+                __this.locais.forEach(function (row, index) {
+                    const item = new SegmentedBarItem();
+                    item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
+                    item.title = index == 0 ? '\uf041' : '\uf111';
+                    ItemsComponent.__this.myItems.push(item);
+    
+                });
+    
+    
+                __this.carregando = false;
+            });
+            console.dir(this.locais);
+            this.carregaitems()
+
+        }
+        //console.log("items");
+        //console.dir(this.items);
+
+
+    }
+
 
     listacidades() {
         this.showlocais = true;
@@ -190,7 +205,7 @@ export class ItemsComponent implements OnInit {
                 break;
         }
         segmbar.selectedIndex = ItemsComponent.__this.tabSelectedIndex;
-        
+
         /* let container = <View>ItemsComponent.__this.container.nativeElement;
      container.animate({
        backgroundColor:  new Color("#601217"),
@@ -208,7 +223,7 @@ export class ItemsComponent implements OnInit {
     }
 
     carregaitems() {
-        this.carregando = true;
+        //this.carregando = true;
         this.items = [];
         this.userService.db
             .get("key=categoriascomeventos" +
@@ -222,14 +237,27 @@ export class ItemsComponent implements OnInit {
 
                     console.dir(this.items);
                 }
-                this.carregando = false;
+                //this.carregando = false;
             });
     }
 
     onclick(item) {
+        this.carregando = true;
         if (this.userService.user.super == 2) {
             if (this.tipo == "onde")
-                this.routerExtensions.navigate(["/estilos/" + item.id + "/" + this.locais[this.tabSelectedIndex].cidade + "/" + this.locais[this.tabSelectedIndex].uf + "/" + this.tipo], { clearHistory: false });
+                this.routerExtensions.navigate(["/estilos/" + item.id + "/" + this.locais[this.tabSelectedIndex].cidade + "/" + this.locais[this.tabSelectedIndex].uf + "/" + this.tipo],
+                    {
+                        clearHistory: false,
+                        transition: {
+                            name: "slide",
+                            duration: 500,
+                            curve: "ease"
+
+                        }
+                    }).
+                    then(() => {
+                        this.carregando = false;
+                    });
             else
                 this.routerExtensions.navigate(["/estilos/" + item.id + "/0/0/" + this.tipo], { clearHistory: false });
         }
@@ -247,22 +275,9 @@ export class ItemsComponent implements OnInit {
         (<any>this.loc).cidade = this.locais[this.tabSelectedIndex].cidade;
         (<any>this.loc).uf = this.locais[this.tabSelectedIndex].uf;
         if (this.userService.user.super == 2)
-        this.carregaitems()
-    }
-
-    ngOnInit(): void {
-        ItemsComponent.__this = this;
-        this.items = this.itemService.getItems();
-        if (this.userService.user.super == 2){
-            this.items=[]
             this.carregaitems()
-            
-        }
-        //console.log("items");
-        //console.dir(this.items);
-
-
     }
 
+    
 
 }

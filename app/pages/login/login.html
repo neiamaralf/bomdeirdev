@@ -1,5 +1,5 @@
 <GridLayout rows="*" [visibility]="userService.user.goodtoken?'hidden':'visible'" class="bkg">
-    <StackLayout row="0" #container class="cmain page" backgroundColor="darkgray">
+    <StackLayout row="0" #container class="cmain page" backgroundColor="gray" borderRadius="10">
         <ios>
             <Image visibility="{{!admin?'visible':'collapse'}}" src="res://AppIcon" stretch="aspectFill" height="80" width="80" horizontalAlignment="center"></Image>
         </ios>
@@ -13,6 +13,6 @@
             <Switch (tap)=showadmin() style="color:red"></Switch>
         </FlexboxLayout>
         <Button [text]="isLoggingIn ? 'Entrar' : 'Cadastrar'" class="submit-button" (tap)="submit()"></Button>
-        <Button visibility="{{admin?'visible':'collapse'}}" [text]="isLoggingIn ? 'Cadastrar' : 'Voltar ao Login'" (tap)="toggleDisplay()"></Button>
+        <Button backgroundColor="blue" color="white" visibility="{{admin?'visible':'collapse'}}" [text]="isLoggingIn ? 'Cadastrar' : 'Voltar ao Login'" (tap)="toggleDisplay()"></Button>
     </StackLayout>
 </GridLayout>

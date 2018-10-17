@@ -709,6 +709,7 @@ export class EstilosEvtComponent implements OnInit {
 
   ngOnInit(): void {
     this.item.menu = [];
+    console.log("loadlist:");
     this.loadlist(this.item.menu, "estilosevt", "-1");
     //this.item = this.itemService.getItem();
     //console.log("items");
