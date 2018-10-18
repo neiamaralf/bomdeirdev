@@ -24,6 +24,21 @@ components that have the btn class name.
     font-size: 18;
 }
 
+
+.cadastrar-bt {
+    margin-left: 16;
+    margin-right: 16;
+    margin-bottom: 10;
+    margin-top: 10;
+    border-radius: 10;
+}
+
+.submit-button {
+    background-color: #CB1D00;
+    color: white;
+    margin-top: 10;
+}
+
 .whitetext {
     color: white;
     margin:10;

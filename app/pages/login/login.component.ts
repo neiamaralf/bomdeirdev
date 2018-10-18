@@ -6,8 +6,8 @@ import { View } from "ui/core/view";
 
 @Component({
   selector: "my-app",
-  templateUrl: "./pages/login/login.html",
-  styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
+  moduleId: module.id,
+  templateUrl: "./login.html"
 })
 export class LoginComponent implements OnInit {
   isLoggingIn = true;
