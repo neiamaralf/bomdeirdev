@@ -33,10 +33,24 @@ components that have the btn class name.
     border-radius: 10;
 }
 
+.cmain {
+    margin: 30;
+}
+
+.logo {
+    margin-top: 20;
+    margin-bottom: 10;
+}
+
 .submit-button {
     background-color: #CB1D00;
     color: white;
     margin-top: 10;
+    margin-left: 16;
+    margin-right: 16;
+    margin-bottom: 10;
+    margin-top: 10;
+    border-radius: 10;
 }
 
 .whitetext {

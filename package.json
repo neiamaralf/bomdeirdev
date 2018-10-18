@@ -45,7 +45,6 @@
     "babylon": "6.4.5",
     "lazy": "1.0.11",
     "nativescript-dev-typescript": "~0.7.0",
-    "nativescript-dev-webpack": "~0.14.0",
     "typescript": "~2.7.2"
   }
 }
