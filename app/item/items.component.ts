@@ -242,8 +242,9 @@ export class ItemsComponent implements OnInit {
     }
 
     onclick(item) {
-        this.carregando = true;
+        
         if (this.userService.user.super == 2) {
+            this.carregando = true;
             if (this.tipo == "onde")
                 this.routerExtensions.navigate(["/estilos/" + item.id + "/" + this.locais[this.tabSelectedIndex].cidade + "/" + this.locais[this.tabSelectedIndex].uf + "/" + this.tipo],
                     {
