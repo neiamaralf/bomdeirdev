@@ -8,7 +8,7 @@
 android {  
   defaultConfig {  
     generatedDensities = []
-    applicationId = "org.nativescript.BomDeIr"  
+    applicationId = "br.com.athena3d.BomDeIr"  
   }  
   aaptOptions {  
     additionalParameters "--no-version-vectors"  

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bomdeir.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>58D5321E69BD6CCC1EFEFFF30716BFE0719262A6</string>
+				<key>dateExpires</key>
+				<string>19/10/19</string>
+				<key>type</key>
+				<string>iOS Distribution</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>58D5321E69BD6CCC1EFEFFF30716BFE0719262A6</string>
+						<key>dateExpires</key>
+						<string>19/10/19</string>
+						<key>type</key>
+						<string>iOS Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>NativeScript.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>5785QBR36V</string>
+						<key>name</key>
+						<string>Nei Munhoz</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>58D5321E69BD6CCC1EFEFFF30716BFE0719262A6</string>
+						<key>dateExpires</key>
+						<string>19/10/19</string>
+						<key>type</key>
+						<string>iOS Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>QBImagePickerController.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>5785QBR36V</string>
+						<key>name</key>
+						<string>Nei Munhoz</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>58D5321E69BD6CCC1EFEFFF30716BFE0719262A6</string>
+						<key>dateExpires</key>
+						<string>19/10/19</string>
+						<key>type</key>
+						<string>iOS Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>TNSCalendar.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>5785QBR36V</string>
+						<key>name</key>
+						<string>Nei Munhoz</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>58D5321E69BD6CCC1EFEFFF30716BFE0719262A6</string>
+						<key>dateExpires</key>
+						<string>19/10/19</string>
+						<key>type</key>
+						<string>iOS Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>TNSCore.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>5785QBR36V</string>
+						<key>name</key>
+						<string>Nei Munhoz</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>58D5321E69BD6CCC1EFEFFF30716BFE0719262A6</string>
+						<key>dateExpires</key>
+						<string>19/10/19</string>
+						<key>type</key>
+						<string>iOS Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>TNSWidgets.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>5785QBR36V</string>
+						<key>name</key>
+						<string>Nei Munhoz</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>58D5321E69BD6CCC1EFEFFF30716BFE0719262A6</string>
+						<key>dateExpires</key>
+						<string>19/10/19</string>
+						<key>type</key>
+						<string>iOS Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>TOCropViewController.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>5785QBR36V</string>
+						<key>name</key>
+						<string>Nei Munhoz</string>
+					</dict>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>5785QBR36V.org.nativescript.BomDeIr</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>5785QBR36V</string>
+				<key>get-task-allow</key>
+				<false/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>5785QBR36V.org.nativescript.BomDeIr</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>bomdeir.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>e4adfaa3-2bd1-482e-9663-f39725a09b23</string>
+				<key>name</key>
+				<string>iOS Team Ad Hoc Provisioning Profile: org.nativescript.BomDeIr</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>5785QBR36V</string>
+				<key>name</key>
+				<string>Nei Munhoz</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
