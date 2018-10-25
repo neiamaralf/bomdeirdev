@@ -1,0 +1,7 @@
+{
+    "app.name": "bomdeir",
+    "ios.info.plist": {
+        "NSLocationWhenInUseUsageDescription": "Isto nos permite saber em que cidade está no momento quando abrir o app pela primeira vez, mostrando inicialmente os eventos nesta cidade, além disso, sua localização atual vai possibilitar a busca de eventos próximos a você e o cálculo de rotas.Caso não deseje permitir o acesso a sua localização você pode adicionar cidades manualmente.",
+        "NSLocationAlwaysUsageDescription":"Isto nos permite saber em que cidade está no momento quando abrir o app pela primeira vez, mostrando inicialmente os eventos nesta cidade, além disso, sua localização atual vai possibilitar a busca de eventos próximos a você e o cálculo de rotas.Caso não deseje permitir o acesso a sua localização você pode adicionar cidades manualmente."
+    }
+}

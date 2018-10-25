@@ -53,9 +53,9 @@ export class ItemsComponent implements OnInit {
 
         //appsettings.remove('locais');
 
-       
+
         this.tipo = this.route.snapshot.params["tipo"];
-        
+
     }
 
     ngOnInit(): void {
@@ -65,37 +65,39 @@ export class ItemsComponent implements OnInit {
             this.items = [];
             var __this = this;
             __this.carregando = true;
-            this.locationService.getEndFromlatlong(this.loc, function (res) {
-                //console.dir(res);
-                (<any>__this.loc).cidade = (<any>res).results[0].address_components[0].short_name;
-                (<any>__this.loc).uf = (<any>res).results[0].address_components[1].short_name;
-    
-                // __this.routerExtensions.navigate(["/items/" + (<any>__this.loc).cidade + "/" + (<any>__this.loc).uf + "/" + page], { clearHistory: false });
-                //console.dir((<any>__this.loc));
-                if (!appsettings.hasKey("locais") && (<any>__this.loc).cidade != "0") {
-                    __this.locais.push(
-                        {
-                            cidade: (<any>__this.loc).cidade,
-                            uf: (<any>__this.loc).uf
-                        }
-                    )
-                    appsettings.setString("locais", JSON.stringify(__this.locais));
-                }
-                else if (appsettings.hasKey("locais")) {
-                    __this.locais = JSON.parse(appsettings.getString("locais"));
-    
-                }
-                __this.myItems = [];
-                __this.locais.forEach(function (row, index) {
-                    const item = new SegmentedBarItem();
-                    item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
-                    item.title = index == 0 ? '\uf041' : '\uf111';
-                    ItemsComponent.__this.myItems.push(item);
-    
+            this.locationService.enableLocation(function () {
+                __this.locationService.getEndFromlatlong(__this.loc, function (res) {
+                    //console.dir(res);
+                    (<any>__this.loc).cidade = (<any>res).results[0].address_components[0].short_name;
+                    (<any>__this.loc).uf = (<any>res).results[0].address_components[1].short_name;
+
+                    // __this.routerExtensions.navigate(["/items/" + (<any>__this.loc).cidade + "/" + (<any>__this.loc).uf + "/" + page], { clearHistory: false });
+                    //console.dir((<any>__this.loc));
+                    if (!appsettings.hasKey("locais") && (<any>__this.loc).cidade != "0") {
+                        __this.locais.push(
+                            {
+                                cidade: (<any>__this.loc).cidade,
+                                uf: (<any>__this.loc).uf
+                            }
+                        )
+                        appsettings.setString("locais", JSON.stringify(__this.locais));
+                    }
+                    else if (appsettings.hasKey("locais")) {
+                        __this.locais = JSON.parse(appsettings.getString("locais"));
+
+                    }
+                    __this.myItems = [];
+                    __this.locais.forEach(function (row, index) {
+                        const item = new SegmentedBarItem();
+                        item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
+                        item.title = index == 0 ? '\uf041' : '\uf111';
+                        ItemsComponent.__this.myItems.push(item);
+
+                    });
+
+
+                    __this.carregando = false;
                 });
-    
-    
-                __this.carregando = false;
             });
             console.dir(this.locais);
             this.carregaitems()
@@ -242,7 +244,7 @@ export class ItemsComponent implements OnInit {
     }
 
     onclick(item) {
-        
+
         if (this.userService.user.super == 2) {
             this.carregando = true;
             if (this.tipo == "onde")
@@ -279,6 +281,6 @@ export class ItemsComponent implements OnInit {
             this.carregaitems()
     }
 
-    
+
 
 }
