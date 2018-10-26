@@ -17,8 +17,8 @@ export class LocationService {
 
     }
 
-    enableLocation(callback) {
-        var __this=this;
+    enableLocation(callback, errorcalback) {
+        var __this = this;
         geolocation.isEnabled().then(function (isEnabled) {
             if (!isEnabled) {
                 geolocation.enableLocationRequest().then(function () {
@@ -29,12 +29,14 @@ export class LocationService {
                         })
                 }, function (e) {
                     console.log("Error: " + (e.message || e));
+                    errorcalback()
                 });
             }
             else callback();
-        }, function (e) {
-            console.log("Error: " + (e.message || e));
-        });
+        }//, function (e) {
+          //  console.log("Error: " + (e.message || e));
+        //}
+        );
     }
 
     getEndFromlatlong(retobj, callback) {

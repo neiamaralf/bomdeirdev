@@ -33,7 +33,7 @@ export class ItemsComponent implements OnInit {
     tabSelectedIndex: number = 0;
     searchPhrase = "";
     carregando: boolean = false;
-    public myItems: Array<SegmentedBarItem>;
+    public myItems: Array<SegmentedBarItem> = [];
     loc = fromObject({
         cidade: "",
         uf: ""
@@ -91,14 +91,37 @@ export class ItemsComponent implements OnInit {
                         const item = new SegmentedBarItem();
                         item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
                         item.title = index == 0 ? '\uf041' : '\uf111';
-                        ItemsComponent.__this.myItems.push(item);
+                        __this.myItems.push(item);
 
                     });
-
-
                     __this.carregando = false;
                 });
-            });
+            },
+                function () {
+                    __this.carregando = false;
+                    if (!appsettings.hasKey("locais")) {
+                        __this.showlocais = true;
+                        __this.showaddlocal = true;
+                    }
+                    else {
+                        __this.locais = JSON.parse(appsettings.getString("locais"));
+                        (<any>__this.loc).cidade = __this.locais[0].cidade;
+                        (<any>__this.loc).uf = __this.locais[0].uf;
+                        __this.myItems = [];
+                        __this.locais.forEach(function (row, index) {
+                            const item = new SegmentedBarItem();
+                            item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
+                            item.title = index == 0 ? '\uf041' : '\uf111';
+                            __this.myItems.push(item);
+                        });
+                        var segmbar: SegmentedBar = <SegmentedBar>__this.page.getViewById("segmbar");
+                        __this.tabSelectedIndex = 0;
+                        segmbar.selectedIndex = __this.tabSelectedIndex;
+                    }
+
+
+
+                });
             console.dir(this.locais);
             this.carregaitems()
 
@@ -160,8 +183,6 @@ export class ItemsComponent implements OnInit {
         var segmbar: SegmentedBar = <SegmentedBar>ItemsComponent.__this.page.getViewById("segmbar");
         segmbar.selectedIndex = this.myItems.length - 1;
         appsettings.setString("locais", JSON.stringify(this.locais));
-
-
     }
 
 

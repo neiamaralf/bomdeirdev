@@ -22,6 +22,7 @@
         <ActivityIndicator height="100%" [busy]="carregando"></ActivityIndicator>
     </StackLayout>
     <StackLayout backgroundColor="transparent" visibility="{{showaddlocal?'visible':'collapse'}}">
+        <Label class="whitetext" style="padding:5;font-size: 10" horizontalAlignment="center" textWrap="true" text="ADICIONAR CIDADE"></Label>
         <SearchBar id="sblocal" hint="Digite a cidade" [text]="searchPhrase" (textChange)="onTextChanged($event)" (submit)="onSubmit($event)"
             color="black" textFieldBackgroundColor="white" textFieldHintColor="gray"></SearchBar>
         <ListView backgroundColor="transparent" id="resbusca" [items]="cidades" class="list-group">
@@ -34,6 +35,7 @@
     </StackLayout>
     <StackLayout [visibility]="!carregando ? 'visible' : 'collapse'" backgroundColor="transparent">
         <StackLayout padding="5" backgroundColor="transparent" visibility="{{showlocais&&!showaddlocal?'visible':'collapse'}}" (swipe)="onSwipe($event)">
+            <Label class="whitetext" style="padding:5;font-size: 10" horizontalAlignment="center" textWrap="true" text="CIDADES"></Label>
             <ListView separatorColor="transparent" height="100%" backgroundColor="transparent" id="locais" [items]="locais" padding="10">
                 <ng-template let-item="item" let-i="index">
                     <GridLayout class="itemlista" columns="*,auto" (swipe)="onSwipe($event)" (tap)="localclic(item,i)">
