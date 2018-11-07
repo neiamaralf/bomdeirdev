@@ -88,11 +88,12 @@ components that have the btn class name.
 
 .fa {
     font-family: "FontAwesome", 'fontawesome-webfont';
+    font-size: 22pt;
 }
 
 .fa1 {
     font-family: "FontAwesome", 'fontawesome-webfont';
-    font-size: 18pt;
+    font-size: 22pt;
     padding: 0;
     width: 40pt
 }
@@ -113,7 +114,8 @@ components that have the btn class name.
 }
 
 .bkg {
-    background-image: url('res://background');
+    /*background-image: url('res://background');*/
+    background-color: #808080;
     background-size: cover
 }
 

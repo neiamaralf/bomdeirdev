@@ -29,7 +29,7 @@ export class ItemService {
                     )
                 },
                 {
-                    id: 3, name: "ARTE", menu: new Array<Item>(
+                    id: 3, name: "EXPO", menu: new Array<Item>(
                         { id: 10, iddono: 3, key: "estilos", name: "ESTILOS", menu: new Array<Item>() }
                     )
                 },
@@ -39,7 +39,7 @@ export class ItemService {
                     )
                 },
                 {
-                    id: 5, name: "GASTRONOMIA", menu: new Array<Item>(
+                    id: 5, name: "GASTRO", menu: new Array<Item>(
                         { id: 12, iddono: 5, key: "estilos", name: "ESTILOS", menu: new Array<Item>() }
                     )
                 },
@@ -71,7 +71,7 @@ export class ItemService {
                     )
                 },
                 {
-                    id: 3, name: "ARTE", menu: new Array<Item>(
+                    id: 3, name: "EXPO", menu: new Array<Item>(
                         { id: 14, iddono: 3, key: "artistas", name: "ARTISTAS", menu: new Array<Item>() },
                         { id: 15, iddono: 3, key: "locais", name: "LOCAIS", menu: new Array<Item>() },
                         { id: 16, iddono: 3, key: "eventos", name: "EVENTOS", menu: new Array<Item>() }
@@ -84,7 +84,7 @@ export class ItemService {
                     )
                 },
                 {
-                    id: 5, name: "GASTRONOMIA", menu: new Array<Item>(
+                    id: 5, name: "GASTRO", menu: new Array<Item>(
                         { id: 19, iddono: 5, key: "locais", name: "LOCAIS", menu: new Array<Item>() },
                         { id: 20, iddono: 5, key: "eventos", name: "EVENTOS", menu: new Array<Item>() }
                     )
@@ -113,7 +113,7 @@ export class ItemService {
                     )
                 },
                 {
-                    id: 3, name: "ARTE", menu: new Array<Item>(
+                    id: 3, name: "EXPO", menu: new Array<Item>(
 
                     )
                 },

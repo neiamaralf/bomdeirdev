@@ -281,18 +281,7 @@ export class EstilosEvtComponent implements OnInit {
         "&uf=" + this.route.snapshot.params["uf"] +
         "&idestilo=" + idestilo))
       .subscribe(res => {
-        if (res != null) {
-          if (key == "estilosevt") {
-            var row: any = {
-              id: "-1",
-              nome: "TODOS",
-              idcategoria: "1"
-            };
-            (<any>this.item.menu).push({
-              row,
-              toString: () => { return row.nome; },
-            });
-          }
+        if (res != null) {          
           var i = 0;
           this.cureventindex = -1;
           this.goToCurrentDay();
@@ -332,6 +321,17 @@ export class EstilosEvtComponent implements OnInit {
             }
 
           });
+          if (key == "estilosevt") {
+            var row: any = {
+              id: "-1",
+              nome: "TODOS",
+              idcategoria: "1"
+            };
+            (<any>this.item.menu).push({
+              row,
+              toString: () => { return row.nome; },
+            });
+          }
           if (key == "eventosregiao") {
             this.cureventindex = 0;
             this._calendar.nativeElement.goToDate(this._events[this.cureventindex].startDate)
