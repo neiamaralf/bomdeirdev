@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="_ios_info_plist_NSLocationAlwaysUsageDescription_Z1cD1M8">"Isto nos permite saber em que cidade está no momento quando abrir o app pela primeira vez, mostrando inicialmente os eventos nesta cidade, além disso, sua localização atual vai possibilitar a busca de eventos próximos a você e o cálculo de rotas.Caso não deseje permitir o acesso a sua localização você pode adicionar cidades manualmente."</string>
+  <string name="_ios_info_plist_NSLocationWhenInUseUsageDescription_ZpKiIF">"Isto nos permite saber em que cidade está no momento quando abrir o app pela primeira vez, mostrando inicialmente os eventos nesta cidade, além disso, sua localização atual vai possibilitar a busca de eventos próximos a você e o cálculo de rotas.Caso não deseje permitir o acesso a sua localização você pode adicionar cidades manualmente."</string>
+  <string name="_app_name_1k3Sbz">"bomdeir"</string>
+  <string name="app_name">"bomdeir"</string>
+  <string name="title_activity_kimera">"bomdeir"</string>
+</resources>
