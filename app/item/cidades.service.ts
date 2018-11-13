@@ -1,0 +1,22 @@
+import { Injectable } from "@angular/core";
+import { UserService } from "../shared/user/user.service";
+class local {
+    cidade: string;
+    uf: string;
+}
+
+@Injectable()
+export class CidadesService {
+    public locais: Array<local> = [];
+
+    constructor(private userService: UserService) {
+        console.log("itemservice");
+        console.dir(userService.user);
+        console.log(userService.user.super);
+        this.inititems();
+    }
+
+    inititems(){
+
+    }
+}

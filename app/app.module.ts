@@ -6,6 +6,8 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { EstilosEvtComponent } from "./pages/estilos/estilosevt.component";
 import { ItemService } from "./item/item.service";
+import { CidadesService } from "./item/cidades.service";
+import { CidadesComponent } from "./item/cidades";
 import { ItemsComponent } from "./item/items.component";
 import { DbService } from "./shared/db/db.service";
 import { User } from "./shared/user/user";
@@ -49,7 +51,8 @@ if (platform.isIOS) {
         CepComponent,
         EventosComponent,
         BuscaCepComponent,
-        LocaisComponent
+        LocaisComponent,
+        CidadesComponent
     ],
     providers: [
         User,
@@ -57,6 +60,7 @@ if (platform.isIOS) {
         UserService,
         LocationService,
         ItemService,
+        CidadesService,
         { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader }
     ],
     schemas: [

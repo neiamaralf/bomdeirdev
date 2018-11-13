@@ -4,6 +4,7 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { LoginComponent } from "./pages/login/login.component";
 import { EstilosEvtComponent } from "./pages/estilos/estilosevt.component";
 import { ItemsComponent } from "./item/items.component";
+import { CidadesComponent } from "./item/cidades";
 import { ItemDetailComponent } from "./item/item-detail.component";
 import { SubItemDetailComponent } from "./item/subitem-detail.component";
 import { CepComponent } from "./item/cep";
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: "cep/:itemid/:idcategoria/:idadmin", component: CepComponent },
     { path: "eventos/:itemid/:acao/:idcategoria/:idadmin", component: EventosComponent },
     { path: "buscacep/:itemid/:idcategoria/:idadmin", component: BuscaCepComponent },
+    { path: "cidades", component: CidadesComponent },
     { path: "locais/:itemid/:acao/:cep/:logradouro/:bairro/:localidade/:uf/:idcategoria/:idadmin", component: LocaisComponent },
 ];
 
