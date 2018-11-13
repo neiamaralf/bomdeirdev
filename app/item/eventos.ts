@@ -19,7 +19,7 @@ import * as imageSource from "image-source"
 import * as imagepicker from "nativescript-imagepicker";
 import { ImageCropper } from 'nativescript-imagecropper';
 import { takePicture, requestPermissions } from 'nativescript-camera';
-
+import { GestureEventData } from "tns-core-modules/ui/gestures";
 @Component({
   moduleId: module.id,
   templateUrl: "./eventos.html",
@@ -52,6 +52,19 @@ export class EventosComponent implements OnInit {
   time: string = "20:00:00";
   timeend: string = "20:00:00";
   date: String = "";
+
+  onSwipe(args: GestureEventData,sovolta:boolean=false) {
+    switch((<any>args).direction){
+      case 1:
+      this.goback();
+      break;
+      case 2:
+      if(!sovolta)
+       this.avancar();
+      break;
+
+    }
+  }
 
   constructor(
     private itemService: ItemService,

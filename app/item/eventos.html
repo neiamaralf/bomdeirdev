@@ -8,43 +8,46 @@
     </ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
-    <ActivityIndicator height="100%" [busy]="carregando" [visibility]="carregando ? 'visible' : 'collapse'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    <ActivityIndicator height="100%" [busy]="carregando" [visibility]="carregando ? 'visible' : 'collapse'" horizontalAlignment="center"
+        verticalAlignment="center"></ActivityIndicator>
 
     <StackLayout [visibility]="!carregando&&(artistas.length==0||locais.length==0) ? 'visible' : 'collapse'">
         <Label text="ADICIONE AO MENOS UM ARTISTA E UM LOCAL" textAlignment="center" class="whitetext"></Label>
-    </StackLayout>    
+    </StackLayout>
     <StackLayout [visibility]="!carregando&&artistas.length>0&&locais.length>0 ? 'visible' : 'hidden'" id="stck">
         <SearchBar [hint]="Searchhint" backgroundColor="transparent" visibility="{{pagenumber<3?'visible':'collapse'}}" [text]="searchPhrase"
             (textChange)="onTextChanged($event)" (submit)="onSubmit($event)" color="black" textFieldBackgroundColor="white" textFieldHintColor="gray"></SearchBar>
-        <ListPicker id="artistas" visibility="{{pagenumber==0?'visible':'collapse'}}" backgroundColor="transparent" color="white"
-            (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
+        <ListPicker (swipe)="onSwipe($event)" id="artistas" visibility="{{pagenumber==0?'visible':'collapse'}}" backgroundColor="transparent"
+            color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
         </ListPicker>
-        <ListPicker id="estilos" visibility="{{pagenumber==1?'visible':'collapse'}}" backgroundColor="transparent" color="white"
-            (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
+        <ListPicker (swipe)="onSwipe($event)" id="estilos" visibility="{{pagenumber==1?'visible':'collapse'}}" backgroundColor="transparent"
+            color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
         </ListPicker>
-        <ListPicker id="locais" visibility="{{pagenumber==2?'visible':'collapse'}}" backgroundColor="transparent" color="white" (selectedIndexChange)="selectedIndexChanged($event)"
-            class="p-12">
+        <ListPicker (swipe)="onSwipe($event)" id="locais" visibility="{{pagenumber==2?'visible':'collapse'}}" backgroundColor="transparent"
+            color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
         </ListPicker>
-        <DatePicker backgroundColor="transparent" style="color: white" visibility="{{pagenumber==3?'visible':'collapse'}}" (loaded)="onPickerLoaded($event)"
-            (dateChange)="onDateChanged($event)" verticalAlignment="center"></DatePicker>
-        <TimePicker backgroundColor="transparent" color="white" visibility="{{pagenumber==4?'visible':'collapse'}}" (loaded)="onDTPickerLoaded($event)"
-            (timeChange)="onTimeChanged($event)" verticalAlignment="center"></TimePicker>
-        <TimePicker backgroundColor="transparent" color="white" visibility="{{pagenumber==5?'visible':'collapse'}}" (loaded)="onDTPickerLoaded($event)"
-            (timeChange)="onTimeChanged($event)" verticalAlignment="center"></TimePicker>
-        <GridLayout visibility="{{pagenumber==6?'visible':'collapse'}}" height="50%" width="90%" margin="10" borderColor="black"
-            borderWidth="1">
+        <DatePicker (swipe)="onSwipe($event)" backgroundColor="transparent" style="color: white" visibility="{{pagenumber==3?'visible':'collapse'}}"
+            (loaded)="onPickerLoaded($event)" (dateChange)="onDateChanged($event)" verticalAlignment="center"></DatePicker>
+        <TimePicker (swipe)="onSwipe($event)" backgroundColor="transparent" color="white" visibility="{{pagenumber==4?'visible':'collapse'}}"
+            (loaded)="onDTPickerLoaded($event)" (timeChange)="onTimeChanged($event)" verticalAlignment="center"></TimePicker>
+        <TimePicker (swipe)="onSwipe($event)" backgroundColor="transparent" color="white" visibility="{{pagenumber==5?'visible':'collapse'}}"
+            (loaded)="onDTPickerLoaded($event)" (timeChange)="onTimeChanged($event)" verticalAlignment="center"></TimePicker>
+        <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber==6?'visible':'collapse'}}" height="50%" width="90%" margin="10"
+            borderColor="black" borderWidth="1">
             <Label visibility="{{imagemEvento==null?'visible':'collapse'}}" class="fa2" horizontalAlignment="center" verticalAlignment="center"
                 text="&#xf03e;"></Label>
             <Image visibility="{{imagemEvento!=null?'visible':'collapse'}}" [src]="imageUrl" stretch="aspectFit" margin="10"></Image>
         </GridLayout>
-        <Button (tap)="uploadfotodlg($event)" height="50%" color="blue" visibility="{{pagenumber==6?'visible':'collapse'}}" class="fa2"
-            backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf093;"></Button>
-        <TextField id="titulo" visibility="{{pagenumber==7?'visible':'collapse'}}" style="background-color: white" hint="Título"
-            [(ngModel)]="evento.titulo"></TextField>
-        <TextField id="descricao" visibility="{{pagenumber==7?'visible':'collapse'}}" style="background-color: white" hint="Descrição"
-            [(ngModel)]="evento.descricao"></TextField>
-        <Label class="whitetext" visibility="{{pagenumber==7?'visible':'collapse'}}" text="{{'Data   : '+date}}"></Label>
-        <Label class="whitetext" visibility="{{pagenumber==7?'visible':'collapse'}}" text="{{'Horário Início  : '+time}}"></Label>
-        <Label class="whitetext" visibility="{{pagenumber==7?'visible':'collapse'}}" text="{{'Horário Fim  : '+timeend}}"></Label>
+        <Button (swipe)="onSwipe($event)" (tap)="uploadfotodlg($event)" height="50%" color="blue" visibility="{{pagenumber==6?'visible':'collapse'}}"
+            class="fa2" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf093;"></Button>
+        <StackLayout (swipe)="onSwipe($event,true)" visibility="{{pagenumber==7?'visible':'collapse'}}" >
+            <TextField id="titulo" style="background-color: white" hint="Título" [(ngModel)]="evento.titulo"></TextField>
+            <TextField id="descricao" style="background-color: white" hint="Descrição"
+                [(ngModel)]="evento.descricao"></TextField>
+            <Label class="whitetext" text="{{'Data   : '+date}}"></Label>
+            <Label class="whitetext" text="{{'Horário Início  : '+time}}"></Label>
+            <Label class="whitetext" text="{{'Horário Fim  : '+timeend}}"></Label>
+        </StackLayout>
+
     </StackLayout>
 </StackLayout>

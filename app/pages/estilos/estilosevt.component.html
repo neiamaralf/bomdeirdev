@@ -49,7 +49,7 @@
                 <ng-template let-item="item">
                     <GridLayout class="itemlista" (swipe)="onSwipe($event)" (tap)="eventoclick(item)" columns="auto * auto">
                         <StackLayout col="0">
-                            <Label horizontalAlignment="center" text="{{item.row.ano }}" color="black"></Label>
+                            <Label horizontalAlignment="center" text="{{item.row.ano }}" color="cyan"></Label>
                             <Label horizontalAlignment="center" text="{{item.row.abrevmes }}" color="red" textWrap="true"></Label>
                             <Label horizontalAlignment="center" text="{{item.row.diames }}" style="font-weight: bold" textWrap="true" color="orange"></Label>
                             <Label class="whitetext" horizontalAlignment="center" text="{{item.row.abrevsem }}" textWrap="true"></Label>
@@ -58,7 +58,7 @@
                             <Label class="whitetext" style="font-weight: bold;font-size:18 " text="{{item.row.nome }}" textWrap="true"></Label>
                             <Label class="whitetext" text="{{item.row.time+' - '+item.row.timefim+' '+item.row.nomelocal}}"></Label>
                         </StackLayout>
-                        <Label class="whitetext" verticalAlignment="center" paddingRight="10" class="fa" text="&#xf105;" col="2"></Label>
+                        <Label verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" col="2" color="white"></Label>
                     </GridLayout>
                 </ng-template>
             </ListView>
@@ -70,24 +70,20 @@
             <GridLayout (swipe)="onSwipe($event)" rows="auto auto auto auto auto auto auto ">
                 <StackLayout class="h3 itemlista" orientation="horizontal" row="0">
                     <StackLayout>
-                        <Label horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.ano:'' }}" color="black"></Label>
+                        <Label horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.ano:'' }}" color="cyan"></Label>
                         <Label horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.abrevmes:'' }}" color="red"></Label>
                         <Label horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.diames:'' }}" style="font-weight: bold" color="orange"></Label>
                         <Label class="whitetext" horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.abrevsem:'' }}"></Label>
                     </StackLayout>
                     <Label class="whitetext" padding="10" style="font-weight: bold;font-size:18 " text="{{curevento!=undefined?curevento.row.nome:'' }}"
                         textWrap="true"></Label>
-                </StackLayout>
-                <StackLayout class="h3 itemlista" row="1">
-                    <Label class="whitetext" text="Detalhes" style="font-weight: bold"></Label>
-                    <Label class="whitetext" text="{{curevento!=undefined?curevento.row.descricao:'' }}" textWrap="true"></Label>
-                </StackLayout>
-                <StackLayout class="h3 itemlista" orientation="horizontal" row="2">
+                </StackLayout>                
+                <StackLayout class="h3 itemlista" orientation="horizontal" row="1">
                     <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf017; "></Label>
                     <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.time+' - '+curevento.row.timefim:'' }}"
                         textWrap="true"></Label>
                 </StackLayout>
-                <StackLayout class="h3 itemlista" row="3">
+                <StackLayout class="h3 itemlista" row="2">
                     <StackLayout orientation="horizontal">
                         <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf041;"></Label>
                         <StackLayout padding="10">
@@ -105,6 +101,10 @@
                         <Label class="whitetext" (tap)="ligafone()" padding="10" text="{{curevento!=undefined?curevento.row.fone:'' }}" style="color:aqua "
                             underline="true"></Label>
                     </StackLayout>
+                </StackLayout>
+                <StackLayout class="h3 itemlista" row="3">
+                    <Label class="whitetext" text="Detalhes" style="font-weight: bold"></Label>
+                    <Label class="whitetext" text="{{curevento!=undefined?curevento.row.descricao:'' }}" textWrap="true"></Label>
                 </StackLayout>
                 <StackLayout class="h3 itemlista" row="4">
                     <Label class="whitetext" text="Estilo " style="font-weight: bold"></Label>

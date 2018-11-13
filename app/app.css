@@ -55,14 +55,16 @@ components that have the btn class name.
 
 .whitetext {
     color: white;
-    margin:10;
+    margin:5;
+    font-size: 15;
 }
 
 .roundbt {
     text-align: left;
     border-radius: 10;
     margin-top: 10;
-    background-color: rgb(105, 117, 115);
+    background-color:yellow;
+    color: black;
 }
 
 .itemlista{
@@ -89,13 +91,15 @@ components that have the btn class name.
 .fa {
     font-family: "FontAwesome", 'fontawesome-webfont';
     font-size: 22pt;
+    color:yellow;
 }
 
 .fa1 {
     font-family: "FontAwesome", 'fontawesome-webfont';
     font-size: 22pt;
     padding: 0;
-    width: 40pt
+    width: 40pt;
+    color:yellow;
 }
 
 .fa2 {

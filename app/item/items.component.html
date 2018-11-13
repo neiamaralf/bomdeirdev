@@ -11,8 +11,9 @@
         (tap)="listacidades()">
         <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0c9;"></Button>
     </ActionItem>
-    <ActionItem visibility="{{showlocais&&!showaddlocal?'visible':'collapse'}}" ios.systemIcon="4" android.systemIcon="ic_menu_add"
-        ios.position="right" (tap)="add()"></ActionItem>
+    <ActionItem visibility="{{showlocais&&!showaddlocal?'visible':'collapse'}}" ios.position="right" (tap)="add()">
+        <Button class="fa1" backgroundColor="transparent" borderColor="transparent"  borderWidth="1" text="&#xf0fe;"></Button>
+    </ActionItem>
     <ActionItem ios.position="right" (tap)="userService.logout()">
         <Button  backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
     </ActionItem>
@@ -70,8 +71,8 @@
                     </StackLayout>
                 </ng-container>
             </StackLayout>
-            <SegmentedBar id="segmbar" selectedBackgroundColor="white" row="1" [items]="myItems" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChange($event)"
-                class="m-5 page fa"></SegmentedBar>
+            <SegmentedBar id="segmbar" selectedBackgroundColor="white" row="1" [items]="myItems" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChange($event)" class="m-5 page fa">
+            </SegmentedBar>
         </GridLayout>
 
         <GridLayout class="page" visibility="{{tipo=='admin'?'visible':'collapse'}}" rows="*,auto,auto" backgroundColor="transparent">
