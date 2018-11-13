@@ -24,7 +24,6 @@ components that have the btn class name.
     font-size: 18;
 }
 
-
 .cadastrar-bt {
     margin-left: 16;
     margin-right: 16;
@@ -55,23 +54,24 @@ components that have the btn class name.
 
 .whitetext {
     color: white;
-    margin:5;
+    margin: 5;
     font-size: 15;
 }
 
 .roundbt {
+    font-size: 18;
     text-align: left;
     border-radius: 10;
-    margin-top: 10;
-    background-color:yellow;
+    margin-top: 5;
+    background-color: yellow;
     color: black;
 }
 
-.itemlista{
-    background-color:rgb(58, 54, 54);
-    margin:5;
-    padding:10;
-    border-color:white;
+.itemlista {
+    background-color: rgb(58, 54, 54);
+    margin: 5;
+    padding: 10;
+    border-color: white;
     border-radius: 5;
     border-width: 1;
 }
@@ -80,18 +80,18 @@ components that have the btn class name.
     font-family: 'Weather Icons', 'weathericons-regular-webfont';
     font-size: 48;
     text-align: center;
-  }
+}
 
-  .iconeclimapq {
+.iconeclimapq {
     font-family: 'Weather Icons', 'weathericons-regular-webfont';
     font-size: 36;
     text-align: center;
-  }
+}
 
 .fa {
     font-family: "FontAwesome", 'fontawesome-webfont';
     font-size: 22pt;
-    color:yellow;
+    color: yellow;
 }
 
 .fa1 {
@@ -99,7 +99,7 @@ components that have the btn class name.
     font-size: 22pt;
     padding: 0;
     width: 40pt;
-    color:yellow;
+    color: yellow;
 }
 
 .fa2 {
@@ -131,5 +131,5 @@ TextField {
     margin-top: 20;
     height: 30;
     border-radius: 10;
-    padding:5;
-} 
+    padding: 5;
+}

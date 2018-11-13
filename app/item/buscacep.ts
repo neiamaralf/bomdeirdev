@@ -47,6 +47,10 @@ export class BuscaCepComponent implements OnInit {
     }, 100);
   }
 
+  goback() {
+    this.routerExtensions.backToPreviousPage();
+  }
+
   selectedIndexChanged(arg) {
     this.curestado = (<any>arg.object).items[(<any>arg.object).selectedIndex];
     console.dir(this.curestado);

@@ -1,4 +1,5 @@
 <ActionBar title="VERIFICAR CEP" class="action-bar bkg">
+    <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
 </ActionBar>
 <StackLayout class="page bkg">
     <TextField style="background-color: white" hint="Digite o CEP (só números)" keyboardType="number" [(ngModel)]="cep"></TextField>

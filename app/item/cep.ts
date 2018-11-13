@@ -27,9 +27,13 @@ export class CepComponent {
     this.params.set("idadmin", this.route.snapshot.params["idadmin"]);
   }
 
+  goback() {
+    this.routerExtensions.backToPreviousPage();
+  }
+
   cepIsOk(cep): any {
     return this.db
-      .geturl("https://viacep.com.br/ws/" + cep + "/json/","application/json");
+      .geturl("https://viacep.com.br/ws/" + cep + "/json/", "application/json");
   }
 
   continuar() {
@@ -51,11 +55,11 @@ export class CepComponent {
               this.params.get("idadmin")],
             {
               clearHistory: false,
-             /* transition: {
-                name: "flip",
-                duration: 1000,
-                curve: "linear"
-              }*/
+              /* transition: {
+                 name: "flip",
+                 duration: 1000,
+                 curve: "linear"
+               }*/
             });
         }
       }, (error) => {
