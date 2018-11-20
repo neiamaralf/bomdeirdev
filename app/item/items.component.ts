@@ -12,6 +12,7 @@ import * as gestures from "ui/gestures";
 import { SegmentedBar, SegmentedBarItem } from "ui/segmented-bar";
 import { LocationService } from "../shared/location/location.service";
 import { fromObject } from "tns-core-modules/data/observable";
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: "ns-items",
@@ -19,10 +20,8 @@ import { fromObject } from "tns-core-modules/data/observable";
     templateUrl: "./items.component.html",
 })
 export class ItemsComponent implements OnInit {
-    items: Item[];
+    items: Item[] = [];
     tipo: any;
-    showlocais: boolean = false;
-    tabSelectedIndex: number = 0;
     searchPhrase = "";
     carregando: boolean = false;
     public myItems: Array<SegmentedBarItem> = [];
@@ -38,13 +37,9 @@ export class ItemsComponent implements OnInit {
         private route: ActivatedRoute,
         private page: Page,
         private locationService: LocationService,
-        private cidadesService: CidadesService
+        private cidadesService: CidadesService,
+        private router: Router
     ) {
-        var __this=this;
-        this.page.on(Page.navigatingToEvent, function(){
-            console.log("navigating to this page");
-            __this.init()
-        })
         console.log("user");
         console.dir(userService.user);
         itemService.inititems();
@@ -52,78 +47,89 @@ export class ItemsComponent implements OnInit {
         this.tipo = this.route.snapshot.params["tipo"];
     }
 
-    init(){
-        ItemsComponent.__this = this;
-        this.items = this.itemService.getItems();
+    updateitems(__this,cidade, uf) {
+        (<any>__this.loc).cidade = cidade;
+        (<any>__this.loc).uf = uf;
+        __this.myItems = [];
+        __this.cidadesService.locais.forEach(function (row, index) {
+            const item = new SegmentedBarItem();
+            item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
+            item.title = index == 0 ? '\uf041' : '\uf111';
+            __this.myItems.push(item);
+        });
+        var segmbar: SegmentedBar = <SegmentedBar>__this.page.getViewById("segmbar");
+        //__this.cidadesService.curlocal = 0;
+        segmbar.selectedIndex = __this.cidadesService.curlocal;
+        __this.carregando = false;
+        __this.carregaitems();
+    }
+
+    init() {
         if (this.userService.user.super == 2) {
             this.items = [];
-            this.carregando = true;
-            var __this = this;
-            this.locationService.enableLocation(function () {
-                __this.locationService.getEndFromlatlong(__this.loc, function (res) {
-                    (<any>__this.loc).cidade = (<any>res).results[0].address_components[0].short_name;
-                    (<any>__this.loc).uf = (<any>res).results[0].address_components[1].short_name;
-                    if (!appsettings.hasKey("locais") && (<any>__this.loc).cidade != "0") {
-                        __this.cidadesService.locais.push(
-                            {
-                                cidade: (<any>__this.loc).cidade,
-                                uf: (<any>__this.loc).uf
-                            }
-                        )
-                        appsettings.setString("locais", JSON.stringify(__this.cidadesService.locais));
-                    }
-                    else if (appsettings.hasKey("locais")) {
-                        __this.cidadesService.locais = JSON.parse(appsettings.getString("locais"));
+            setTimeout(() => {
+                var __this = this;
+                if (!appsettings.hasKey("locais") && (<any>__this.loc).cidade != "0") {
+                    this.locationService.enableLocation(function () {
+                        __this.carregando = true;
+                        __this.locationService.getEndFromlatlong(function (res) {
+                            __this.cidadesService.locais.push(
+                                {
+                                    cidade: (<any>res).results[0].address_components[0].short_name,
+                                    uf: (<any>res).results[0].address_components[1].short_name
+                                }
+                            );
 
-                    }
-                    __this.myItems = [];
-                    __this.cidadesService.locais.forEach(function (row, index) {
-                        const item = new SegmentedBarItem();
-                        item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
-                        item.title = index == 0 ? '\uf041' : '\uf111';
-                        __this.myItems.push(item);
+                            appsettings.setString("locais", JSON.stringify(__this.cidadesService.locais));
 
-                    });
-                    __this.carregando = false;
-                });
-            },
-                function () {
-                    __this.carregando = false;
-                    if (!appsettings.hasKey("locais")) {
-                        __this.showlocais = true;
-                    }
-                    else {
-                        __this.cidadesService.locais = JSON.parse(appsettings.getString("locais"));
-                        (<any>__this.loc).cidade = __this.cidadesService.locais[0].cidade;
-                        (<any>__this.loc).uf = __this.cidadesService.locais[0].uf;
-                        __this.myItems = [];
-                        __this.cidadesService.locais.forEach(function (row, index) {
-                            const item = new SegmentedBarItem();
-                            item.setInlineStyle("font-family: 'FontAwesome', 'fontawesome-webfont';color:red;background-color:green")
-                            item.title = index == 0 ? '\uf041' : '\uf111';
-                            __this.myItems.push(item);
+                            __this.updateitems(__this,(<any>res).results[0].address_components[0].short_name,
+                                (<any>res).results[0].address_components[1].short_name)
+
                         });
-                        var segmbar: SegmentedBar = <SegmentedBar>__this.page.getViewById("segmbar");
-                        __this.tabSelectedIndex = 0;
-                        segmbar.selectedIndex = __this.tabSelectedIndex;
-                    }
+                    },
+                        function () {
+                            __this.carregando = false;
+                            __this.listacidades();
+                        });
+                }
+                else if (appsettings.hasKey("locais")) {
+                    __this.cidadesService.locais = JSON.parse(appsettings.getString("locais"));
+                    __this.updateitems(__this,__this.cidadesService.locais[__this.cidadesService.curlocal].cidade,
+                        __this.cidadesService.locais[__this.cidadesService.curlocal].uf)
 
+                }
+                console.dir(this.cidadesService.locais);
+            });
 
-
-                });
-            console.dir(this.cidadesService.locais);
-            this.carregaitems();
 
         }
-        console.log("items");
+        else this.items = this.itemService.getItems();
+
+        //console.log("items");
         //console.dir(this.items);
     }
 
     ngOnInit(): void {
-       this.init()
+        this.init();
+        this.router.events.subscribe((val) => {
+            if (val instanceof NavigationEnd) {
+                this.items = [];
+                if (this.router.url == "/items/0/0/onde") {
+                    if (1) {//this.cidadesService.alterado == true) {
+                        this.cidadesService.alterado = false;
+                        this.init();
+                    }
+                    var segmbar: SegmentedBar = <SegmentedBar>this.page.getViewById("segmbar");
+                    segmbar.selectedIndex = this.cidadesService.curlocal;
+                    console.log(this.router.url)
+                };
+
+            }
+        });
+
     }
 
- 
+
 
     public onSubmit(args) {
 
@@ -135,38 +141,40 @@ export class ItemsComponent implements OnInit {
         console.log("View that triggered the event: " + args.view);
         console.log("Event name: " + args.eventName);
         console.log("Swipe Direction: " + args.direction);
-        var segmbar: SegmentedBar = <SegmentedBar>ItemsComponent.__this.page.getViewById("segmbar");
+        var segmbar: SegmentedBar = <SegmentedBar>this.page.getViewById("segmbar");
         switch (args.direction) {
             case 1:
-                if (ItemsComponent.__this.tabSelectedIndex > 0)
-                    ItemsComponent.__this.tabSelectedIndex--;
+                if (this.cidadesService.curlocal > 0)
+                    this.cidadesService.curlocal--;
                 break;
             case 2:
-                if (ItemsComponent.__this.tabSelectedIndex < segmbar.items.length - 1)
-                    ItemsComponent.__this.tabSelectedIndex++;
+                if (this.cidadesService.curlocal < segmbar.items.length - 1)
+                    this.cidadesService.curlocal++;
                 break;
         }
-        segmbar.selectedIndex = ItemsComponent.__this.tabSelectedIndex;
+        segmbar.selectedIndex = this.cidadesService.curlocal;
     }
 
 
     carregaitems() {
-        //this.carregando = true;
         this.items = [];
-        this.userService.db
-            .get("key=categoriascomeventos" +
-                "&cidade=" + encodeURI((<any>this.loc).cidade) +
-                "&uf=" + (<any>this.loc).uf)
-            .subscribe(res => {
-                if (res != null) {
-                    (<any>res).result.forEach(row => {
-                        this.items.push({ id: row.id, name: row.nome, menu: new Array<Item>() })
-                    });
+        setTimeout(() => {
+            this.carregando = true;
+            this.userService.db
+                .get("key=categoriascomeventos" +
+                    "&cidade=" + encodeURI((<any>this.loc).cidade) +
+                    "&uf=" + (<any>this.loc).uf)
+                .subscribe(res => {
+                    if (res != null) {
+                        (<any>res).result.forEach(row => {
+                            this.items.push({ id: row.id, name: row.nome, menu: new Array<Item>() })
+                        });
 
-                    console.dir(this.items);
-                }
-                //this.carregando = false;
-            });
+                        console.dir(this.items);
+                    }
+                    this.carregando = false;
+                });
+        });
     }
 
     listacidades() {
@@ -192,7 +200,7 @@ export class ItemsComponent implements OnInit {
         if (this.userService.user.super == 2) {
             this.carregando = true;
             if (this.tipo == "onde")
-                this.routerExtensions.navigate(["/estilos/" + item.id + "/" + this.cidadesService.locais[this.tabSelectedIndex].cidade + "/" + this.cidadesService.locais[this.tabSelectedIndex].uf + "/" + this.tipo],
+                this.routerExtensions.navigate(["/estilos/" + item.id + "/" + this.cidadesService.locais[this.cidadesService.curlocal].cidade + "/" + this.cidadesService.locais[this.cidadesService.curlocal].uf + "/" + this.tipo],
                     {
                         clearHistory: false,
                         transition: {
@@ -214,17 +222,13 @@ export class ItemsComponent implements OnInit {
     }
 
     static __this: ItemsComponent;
-    public tabs: any[] = [];
 
     public onSelectedIndexChange(args) {
         let segmentedBar = <SegmentedBar>args.object;
-        this.tabSelectedIndex = segmentedBar.selectedIndex;
-        (<any>this.loc).cidade = this.cidadesService.locais[this.tabSelectedIndex].cidade;
-        (<any>this.loc).uf = this.cidadesService.locais[this.tabSelectedIndex].uf;
+        this.cidadesService.curlocal = segmentedBar.selectedIndex;
+        (<any>this.loc).cidade = this.cidadesService.locais[this.cidadesService.curlocal].cidade;
+        (<any>this.loc).uf = this.cidadesService.locais[this.cidadesService.curlocal].uf;
         if (this.userService.user.super == 2)
-            this.carregaitems()
+            this.carregaitems();
     }
-
-
-
 }

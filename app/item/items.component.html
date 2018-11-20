@@ -1,5 +1,5 @@
 <ActionBar title="BomDeIr" class="action-bar bkg">
-    <ActionItem visibility="{{userService.user.super == 2&&tipo=='onde'?'visible':'collapse'}}" ios.position="right" (tap)="listacidades()">
+    <ActionItem [visibility]="userService.user.super == 2?'visible':'collapse'" ios.position="right" (tap)="listacidades()">
         <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0c9;"></Button>
     </ActionItem>    
     <ActionItem ios.position="right" (tap)="userService.logout()">
@@ -7,16 +7,16 @@
     </ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
-    <StackLayout visibility="{{carregando ? 'visible' : 'collapse'}}">
+    <StackLayout [visibility]="carregando ? 'visible' : 'collapse'">
         <ActivityIndicator height="100%" [busy]="carregando"></ActivityIndicator>
     </StackLayout>
     
     <StackLayout [visibility]="!carregando ? 'visible' : 'collapse'" backgroundColor="transparent">
-       <GridLayout backgroundColor="transparent" id="container" visibility="{{tipo=='onde'&&!showaddlocal?'visible':'collapse'}}"
+       <GridLayout backgroundColor="transparent" id="container" [visibility]="tipo!='admin'?'visible':'collapse'"
             rows="*, auto">
             <StackLayout backgroundColor="transparent" row="0">
                 <ng-container *ngFor="let local of cidadesService.locais; let i = index">
-                    <StackLayout visibility="{{i==tabSelectedIndex?'visible':'collapse'}}" class="fa" backgroundColor="transparent">
+                    <StackLayout [visibility]="i==cidadesService.curlocal?'visible':'collapse'" class="fa" backgroundColor="transparent">
                         <GridLayout rows="*,auto,auto" backgroundColor="transparent">
                             <ScrollView style="margin-top: 10">
                                 <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
@@ -35,12 +35,11 @@
                     </StackLayout>
                 </ng-container>
             </StackLayout>
-            <SegmentedBar id="segmbar" selectedBackgroundColor="white" row="1" [items]="myItems" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChange($event)"
-                class="m-5 page fa">
+            <SegmentedBar id="segmbar" selectedBackgroundColor="white" row="1" [items]="myItems" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChange($event)" class="m-5 page fa">
             </SegmentedBar>
         </GridLayout>
 
-        <GridLayout class="page" visibility="{{tipo=='admin'?'visible':'collapse'}}" rows="*,auto,auto" backgroundColor="transparent">
+        <GridLayout class="page" [visibility]="tipo=='admin'?'visible':'collapse'" rows="*,auto,auto" backgroundColor="transparent">
             <ScrollView style="margin-top: 10">
                 <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
                     <WrapLayout horizontalAlignment="center" backgroundColor="transparent">

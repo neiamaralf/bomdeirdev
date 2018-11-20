@@ -39,7 +39,7 @@ export class LocationService {
         );
     }
 
-    getEndFromlatlong(retobj, callback) {
+    getEndFromlatlong(callback) {
         var _this = this;
         this.getLocationOnce()
             .then(function (location) {
@@ -49,11 +49,9 @@ export class LocationService {
                 url = url + "&result_type=administrative_area_level_1|administrative_area_level_2&key=AIzaSyBjF_58qpK1CsH2SMZdhNtFmab87Q4wfWU";
                 console.log(url);
                 _this.db.geturl(url, "application/json").subscribe(function (res) {
-                    console.log("res localizacao:")
-                    console.dir(res);
+                   // console.log("res localizacao:")
+                    //console.dir(res);
                     callback(res)
-
-                    //console.dir(retobj);
                 });
             }).catch(function (error) {
                 console.log("Location error received: " + error);

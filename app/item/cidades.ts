@@ -12,12 +12,12 @@ import { UserService } from "../shared/user/user.service";
     templateUrl: "./cidades.html",
 })
 export class CidadesComponent implements OnInit {
- carregando:boolean=false;
+    carregando: boolean = false;
     showaddlocal: boolean = false;
     cidades: any[] = [];
 
     constructor(
-        private userService:UserService,
+        private userService: UserService,
         private routerExtensions: RouterExtensions,
         private page: Page,
         private cidadesService: CidadesService
@@ -26,37 +26,29 @@ export class CidadesComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    localclic(item,i){
+    localclic(item, i) {
+        console.log(i)
+        this.cidadesService.curlocal = i;
         this.routerExtensions.backToPreviousPage();
-        return;
-       /* this.carregando = true;
-        this.routerExtensions.navigate(["/"],
-            {
-                clearHistory: false,
-                transition: {
-                    name: "slide",
-                    duration: 500,
-                    curve: "ease"
-
-                }
-            }).
-            then(() => {
-                this.carregando = false;
-            });*/
     }
 
     goback() {
         if (this.showaddlocal)
-            this.showaddlocal = false;        
+            this.showaddlocal = false;
         else
             this.routerExtensions.backToPreviousPage();
     }
 
-    
+
     dellocal(index) {
-        if (index == 0) return;
+        this.cidadesService.curlocal = 0;
         this.cidadesService.locais.splice(index, 1);
-        appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
+        this.cidadesService.alterado = true;
+
+        if (this.cidadesService.locais.length == 0)
+            appsettings.remove("locais");
+        else
+            appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
     }
 
     add() {
@@ -70,21 +62,24 @@ export class CidadesComponent implements OnInit {
     public onTextChanged(args) {
         let searchBar = <SearchBar>args.object;
         console.log("SearchBar text changed! New value: " + searchBar.text);
-        this.cidades = [];
-        this.userService.db
-            .get("key=cidadeoucep" +
-                "&cidade=" + encodeURI(searchBar.text))
-            .subscribe(res => {
-                if (res != null) {
-                    (<any>res).result.forEach(row => {
-                        this.cidades.push({
-                            row
-                        })
-                    });
-                    console.dir(this.cidades);
-                }
-                //this.carregando = false;
-            });
+        if (searchBar.text != undefined) {
+            
+            this.cidades = [];
+            this.userService.db
+                .get("key=cidadeoucep" +
+                    "&cidade=" + encodeURI(searchBar.text))
+                .subscribe(res => {
+                    if (res != null) {
+                        (<any>res).result.forEach(row => {
+                            this.cidades.push({
+                                row
+                            })
+                        });
+                        console.dir(this.cidades);
+                    }
+                    //this.carregando = false;
+                });
+        }
     }
 
     lvcidades(item) {
@@ -96,6 +91,8 @@ export class CidadesComponent implements OnInit {
                 uf: item.row.uf
             }
         )
+        this.cidadesService.alterado = true;
+        this.cidadesService.curlocal = 0;
         appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
     }
 }
