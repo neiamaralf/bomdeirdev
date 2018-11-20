@@ -70,11 +70,13 @@ export class UserService {
     appsettings.setString("usr", JSON.stringify(this.user));
   }
 
+
   logout() {
     this.db.post({ key: 'logout', id: this.user.id, token: this.user.token })
       .subscribe(res => {
         if ((<any>res).status == 'success') {
-          appsettings.remove('usr');
+          appsettings.clear()
+          //appsettings.remove('usr');
           this.user.goodtoken = false;
           this.routerExtensions.navigate(["/"], { clearHistory: true });
         } else {

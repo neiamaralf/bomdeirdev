@@ -1,5 +1,5 @@
 <ActionBar title="BomDeIr" class="action-bar bkg">
-    <ActionItem [visibility]="userService.user.super == 2?'visible':'collapse'" ios.position="right" (tap)="listacidades()">
+    <ActionItem [visibility]="userService.user.super == 2?'visible':'collapse'" ios.position="right" (tap)="listacidades('false')">
         <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0c9;"></Button>
     </ActionItem>    
     <ActionItem ios.position="right" (tap)="userService.logout()">

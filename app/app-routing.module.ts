@@ -21,7 +21,7 @@ const routes: Routes = [
     { path: "cep/:itemid/:idcategoria/:idadmin", component: CepComponent },
     { path: "eventos/:itemid/:acao/:idcategoria/:idadmin", component: EventosComponent },
     { path: "buscacep/:itemid/:idcategoria/:idadmin", component: BuscaCepComponent },
-    { path: "cidades", component: CidadesComponent },
+    { path: "cidades/:add", component: CidadesComponent },
     { path: "locais/:itemid/:acao/:cep/:logradouro/:bairro/:localidade/:uf/:idcategoria/:idadmin", component: LocaisComponent },
 ];
 

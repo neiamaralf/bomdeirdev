@@ -4,6 +4,7 @@ import * as appsettings from "application-settings";
 import { SearchBar } from "ui/search-bar";
 import { Page } from "tns-core-modules/ui/page";
 import { RouterExtensions } from "nativescript-angular/router";
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from "../shared/user/user.service";
 
 @Component({
@@ -20,19 +21,23 @@ export class CidadesComponent implements OnInit {
         private userService: UserService,
         private routerExtensions: RouterExtensions,
         private page: Page,
-        private cidadesService: CidadesService
+        private cidadesService: CidadesService,
+        private router: ActivatedRoute
     ) {
+        if(router.snapshot.params["add"]=="true"){
+            this.showaddlocal=true;
+        }
     }
     ngOnInit(): void {
     }
 
     localclic(item, i) {
         console.log(i);
-        if(i!=this.cidadesService.curlocal ){
-            this.cidadesService.indexalterado=true;
+        if (i != this.cidadesService.curlocal) {
+            this.cidadesService.indexalterado = true;
             this.cidadesService.curlocal = i;
         }
-        
+
         this.routerExtensions.backToPreviousPage();
     }
 
@@ -45,10 +50,9 @@ export class CidadesComponent implements OnInit {
 
 
     dellocal(index) {
+        this.cidadesService.alterado = true;
         this.cidadesService.curlocal = 0;
         this.cidadesService.locais.splice(index, 1);
-        this.cidadesService.alterado = true;
-
         if (this.cidadesService.locais.length == 0)
             appsettings.remove("locais");
         else
@@ -57,9 +61,10 @@ export class CidadesComponent implements OnInit {
 
     add() {
         var searchBar: SearchBar = <SearchBar>this.page.getViewById("sblocal");
-        this.showaddlocal = true;
+
         setTimeout(() => {
             searchBar.focus();
+            this.showaddlocal = true;
         }, 500);
     }
 
@@ -67,7 +72,7 @@ export class CidadesComponent implements OnInit {
         let searchBar = <SearchBar>args.object;
         console.log("SearchBar text changed! New value: " + searchBar.text);
         if (searchBar.text != undefined) {
-            
+
             this.cidades = [];
             this.userService.db
                 .get("key=cidadeoucep" +

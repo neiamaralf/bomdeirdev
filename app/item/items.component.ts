@@ -56,9 +56,6 @@ export class ItemsComponent implements OnInit {
             item.title = index == 0 ? '\uf041' : '\uf111';
             __this.myItems.push(item);
         });
-        var segmbar: SegmentedBar = <SegmentedBar>__this.page.getViewById("segmbar");
-        //__this.cidadesService.curlocal = 0;
-        //segmbar.selectedIndex = __this.cidadesService.curlocal;
         __this.carregando = false;
         __this.carregaitems();
     }
@@ -109,7 +106,7 @@ export class ItemsComponent implements OnInit {
                     },
                         function () {
                             __this.carregando = false;
-                            __this.listacidades();
+                            __this.listacidades('true');
                         });
                 }
                 else if (appsettings.hasKey("locais")) {
@@ -128,7 +125,7 @@ export class ItemsComponent implements OnInit {
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
                 if (this.router.url == "/items/0/0/onde") {
-                    if (this.cidadesService.alterado == true) {
+                    if (this.cidadesService.locais.length==0||this.cidadesService.alterado == true) {
                         this.cidadesService.alterado = false;
                         this.init();
                     }
@@ -154,12 +151,7 @@ export class ItemsComponent implements OnInit {
 
     }
 
-    onSwipe(args: gestures.SwipeGestureEventData) {
-        console.log("Swipe!");
-        console.log("Object that triggered the event: " + args.object);
-        console.log("View that triggered the event: " + args.view);
-        console.log("Event name: " + args.eventName);
-        console.log("Swipe Direction: " + args.direction);
+    onSwipe(args: gestures.SwipeGestureEventData) {        
         var segmbar: SegmentedBar = <SegmentedBar>this.page.getViewById("segmbar");
         switch (args.direction) {
             case 1:
@@ -171,13 +163,12 @@ export class ItemsComponent implements OnInit {
                     this.cidadesService.curlocal++;
                 break;
         }
-        //segmbar.selectedIndex = this.cidadesService.curlocal;
     }
 
-    listacidades() {
+    listacidades(addparam) {
         console.log("cidades")
         this.carregando = true;
-        this.routerExtensions.navigate(["/cidades"],
+        this.routerExtensions.navigate(["/cidades/"+addparam],
             {
                 clearHistory: false,
                 transition: {
