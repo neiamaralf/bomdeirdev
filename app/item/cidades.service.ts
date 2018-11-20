@@ -9,7 +9,8 @@ class local {
 export class CidadesService {
     public locais: Array<local> = [];
     public curlocal:number=0;
-    public alterado:boolean=true;
+    public alterado:boolean=false;
+    public indexalterado:boolean=false;
     constructor(private userService: UserService) {
         console.log("itemservice");
         console.dir(userService.user);

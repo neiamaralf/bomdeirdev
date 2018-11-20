@@ -35,7 +35,7 @@
                     </StackLayout>
                 </ng-container>
             </StackLayout>
-            <SegmentedBar id="segmbar" selectedBackgroundColor="white" row="1" [items]="myItems" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChange($event)" class="m-5 page fa">
+            <SegmentedBar id="segmbar" selectedBackgroundColor="white" row="1" [items]="myItems" [selectedIndex]="cidadesService.curlocal" (selectedIndexChange)="onSelectedIndexChange($event)" class="m-5 page fa">
             </SegmentedBar>
         </GridLayout>
 

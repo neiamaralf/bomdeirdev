@@ -27,8 +27,12 @@ export class CidadesComponent implements OnInit {
     }
 
     localclic(item, i) {
-        console.log(i)
-        this.cidadesService.curlocal = i;
+        console.log(i);
+        if(i!=this.cidadesService.curlocal ){
+            this.cidadesService.indexalterado=true;
+            this.cidadesService.curlocal = i;
+        }
+        
         this.routerExtensions.backToPreviousPage();
     }
 

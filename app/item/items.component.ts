@@ -6,7 +6,6 @@ import { UserService } from "../shared/user/user.service";
 import { RouterExtensions } from "nativescript-angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { Page } from "tns-core-modules/ui/page";
-import { SearchBar } from "ui/search-bar";
 import * as appsettings from "application-settings";
 import * as gestures from "ui/gestures";
 import { SegmentedBar, SegmentedBarItem } from "ui/segmented-bar";
@@ -47,7 +46,7 @@ export class ItemsComponent implements OnInit {
         this.tipo = this.route.snapshot.params["tipo"];
     }
 
-    updateitems(__this,cidade, uf) {
+    updateitems(__this, cidade, uf) {
         (<any>__this.loc).cidade = cidade;
         (<any>__this.loc).uf = uf;
         __this.myItems = [];
@@ -59,14 +58,35 @@ export class ItemsComponent implements OnInit {
         });
         var segmbar: SegmentedBar = <SegmentedBar>__this.page.getViewById("segmbar");
         //__this.cidadesService.curlocal = 0;
-        segmbar.selectedIndex = __this.cidadesService.curlocal;
+        //segmbar.selectedIndex = __this.cidadesService.curlocal;
         __this.carregando = false;
         __this.carregaitems();
     }
 
+    carregaitems() {
+        setTimeout(() => {
+            this.items = [];
+            this.carregando = true;
+            this.userService.db
+                .get("key=categoriascomeventos" +
+                    "&cidade=" + encodeURI((<any>this.loc).cidade) +
+                    "&uf=" + (<any>this.loc).uf)
+                .subscribe(res => {
+                    if (res != null) {
+                        this.items = [];
+                        (<any>res).result.forEach(row => {
+                            this.items.push({ id: row.id, name: row.nome, menu: new Array<Item>() })
+                        });
+
+                        console.dir(this.items);
+                    }
+                    this.carregando = false;
+                });
+        });
+    }
+
     init() {
         if (this.userService.user.super == 2) {
-            this.items = [];
             setTimeout(() => {
                 var __this = this;
                 if (!appsettings.hasKey("locais") && (<any>__this.loc).cidade != "0") {
@@ -82,7 +102,7 @@ export class ItemsComponent implements OnInit {
 
                             appsettings.setString("locais", JSON.stringify(__this.cidadesService.locais));
 
-                            __this.updateitems(__this,(<any>res).results[0].address_components[0].short_name,
+                            __this.updateitems(__this, (<any>res).results[0].address_components[0].short_name,
                                 (<any>res).results[0].address_components[1].short_name)
 
                         });
@@ -94,33 +114,32 @@ export class ItemsComponent implements OnInit {
                 }
                 else if (appsettings.hasKey("locais")) {
                     __this.cidadesService.locais = JSON.parse(appsettings.getString("locais"));
-                    __this.updateitems(__this,__this.cidadesService.locais[__this.cidadesService.curlocal].cidade,
+                    __this.updateitems(__this, __this.cidadesService.locais[__this.cidadesService.curlocal].cidade,
                         __this.cidadesService.locais[__this.cidadesService.curlocal].uf)
-
                 }
                 console.dir(this.cidadesService.locais);
             });
-
-
         }
         else this.items = this.itemService.getItems();
-
-        //console.log("items");
-        //console.dir(this.items);
     }
 
     ngOnInit(): void {
         this.init();
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
-                this.items = [];
                 if (this.router.url == "/items/0/0/onde") {
-                    if (1) {//this.cidadesService.alterado == true) {
+                    if (this.cidadesService.alterado == true) {
                         this.cidadesService.alterado = false;
                         this.init();
                     }
-                    var segmbar: SegmentedBar = <SegmentedBar>this.page.getViewById("segmbar");
-                    segmbar.selectedIndex = this.cidadesService.curlocal;
+                    else if (this.cidadesService.indexalterado == true) {
+                        this.cidadesService.indexalterado = false;
+                        (<any>this.loc).cidade = this.cidadesService.locais[this.cidadesService.curlocal].cidade;
+                        (<any>this.loc).uf = this.cidadesService.locais[this.cidadesService.curlocal].uf;
+                        this.carregaitems();
+                    }
+
+
                     console.log(this.router.url)
                 };
 
@@ -152,29 +171,7 @@ export class ItemsComponent implements OnInit {
                     this.cidadesService.curlocal++;
                 break;
         }
-        segmbar.selectedIndex = this.cidadesService.curlocal;
-    }
-
-
-    carregaitems() {
-        this.items = [];
-        setTimeout(() => {
-            this.carregando = true;
-            this.userService.db
-                .get("key=categoriascomeventos" +
-                    "&cidade=" + encodeURI((<any>this.loc).cidade) +
-                    "&uf=" + (<any>this.loc).uf)
-                .subscribe(res => {
-                    if (res != null) {
-                        (<any>res).result.forEach(row => {
-                            this.items.push({ id: row.id, name: row.nome, menu: new Array<Item>() })
-                        });
-
-                        console.dir(this.items);
-                    }
-                    this.carregando = false;
-                });
-        });
+        //segmbar.selectedIndex = this.cidadesService.curlocal;
     }
 
     listacidades() {
@@ -221,14 +218,16 @@ export class ItemsComponent implements OnInit {
         console.dir(item);
     }
 
-    static __this: ItemsComponent;
-
     public onSelectedIndexChange(args) {
         let segmentedBar = <SegmentedBar>args.object;
-        this.cidadesService.curlocal = segmentedBar.selectedIndex;
-        (<any>this.loc).cidade = this.cidadesService.locais[this.cidadesService.curlocal].cidade;
-        (<any>this.loc).uf = this.cidadesService.locais[this.cidadesService.curlocal].uf;
-        if (this.userService.user.super == 2)
-            this.carregaitems();
+        console.dir(args);
+        if (!this.cidadesService.alterado && !this.cidadesService.indexalterado) {
+            this.cidadesService.curlocal = segmentedBar.selectedIndex;
+            (<any>this.loc).cidade = this.cidadesService.locais[this.cidadesService.curlocal].cidade;
+            (<any>this.loc).uf = this.cidadesService.locais[this.cidadesService.curlocal].uf;
+            if (this.userService.user.super == 2)
+                this.carregaitems();
+        }
+
     }
 }
