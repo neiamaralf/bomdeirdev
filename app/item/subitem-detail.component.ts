@@ -7,6 +7,7 @@ import { ItemService } from "./item.service";
 import { DbService } from "../shared/db/db.service";
 import { UserService } from "../shared/user/user.service";
 import { Page } from "tns-core-modules/ui/page";
+import { localize } from "nativescript-localize";
 
 @Component({
     selector: "ns-subdetails",
@@ -26,7 +27,7 @@ export class SubItemDetailComponent {
         private page: Page,
         private routerExtensions: RouterExtensions
     ) {
-        this.ngOnInit();
+        
     }
 
     goback() {
@@ -49,7 +50,6 @@ export class SubItemDetailComponent {
                                 key: (<any>res).key, name: row.nome, id: row.id, menu: null,
                             });
                         });
-                        console.log("item...");
                         console.dir(this.item);
                     }
                     this.carregando = false;
@@ -104,14 +104,20 @@ export class SubItemDetailComponent {
                 console.dir(res);
                 console.log((<any>res).status);
                 if (res != null) {
-                    var index = this.item.menu.indexOf(item, 0);
-                    this.item.menu.splice(index, 1);
+                    if ((<any>res).status == "success") {
+                        var index = this.item.menu.indexOf(item, 0);
+                        this.item.menu.splice(index, 1);
+                    }
+                    else if ((<any>res).status == "erro") {
+                        if (item.key == "estilos")
+                            alert(localize("estilo_possue_eventos"));
+                        else if (item.key == "locais")
+                            alert(localize("local_possue_eventos"));
+                        else if (item.key == "artistas")
+                            alert(localize("artista_possue_eventos"));
+                    }
                 }
-
             });
-
-
-
     }
 
     onclick(item) {
@@ -149,9 +155,8 @@ export class SubItemDetailComponent {
     }
 
     ngOnInit(): void {
-        console.log("ngOnInit");
         var id: number = this.route.snapshot.params["id"]; console.log(id);
-        this.item = this.itemService.getItem(id); console.dir(this.item);
+        this.item = this.itemService.getItem(id); 
         this.obterlista();
 
 

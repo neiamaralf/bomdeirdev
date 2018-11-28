@@ -14,6 +14,7 @@ import { RadCalendarComponent } from "nativescript-ui-calendar/angular";
 import * as calendarModule from "nativescript-ui-calendar";
 import { Color } from "tns-core-modules/color";
 import * as TNSPhone from 'nativescript-phone';
+import { localize } from "nativescript-localize";
 
 registerElement('MapView', () => MapView);
 
@@ -33,6 +34,7 @@ export class EstilosEvtComponent implements OnInit {
   showcalendar: boolean = false;
   showwebview: boolean = false;
   showmap: boolean = false;
+  editaevento: boolean = false;
   private _viewMode;
   mapView: MapView;
   public eventos: any[] = [];
@@ -58,7 +60,7 @@ export class EstilosEvtComponent implements OnInit {
     const id = this.route.snapshot.params["idcategoria"];
     this.tipo = this.route.snapshot.params["tipo"];
     this.item = this.itemService.getItem(id);
-    
+    this.editaevento = userService.user.super==1;
     this._monthViewStyle = this.getMonthViewStyle();
     this._eventsViewMode = calendarModule.CalendarEventsViewMode.Inline;
     this.eventos.push({
@@ -66,6 +68,95 @@ export class EstilosEvtComponent implements OnInit {
     });
     this.curevento = this.eventos[0];
     this._viewMode = calendarModule.CalendarViewMode.Month;
+  }
+
+  ngOnInit(): void {    
+    if (this.userService.user.super == 2){
+      this.item.menu = [];
+      this.loadlist(this.item.menu, "estilosevt", "-1");
+    }      
+    else {
+      this.curevento = null;
+      this.eventos = [];
+      this.loadlist(this.eventos, "eventosadmin", this.userService.user.id);
+      this.pagenumber = 1;
+    }
+  }
+
+  loadlist(array, key, id) {
+    this.carregando = true;
+    this.userService.db
+      .get(key == "eventosadmin" ? "key=" + key + "&idcategoria=" + this.route.snapshot.params["idcategoria"] + "&idadmin=" + id : encodeURI("key=" + key +
+        "&idcategoria=" + this.route.snapshot.params["idcategoria"] +
+        "&cidade=" + this.route.snapshot.params["cidade"] +
+        "&uf=" + this.route.snapshot.params["uf"] +
+        "&idestilo=" + id))
+      .subscribe(res => {
+        if (res != null) {
+          var i = 0;
+          this.cureventindex = -1;
+          this.goToCurrentDay();
+          this._calendar.nativeElement.reload()
+          this._calendar.nativeElement.selectedDate = new Date();
+          this._events = new Array<CalendarEvent>();
+          (<any>res).result.forEach(row => {
+            array.push({
+              row,
+              toString: () => { return row.nome; },
+            })
+            if (key == "eventosregiao" || key == "eventosadmin") {
+              var startDate: Date, endDate: Date, event: CalendarEvent;
+              var t = row.datahorario.split(/[- :]/);
+              console.dir(t);
+              startDate = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5], 0);
+              t = row.datafim.split(/[- :]/);
+              endDate = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5], 0);
+              let colors: Array<Color> = [new Color(200, 188, 26, 214), new Color(220, 255, 109, 130), new Color(255, 55, 45, 255), new Color(199, 17, 227, 10), new Color(255, 255, 54, 3)];
+              event = new CalendarEvent(row.nome + ":" + row.id, startDate, endDate, false, colors[(i++) * 10 % (colors.length - 1)]);
+              this._events.push(event);
+              this.configureevento(array[array.length - 1]);
+            }
+          });
+          if (key == "estilosevt") {
+            var row: any = {
+              id: "-1",
+              nome: "TODOS",
+              idcategoria: "1"
+            };
+            (<any>this.item.menu).push({
+              row,
+              toString: () => { return row.nome; },
+            });
+          }
+          if (key == "eventosregiao" || key == "eventosadmin") {
+            this.cureventindex = 0;
+            this._calendar.nativeElement.goToDate(this._events[this.cureventindex].startDate)
+          }
+          console.dir(array);
+        }
+        this.carregando = false;
+      });
+  }
+
+  editaitem(campo) {
+    if (this.editaevento) {
+      switch (campo) { }
+
+    }
+    else {
+      switch (campo) {
+        case 'local':
+          this.abremapa();
+          break;
+        case 'site':
+          this.abresite();
+          break;
+        case 'fone':
+          this.ligafone();
+          break;
+      }
+    }
+    console.log(campo)
   }
 
   get viewMode() {
@@ -100,98 +191,10 @@ export class EstilosEvtComponent implements OnInit {
   nextevt() {
     this.cureventindex = ((this.cureventindex + 1) % this._events.length)
     this._calendar.nativeElement.goToDate(this._events[this.cureventindex].startDate)
-
   }
 
   getMonthViewStyle(): calendarModule.CalendarMonthViewStyle {
     const monthViewStyle = new calendarModule.CalendarMonthViewStyle();
-    /*monthViewStyle.backgroundColor = "Gray";
-    monthViewStyle.showTitle = true;
-    monthViewStyle.showWeekNumbers = false;
-    monthViewStyle.showDayNames = true;
-
-    const todayCellStyle = new DayCellStyle();
-    todayCellStyle.cellBackgroundColor = "#66bbae";
-    todayCellStyle.cellBorderWidth = 2;
-    todayCellStyle.cellBorderColor = "#f1e8ca";
-    todayCellStyle.cellTextColor = "#5b391e";
-    todayCellStyle.cellTextFontName = "Times New Roman";
-    todayCellStyle.cellTextFontStyle = "Bold";
-    todayCellStyle.cellTextSize = 14;
-    monthViewStyle.todayCellStyle = todayCellStyle;
-
-    const dayCellStyle = new DayCellStyle();
-    dayCellStyle.showEventsText = false;
-    dayCellStyle.eventTextColor = "White";
-    dayCellStyle.eventFontName = "Times New Roman";
-    dayCellStyle.eventFontStyle = "BoldItalic";
-    dayCellStyle.eventTextSize = 8;
-    dayCellStyle.cellAlignment = "Top";
-    dayCellStyle.cellPaddingHorizontal = 10;
-    dayCellStyle.cellPaddingVertical = 5;
-    dayCellStyle.cellBackgroundColor = "#ffffff";
-    dayCellStyle.cellBorderWidth = 1;
-    dayCellStyle.cellBorderColor = "#f1e8ca";
-    dayCellStyle.cellTextColor = "#745151";
-    dayCellStyle.cellTextFontName = "Times New Roman";
-    dayCellStyle.cellTextFontStyle = "Bold";
-    dayCellStyle.cellTextSize = 10;
-    monthViewStyle.dayCellStyle = dayCellStyle;
-
-    const weekendCellStyle = new DayCellStyle();
-    weekendCellStyle.eventTextColor = "BlueViolet";
-    weekendCellStyle.eventFontName = "Times New Roman";
-    weekendCellStyle.eventFontStyle = "BoldItalic";
-    weekendCellStyle.eventTextSize = 8;
-    weekendCellStyle.cellAlignment = "Top";
-    weekendCellStyle.cellPaddingHorizontal = 10;
-    weekendCellStyle.cellPaddingVertical = 5;
-    weekendCellStyle.cellBackgroundColor = "Gray";
-    weekendCellStyle.cellBorderWidth = 1;
-    weekendCellStyle.cellBorderColor = "#f1e8ca";
-    weekendCellStyle.cellTextColor = "#745151";
-    weekendCellStyle.cellTextFontName = "Times New Roman";
-    weekendCellStyle.cellTextFontStyle = "Bold";
-    weekendCellStyle.cellTextSize = 12;
-    monthViewStyle.weekendCellStyle = weekendCellStyle;
-
-    const selectedCellStyle = new DayCellStyle();
-    selectedCellStyle.eventTextColor = "Blue";
-    selectedCellStyle.eventFontName = "Times New Roman";
-    selectedCellStyle.eventFontStyle = "Bold";
-    selectedCellStyle.eventTextSize = 8;
-    selectedCellStyle.cellAlignment = "Top";
-    selectedCellStyle.cellPaddingHorizontal = 10;
-    selectedCellStyle.cellPaddingVertical = 5;
-    selectedCellStyle.cellBackgroundColor = "#dbcbbb";
-    selectedCellStyle.cellBorderWidth = 2;
-    selectedCellStyle.cellBorderColor = "#745151";
-    selectedCellStyle.cellTextColor = "Black";
-    selectedCellStyle.cellTextFontName = "Times New Roman";
-    selectedCellStyle.cellTextFontStyle = "Bold";
-    selectedCellStyle.cellTextSize = 18;
-    monthViewStyle.selectedDayCellStyle = selectedCellStyle;
-
-    const dayNameCellStyle = new CellStyle();
-    dayNameCellStyle.cellBackgroundColor = "#f1e8ca";
-    dayNameCellStyle.cellBorderWidth = 1;
-    dayNameCellStyle.cellBorderColor = "#745151";
-    dayNameCellStyle.cellTextColor = "#745151";
-    dayNameCellStyle.cellTextFontName = "Times New Roman";
-    dayNameCellStyle.cellTextFontStyle = "Bold";
-    dayNameCellStyle.cellTextSize = 10;
-    monthViewStyle.dayNameCellStyle = dayNameCellStyle;
-
-    const titleCellStyle = new DayCellStyle();
-    titleCellStyle.cellBackgroundColor = "#bbcbdb";
-    titleCellStyle.cellBorderWidth = 1;
-    titleCellStyle.cellBorderColor = "#745151";
-    titleCellStyle.cellTextColor = "#dd855c";
-    titleCellStyle.cellTextFontName = "Times New Roman";
-    titleCellStyle.cellTextFontStyle = "Bold";
-    titleCellStyle.cellTextSize = 18;
-    monthViewStyle.titleCellStyle = titleCellStyle;
-*/
     return monthViewStyle;
   }
 
@@ -270,77 +273,6 @@ export class EstilosEvtComponent implements OnInit {
 
   webViewPan(event) {
 
-  }
-
-  loadlist(array, key, idestilo) {
-    this.carregando = true;
-    this.userService.db
-      .get(encodeURI("key=" + key +
-        "&idcategoria=" + this.route.snapshot.params["idcategoria"] +
-        "&cidade=" + this.route.snapshot.params["cidade"] +
-        "&uf=" + this.route.snapshot.params["uf"] +
-        "&idestilo=" + idestilo))
-      .subscribe(res => {
-        if (res != null) {          
-          var i = 0;
-          this.cureventindex = -1;
-          this.goToCurrentDay();
-          this._calendar.nativeElement.reload()
-          this._calendar.nativeElement.selectedDate = new Date();
-          this._events = new Array<CalendarEvent>();
-          (<any>res).result.forEach(row => {
-            array.push({
-              row,
-              toString: () => { return row.nome; },
-            })
-            if (key == "eventosregiao") {
-              var startDate: Date
-                , endDate: Date
-                , event: CalendarEvent;
-              var t = row.datahorario.split(/[- :]/);
-              console.dir(t)
-              //console.log("hora=" + t[3])
-              startDate = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5], 0);
-              /* console.log(startDate.toISOString());
-               console.log(startDate.toJSON());
-               console.log(startDate.toLocaleDateString());
-               console.log(startDate.toLocaleString());
-               console.log(startDate.toLocaleTimeString());
-               console.log(startDate.toTimeString());*/
-              t = row.datafim.split(/[- :]/);
-
-              endDate = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5], 0);
-
-              let colors: Array<Color> = [new Color(200, 188, 26, 214), new Color(220, 255, 109, 130), new Color(255, 55, 45, 255), new Color(199, 17, 227, 10), new Color(255, 255, 54, 3)];
-
-              event = new CalendarEvent(row.nome + ":" + row.id, startDate, endDate, false, colors[(i++) * 10 % (colors.length - 1)]);
-              this._events.push(event);
-              this.configureevento(array[array.length - 1])
-
-
-            }
-
-          });
-          if (key == "estilosevt") {
-            var row: any = {
-              id: "-1",
-              nome: "TODOS",
-              idcategoria: "1"
-            };
-            (<any>this.item.menu).push({
-              row,
-              toString: () => { return row.nome; },
-            });
-          }
-          if (key == "eventosregiao") {
-            this.cureventindex = 0;
-            this._calendar.nativeElement.goToDate(this._events[this.cureventindex].startDate)
-          }
-
-          console.dir(array);
-        }
-        this.carregando = false;
-      });
   }
 
   gotocurday() {
@@ -452,8 +384,8 @@ export class EstilosEvtComponent implements OnInit {
             //console.dir(bounds.southwest.latitude);
             this.showmap = true;
           }).catch(error => {
-            console.log("Location error received: " + error);
-            alert("Location error received: " + error);
+            console.log(localize("locationerror") + error);
+            alert(localize("locationerror") + error);
           });
 
       });
@@ -630,7 +562,6 @@ export class EstilosEvtComponent implements OnInit {
     this.eventos = [];
     this.loadlist(this.eventos, "eventosregiao", item.row.id.toString());
     console.dir(item);
-
     this.pagenumber++;
   }
 
@@ -654,9 +585,9 @@ export class EstilosEvtComponent implements OnInit {
         this.userService.db
           .geturl("https://www.athena3d.com.br/bomdeir/clima.php?idcidade=" + idcidade, "application/xml")
           .subscribe(res => {
-            this.curevento.row.clima=(<any>res).previsao[0].tempo;
-            this.curevento.row.minima=(<any>res).previsao[0].minima;
-            this.curevento.row.maxima=(<any>res).previsao[0].maxima;
+            this.curevento.row.clima = (<any>res).previsao[0].tempo;
+            this.curevento.row.minima = (<any>res).previsao[0].minima;
+            this.curevento.row.maxima = (<any>res).previsao[0].maxima;
             console.dir((<any>res).previsao[0]);
           });
       });
@@ -705,14 +636,5 @@ export class EstilosEvtComponent implements OnInit {
          this.deltaY = args.deltaY;
          this.state = args.state;
      this.direction = args.direction;*/
-  }
-
-  ngOnInit(): void {
-    this.item.menu = [];
-    console.log("loadlist:");
-    this.loadlist(this.item.menu, "estilosevt", "-1");
-    //this.item = this.itemService.getItem();
-    //console.log("items");
-    //console.dir(this.items);
   }
 }

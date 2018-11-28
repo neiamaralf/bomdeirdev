@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute,Router } from "@angular/router";
 import { Item } from "./item";
 import { ItemService } from "./item.service";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -18,6 +18,7 @@ export class ItemDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private routerExtensions: RouterExtensions,
         private userService: UserService,
+        private router: Router
     ) { }
 
     goback() {
@@ -27,5 +28,28 @@ export class ItemDetailComponent implements OnInit {
     ngOnInit(): void {
         const id = this.route.snapshot.params["id"];
         this.item = this.itemService.getItem(id);
+    }
+
+    onclick(item) {
+        if (item.name == "EVENTOS"){
+           this.routerExtensions.navigate(["/estilos/" + item.iddono + "/0/0/admin"],
+                {
+                    clearHistory: false,
+                    transition: {
+                        name: "slide",
+                        duration: 500,
+                        curve: "ease"
+                    }
+                }).
+                then(() => {
+                    //this.carregando = false;
+                }); 
+        }
+            
+        else{
+            console.dir(item);
+            this.router.navigate(["/subitem/" + item.id]);
+        }
+        
     }
 }

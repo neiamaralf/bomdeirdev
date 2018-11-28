@@ -1,3 +1,7 @@
+"_estilo_possue_eventos_Z9P7mA" = "This style has active events, to exclude wait for the events to expire or delete the corresponding events.";
+"_local_possue_eventos_Zlnloh" = "This location has active events, to exclude wait for the events to expire or delete the corresponding events.";
+"_artista_possue_eventos_Z2tRs01" = "This artist has active events, to exclude wait for the events to expire or delete the corresponding events.";
+"_locationerror_Z27m2vp" = "Location error received, please go to system configuration:";
 "_ios_info_plist_NSLocationAlwaysUsageDescription_Z1cD1M8" = "This allows us to know which city is in the moment when you first open the app, initially showing the events in this city, and your current location will allow you to search for events near you and calculate routes. If you do not want to allow access to your location you can add cities manually.";
 "_ios_info_plist_NSLocationWhenInUseUsageDescription_ZpKiIF" = "This allows us to know which city is in the moment when you first open the app, initially showing the events in this city, and your current location will allow you to search for events near you and calculate routes. If you do not want to allow access to your location you can add cities manually.";
 "_app_name_1k3Sbz" = "bomdeir";

@@ -1,3 +1,7 @@
+"_estilo_possue_eventos_Z9P7mA" = "Este estilo tem eventos ativos, para excluir espere os eventos expirarem ou exclua os eventos correspondentes.";
+"_local_possue_eventos_Zlnloh" = "Este local tem eventos ativos, para excluir espere os eventos expirarem ou exclua os eventos correspondentes.";
+"_artista_possue_eventos_Z2tRs01" = "Este artista tem eventos ativos, para excluir espere os eventos expirarem ou exclua os eventos correspondentes.";
+"_locationerror_Z27m2vp" = "Erro de localizacao, por favor entre na configurcao do sistema:";
 "_ios_info_plist_NSLocationAlwaysUsageDescription_Z1cD1M8" = "Isto nos permite saber em que cidade está no momento quando abrir o app pela primeira vez, mostrando inicialmente os eventos nesta cidade, além disso, sua localização atual vai possibilitar a busca de eventos próximos a você e o cálculo de rotas.Caso não deseje permitir o acesso a sua localização você pode adicionar cidades manualmente.";
 "_ios_info_plist_NSLocationWhenInUseUsageDescription_ZpKiIF" = "Isto nos permite saber em que cidade está no momento quando abrir o app pela primeira vez, mostrando inicialmente os eventos nesta cidade, além disso, sua localização atual vai possibilitar a busca de eventos próximos a você e o cálculo de rotas.Caso não deseje permitir o acesso a sua localização você pode adicionar cidades manualmente.";
 "_app_name_1k3Sbz" = "bomdeir";

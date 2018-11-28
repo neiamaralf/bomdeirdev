@@ -3,5 +3,10 @@
     "ios.info.plist": {
         "NSLocationWhenInUseUsageDescription": "Isto nos permite saber em que cidade está no momento quando abrir o app pela primeira vez, mostrando inicialmente os eventos nesta cidade, além disso, sua localização atual vai possibilitar a busca de eventos próximos a você e o cálculo de rotas.Caso não deseje permitir o acesso a sua localização você pode adicionar cidades manualmente.",
         "NSLocationAlwaysUsageDescription":"Isto nos permite saber em que cidade está no momento quando abrir o app pela primeira vez, mostrando inicialmente os eventos nesta cidade, além disso, sua localização atual vai possibilitar a busca de eventos próximos a você e o cálculo de rotas.Caso não deseje permitir o acesso a sua localização você pode adicionar cidades manualmente."
-    }
+    },
+    "locationerror":"Erro de localizacao, por favor entre na configurcao do sistema:",
+    "artista_possue_eventos":"Este artista tem eventos ativos, para excluir espere os eventos expirarem ou exclua os eventos correspondentes.",
+    "local_possue_eventos":"Este local tem eventos ativos, para excluir espere os eventos expirarem ou exclua os eventos correspondentes.",
+    "estilo_possue_eventos":"Este estilo tem eventos ativos, para excluir espere os eventos expirarem ou exclua os eventos correspondentes."
+    
 }

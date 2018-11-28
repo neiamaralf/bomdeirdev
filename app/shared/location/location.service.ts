@@ -24,7 +24,7 @@ export class LocationService {
                 geolocation.enableLocationRequest().then(function () {
                     __this.getLocationOnce()
                         .then(function (location) {
-                            callback();
+                            callback(isEnabled);
                             console.dir(location)
                         })
                 }, function (e) {
@@ -32,7 +32,7 @@ export class LocationService {
                     errorcalback()
                 });
             }
-            else callback();
+            else callback(isEnabled);
         }//, function (e) {
           //  console.log("Error: " + (e.message || e));
         //}

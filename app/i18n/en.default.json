@@ -3,5 +3,9 @@
     "ios.info.plist": {
         "NSLocationWhenInUseUsageDescription": "This allows us to know which city is in the moment when you first open the app, initially showing the events in this city, and your current location will allow you to search for events near you and calculate routes. If you do not want to allow access to your location you can add cities manually.",
         "NSLocationAlwaysUsageDescription":"This allows us to know which city is in the moment when you first open the app, initially showing the events in this city, and your current location will allow you to search for events near you and calculate routes. If you do not want to allow access to your location you can add cities manually."
-    }
+    },
+    "locationerror":"Location error received, please go to system configuration:",
+    "artista_possue_eventos":"This artist has active events, to exclude wait for the events to expire or delete the corresponding events.",
+    "local_possue_eventos":"This location has active events, to exclude wait for the events to expire or delete the corresponding events.",
+    "estilo_possue_eventos":"This style has active events, to exclude wait for the events to expire or delete the corresponding events."
 }

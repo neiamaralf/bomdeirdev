@@ -12,28 +12,23 @@
   } 
   break;
   case 'estilos':
-  $id=$_REQUEST['id'];
-  $sql="DELETE FROM estilos  WHERE  id=$id";
-  $stmt=$pdo->query($sql);
-  if($stmt){
-   echo json_encode(array('status'=>'success'));
-  } 
-  break;
   case 'locais':
-  $id=$_REQUEST['id'];
-  $sql="DELETE FROM locais  WHERE  id=$id";
-  $stmt=$pdo->query($sql);
-  if($stmt){
-   echo json_encode(array('status'=>'success'));
-  } 
-  break;
   case 'artistas':
+  $idkey=$key=='estilos'?'idestilo':$key=='locais'?'idlocal':'idartista';
   $id=$_REQUEST['id'];
-  $sql="DELETE FROM artistas  WHERE  id=$id";
+  $sql="SELECT id FROM eventos  WHERE  $idkey=$id";
   $stmt=$pdo->query($sql);
-  if($stmt){
-   echo json_encode(array('status'=>'success'));
-  } 
+  if($stmt->rowCount()>0){
+      echo json_encode(array('status'=>'erro'));
+  }
+  else{
+      $sql="DELETE FROM $key  WHERE  id=$id";
+      $stmt=$pdo->query($sql);
+      if($stmt){
+          echo json_encode(array('status'=>'success'));
+      }
+  }
+  
   break;
  }
  ?>

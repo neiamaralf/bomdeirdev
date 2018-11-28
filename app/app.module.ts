@@ -22,6 +22,7 @@ import { CepComponent } from "./item/cep";
 import { EventosComponent } from "./item/eventos";
 import { BuscaCepComponent } from "./item/buscacep";
 import { LocaisComponent } from "./item/locais";
+import { NativeScriptLocalizeModule } from "nativescript-localize/angular";
 
 declare var GMSServices: any;
 
@@ -40,6 +41,7 @@ if (platform.isIOS) {
         NativeScriptHttpClientModule,
         NativeScriptUICalendarModule,
         NativeScriptFormsModule,
+        NativeScriptLocalizeModule
     ],
     declarations: [
         AppComponent,

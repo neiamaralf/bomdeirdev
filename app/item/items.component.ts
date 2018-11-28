@@ -86,28 +86,34 @@ export class ItemsComponent implements OnInit {
         if (this.userService.user.super == 2) {
             setTimeout(() => {
                 var __this = this;
+                console.log(appsettings.getString("locais"))
+                if (appsettings.hasKey("locais")) console.log("locais ok")
                 if (!appsettings.hasKey("locais") && (<any>__this.loc).cidade != "0") {
-                    this.locationService.enableLocation(function () {
+                    this.locationService.enableLocation(function (isEnabled) {
                         __this.carregando = true;
-                        __this.locationService.getEndFromlatlong(function (res) {
-                            __this.cidadesService.locais.push(
-                                {
-                                    cidade: (<any>res).results[0].address_components[0].short_name,
-                                    uf: (<any>res).results[0].address_components[1].short_name
-                                }
+                        //if (__this.cidadesService.locais.length == 0)
+                            __this.locationService.getEndFromlatlong(function (res) {
+                                __this.cidadesService.locais.push(
+                                    {
+                                        cidade: (<any>res).results[0].address_components[0].short_name,
+                                        uf: (<any>res).results[0].address_components[1].short_name
+                                    }
+                                );
+
+                                appsettings.setString("locais", JSON.stringify(__this.cidadesService.locais));
+
+                                __this.updateitems(__this, (<any>res).results[0].address_components[0].short_name,
+                                    (<any>res).results[0].address_components[1].short_name)
+
+                            }
                             );
-
-                            appsettings.setString("locais", JSON.stringify(__this.cidadesService.locais));
-
-                            __this.updateitems(__this, (<any>res).results[0].address_components[0].short_name,
-                                (<any>res).results[0].address_components[1].short_name)
-
-                        });
                     },
                         function () {
                             __this.carregando = false;
-                            __this.listacidades('true');
-                        });
+                            if (__this.cidadesService.locais.length == 0)
+                                __this.listacidades('true', true);
+                        }
+                    );
                 }
                 else if (appsettings.hasKey("locais")) {
                     __this.cidadesService.locais = JSON.parse(appsettings.getString("locais"));
@@ -125,7 +131,7 @@ export class ItemsComponent implements OnInit {
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
                 if (this.router.url == "/items/0/0/onde") {
-                    if (this.cidadesService.locais.length==0||this.cidadesService.alterado == true) {
+                    if (this.cidadesService.locais.length == 0 || this.cidadesService.alterado == true) {
                         this.cidadesService.alterado = false;
                         this.init();
                     }
@@ -151,7 +157,7 @@ export class ItemsComponent implements OnInit {
 
     }
 
-    onSwipe(args: gestures.SwipeGestureEventData) {        
+    onSwipe(args: gestures.SwipeGestureEventData) {
         var segmbar: SegmentedBar = <SegmentedBar>this.page.getViewById("segmbar");
         switch (args.direction) {
             case 1:
@@ -165,15 +171,15 @@ export class ItemsComponent implements OnInit {
         }
     }
 
-    listacidades(addparam) {
+    listacidades(addparam, clearhistory) {
         console.log("cidades")
         this.carregando = true;
-        this.routerExtensions.navigate(["/cidades/"+addparam],
+        this.routerExtensions.navigate(["/cidades/" + addparam],
             {
-                clearHistory: false,
+                clearHistory: clearhistory,
                 transition: {
                     name: "slide",
-                    duration: 500,
+                    duration: 200,
                     curve: "ease"
 
                 }
@@ -184,7 +190,6 @@ export class ItemsComponent implements OnInit {
     }
 
     onclick(item) {
-
         if (this.userService.user.super == 2) {
             this.carregando = true;
             if (this.tipo == "onde")
@@ -195,7 +200,6 @@ export class ItemsComponent implements OnInit {
                             name: "slide",
                             duration: 500,
                             curve: "ease"
-
                         }
                     }).
                     then(() => {

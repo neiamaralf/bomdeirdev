@@ -24,8 +24,8 @@ export class CidadesComponent implements OnInit {
         private cidadesService: CidadesService,
         private router: ActivatedRoute
     ) {
-        if(router.snapshot.params["add"]=="true"){
-            this.showaddlocal=true;
+        if (router.snapshot.params["add"] == "true") {
+            this.showaddlocal = true;
         }
     }
     ngOnInit(): void {
@@ -37,8 +37,24 @@ export class CidadesComponent implements OnInit {
             this.cidadesService.indexalterado = true;
             this.cidadesService.curlocal = i;
         }
-
-        this.routerExtensions.backToPreviousPage();
+        if (this.routerExtensions.canGoBack())
+            this.routerExtensions.backToPreviousPage();
+        else{
+            this.cidadesService.alterado=true;
+            this.routerExtensions.navigate(["/items/0/0/onde"],
+                {
+                    clearHistory: true,
+                    transition: {
+                        name: "slide",
+                        duration: 200,
+                        curve: "ease"
+                    }
+                }).
+                then(() => {
+                    this.carregando = false;
+                });
+        }
+            
     }
 
     goback() {
@@ -61,10 +77,10 @@ export class CidadesComponent implements OnInit {
 
     add() {
         var searchBar: SearchBar = <SearchBar>this.page.getViewById("sblocal");
-
+this.showaddlocal = true;
         setTimeout(() => {
             searchBar.focus();
-            this.showaddlocal = true;
+            
         }, 500);
     }
 
