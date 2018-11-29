@@ -5,6 +5,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { EstilosEvtComponent } from "./pages/estilos/estilosevt.component";
+import { EditaEventoComponent } from "./pages/admin/editaeventos";
 import { ItemService } from "./item/item.service";
 import { CidadesService } from "./item/cidades.service";
 import { CidadesComponent } from "./item/cidades";
@@ -26,47 +27,48 @@ import { NativeScriptLocalizeModule } from "nativescript-localize/angular";
 
 declare var GMSServices: any;
 
-if (platform.isIOS) { 
-  GMSServices.provideAPIKey("AIzaSyCpX-cfRtq9NrAeY1DRUs1uoLxeMwK_a4I");
+if (platform.isIOS) {
+ GMSServices.provideAPIKey("AIzaSyCpX-cfRtq9NrAeY1DRUs1uoLxeMwK_a4I");
 }
 
 
 @NgModule({
-    bootstrap: [
-        AppComponent
-    ],
-    imports: [
-        NativeScriptModule,
-        AppRoutingModule,
-        NativeScriptHttpClientModule,
-        NativeScriptUICalendarModule,
-        NativeScriptFormsModule,
-        NativeScriptLocalizeModule
-    ],
-    declarations: [
-        AppComponent,
-        LoginComponent,
-        ItemDetailComponent,
-        SubItemDetailComponent,
-        EstilosEvtComponent,
-        ItemsComponent,
-        CepComponent,
-        EventosComponent,
-        BuscaCepComponent,
-        LocaisComponent,
-        CidadesComponent
-    ],
-    providers: [
-        User,
-        DbService,
-        UserService,
-        LocationService,
-        ItemService,
-        CidadesService,
-        { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader }
-    ],
-    schemas: [
-        NO_ERRORS_SCHEMA
-    ]
+ bootstrap: [
+  AppComponent
+ ],
+ imports: [
+  NativeScriptModule,
+  AppRoutingModule,
+  NativeScriptHttpClientModule,
+  NativeScriptUICalendarModule,
+  NativeScriptFormsModule,
+  NativeScriptLocalizeModule
+ ],
+ declarations: [
+  AppComponent,
+  LoginComponent,
+  ItemDetailComponent,
+  SubItemDetailComponent,
+  EstilosEvtComponent,
+  ItemsComponent,
+  CepComponent,
+  EventosComponent,
+  BuscaCepComponent,
+  LocaisComponent,
+  CidadesComponent,
+  EditaEventoComponent
+ ],
+ providers: [
+  User,
+  DbService,
+  UserService,
+  LocationService,
+  ItemService,
+  CidadesService,
+  { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader }
+ ],
+ schemas: [
+  NO_ERRORS_SCHEMA
+ ]
 })
 export class AppModule { }

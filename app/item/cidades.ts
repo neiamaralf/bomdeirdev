@@ -8,116 +8,116 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from "../shared/user/user.service";
 
 @Component({
-    selector: "ns-cidades",
-    moduleId: module.id,
-    templateUrl: "./cidades.html",
+ selector: "ns-cidades",
+ moduleId: module.id,
+ templateUrl: "./cidades.html",
 })
 export class CidadesComponent implements OnInit {
-    carregando: boolean = false;
-    showaddlocal: boolean = false;
-    cidades: any[] = [];
+ carregando: boolean = false;
+ showaddlocal: boolean = false;
+ cidades: any[] = [];
 
-    constructor(
-        private userService: UserService,
-        private routerExtensions: RouterExtensions,
-        private page: Page,
-        private cidadesService: CidadesService,
-        private router: ActivatedRoute
-    ) {
-        if (router.snapshot.params["add"] == "true") {
-            this.showaddlocal = true;
-        }
-    }
-    ngOnInit(): void {
-    }
+ constructor(
+  private userService: UserService,
+  private routerExtensions: RouterExtensions,
+  private page: Page,
+  private cidadesService: CidadesService,
+  private router: ActivatedRoute
+ ) {
+  if (router.snapshot.params["add"] == "true") {
+   this.showaddlocal = true;
+  }
+ }
+ ngOnInit(): void {
+ }
 
-    localclic(item, i) {
-        console.log(i);
-        if (i != this.cidadesService.curlocal) {
-            this.cidadesService.indexalterado = true;
-            this.cidadesService.curlocal = i;
-        }
-        if (this.routerExtensions.canGoBack())
-            this.routerExtensions.backToPreviousPage();
-        else{
-            this.cidadesService.alterado=true;
-            this.routerExtensions.navigate(["/items/0/0/onde"],
-                {
-                    clearHistory: true,
-                    transition: {
-                        name: "slide",
-                        duration: 200,
-                        curve: "ease"
-                    }
-                }).
-                then(() => {
-                    this.carregando = false;
-                });
-        }
-            
-    }
+ localclic(item, i) {
+  console.log(i);
+  if (i != this.cidadesService.curlocal) {
+   this.cidadesService.indexalterado = true;
+   this.cidadesService.curlocal = i;
+  }
+  if (this.routerExtensions.canGoBack())
+   this.routerExtensions.backToPreviousPage();
+  else {
+   this.cidadesService.alterado = true;
+   this.routerExtensions.navigate(["/items/0/0/onde"],
+    {
+     clearHistory: true,
+     transition: {
+      name: "slide",
+      duration: 200,
+      curve: "ease"
+     }
+    }).
+    then(() => {
+     this.carregando = false;
+    });
+  }
 
-    goback() {
-        if (this.showaddlocal)
-            this.showaddlocal = false;
-        else
-            this.routerExtensions.backToPreviousPage();
-    }
+ }
+
+ goback() {
+  if (this.showaddlocal)
+   this.showaddlocal = false;
+  else
+   this.routerExtensions.backToPreviousPage();
+ }
 
 
-    dellocal(index) {
-        this.cidadesService.alterado = true;
-        this.cidadesService.curlocal = 0;
-        this.cidadesService.locais.splice(index, 1);
-        if (this.cidadesService.locais.length == 0)
-            appsettings.remove("locais");
-        else
-            appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
-    }
+ dellocal(index) {
+  this.cidadesService.alterado = true;
+  this.cidadesService.curlocal = 0;
+  this.cidadesService.locais.splice(index, 1);
+  if (this.cidadesService.locais.length == 0)
+   appsettings.remove("locais");
+  else
+   appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
+ }
 
-    add() {
-        var searchBar: SearchBar = <SearchBar>this.page.getViewById("sblocal");
-this.showaddlocal = true;
-        setTimeout(() => {
-            searchBar.focus();
-            
-        }, 500);
-    }
+ add() {
+  var searchBar: SearchBar = <SearchBar>this.page.getViewById("sblocal");
+  this.showaddlocal = true;
+  setTimeout(() => {
+   searchBar.focus();
 
-    public onTextChanged(args) {
-        let searchBar = <SearchBar>args.object;
-        console.log("SearchBar text changed! New value: " + searchBar.text);
-        if (searchBar.text != undefined) {
+  }, 500);
+ }
 
-            this.cidades = [];
-            this.userService.db
-                .get("key=cidadeoucep" +
-                    "&cidade=" + encodeURI(searchBar.text))
-                .subscribe(res => {
-                    if (res != null) {
-                        (<any>res).result.forEach(row => {
-                            this.cidades.push({
-                                row
-                            })
-                        });
-                        console.dir(this.cidades);
-                    }
-                    //this.carregando = false;
-                });
-        }
-    }
+ public onTextChanged(args) {
+  let searchBar = <SearchBar>args.object;
+  console.log("SearchBar text changed! New value: " + searchBar.text);
+  if (searchBar.text != undefined) {
 
-    lvcidades(item) {
-        console.dir(item);
-        this.showaddlocal = false;
-        this.cidadesService.locais.push(
-            {
-                cidade: item.row.nome,
-                uf: item.row.uf
-            }
-        )
-        this.cidadesService.alterado = true;
-        this.cidadesService.curlocal = 0;
-        appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
-    }
+   this.cidades = [];
+   this.userService.db
+    .get("key=cidadeoucep" +
+     "&cidade=" + searchBar.text)
+    .subscribe(res => {
+     if (res != null) {
+      (<any>res).result.forEach(row => {
+       this.cidades.push({
+        row
+       })
+      });
+      console.dir(this.cidades);
+     }
+     //this.carregando = false;
+    });
+  }
+ }
+
+ lvcidades(item) {
+  console.dir(item);
+  this.showaddlocal = false;
+  this.cidadesService.locais.push(
+   {
+    cidade: item.row.nome,
+    uf: item.row.uf
+   }
+  )
+  this.cidadesService.alterado = true;
+  this.cidadesService.curlocal = 0;
+  appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
+ }
 }

@@ -1,22 +1,18 @@
 <GridLayout rows="*" [visibility]="userService.user.goodtoken?'hidden':'visible'" class="bkg">
-    <StackLayout verticalAlignment="center" row="0" #container class="cmain page" backgroundColor="black" borderRadius="10">
-        <ios>
-            <Image class="logo" visibility="{{!admin?'visible':'collapse'}}" src="res://AppIcon" stretch="aspectFill" height="80" width="80"
-                horizontalAlignment="center"></Image>
-        </ios>
-        <android>
-            <Image class="logo" visibility="{{!admin?'visible':'collapse'}}" src="res://icon" stretch="aspectFill" height="80" width="80"
-                horizontalAlignment="center"></Image>
-        </android>
-        <TextField visibility="{{admin?'visible':'collapse'}}" style="background-color: white" hint="Email" keyboardType="email"
-            [(ngModel)]="userService.user.email" autocorrect="false" autocapitalizationType="none"></TextField>
-        <TextField visibility="{{admin?'visible':'collapse'}}" style="background-color: white" hint="Senha" secure="true" [(ngModel)]="userService.user.senha"></TextField>
-        <FlexboxLayout style="color:rgb(167, 141, 141);padding: 10" justifyContent="center" visibility="{{isLoggingIn?'visible':'hidden'}}">
-            <Label style="margin-right: 10;color: white" text="Administrador" class="p-10"></Label>
-            <Switch (tap)=showadmin() style="color:red"></Switch>
-        </FlexboxLayout>
-        <Button [text]="isLoggingIn ? 'Entrar' : 'Cadastrar'" class="submit-button" (tap)="submit()"></Button>
-        <Button class="cadastrar-bt" backgroundColor="blue" color="white" visibility="{{admin?'visible':'collapse'}}" [text]="isLoggingIn ? 'Cadastrar' : 'Voltar ao Login'"
-            (tap)="toggleDisplay()"></Button>
-    </StackLayout>
+ <StackLayout verticalAlignment="center" row="0" #container class="cmain page" backgroundColor="black" borderRadius="10">
+  <ios>
+   <Image class="logo" visibility="{{!admin?'visible':'collapse'}}" src="res://AppIcon" stretch="aspectFill" height="80" width="80" horizontalAlignment="center"></Image>
+  </ios>
+  <android>
+   <Image class="logo" visibility="{{!admin?'visible':'collapse'}}" src="res://icon" stretch="aspectFill" height="80" width="80" horizontalAlignment="center"></Image>
+  </android>
+  <TextField visibility="{{admin?'visible':'collapse'}}" style="background-color: white" hint="Email" keyboardType="email" [(ngModel)]="userService.user.email" autocorrect="false" autocapitalizationType="none"></TextField>
+  <TextField visibility="{{admin?'visible':'collapse'}}" style="background-color: white" hint="Senha" secure="true" [(ngModel)]="userService.user.senha"></TextField>
+  <FlexboxLayout style="color:rgb(167, 141, 141);padding: 10" justifyContent="center" visibility="{{isLoggingIn?'visible':'hidden'}}">
+   <Label style="margin-right: 10;color: white" text="Administrador" class="p-10"></Label>
+   <Switch (tap)=showadmin() style="color:red"></Switch>
+  </FlexboxLayout>
+  <Button [text]="isLoggingIn ? 'Entrar' : 'Cadastrar'" class="submit-button" (tap)="submit()"></Button>
+  <Button class="cadastrar-bt" backgroundColor="blue" color="white" visibility="{{admin?'visible':'collapse'}}" [text]="isLoggingIn ? 'Cadastrar' : 'Voltar ao Login'" (tap)="toggleDisplay()"></Button>
+ </StackLayout>
 </GridLayout>

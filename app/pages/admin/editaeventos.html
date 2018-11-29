@@ -1,0 +1,22 @@
+<ActionBar [title]="CAMPO" class="action-bar bkg">
+ <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
+ <ActionItem ios.position="right" (tap)="userService.logout()">
+  <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
+ </ActionItem>
+</ActionBar>
+<!-- 
+    <GridLayout class="page bkg" rows="*,auto,auto">
+     <ScrollView style="margin-top: 10">
+      <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
+       <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
+        <ng-container *ngFor="let item of item.menu">
+         <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(item)">
+          <Image width="25%" class="icones" src="{{ 'res://'+item.name}}"></Image>
+          <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
+         </StackLayout>
+        </ng-container>
+       </WrapLayout>
+      </StackLayout>
+     </ScrollView>
+    </GridLayout>
+-->

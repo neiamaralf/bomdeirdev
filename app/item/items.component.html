@@ -1,58 +1,57 @@
 <ActionBar title="BomDeIr" class="action-bar bkg">
-    <ActionItem [visibility]="userService.user.super == 2?'visible':'collapse'" ios.position="right" (tap)="listacidades('false',false)">
-        <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0c9;"></Button>
-    </ActionItem>    
-    <ActionItem ios.position="right" (tap)="userService.logout()">
-        <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
-    </ActionItem>
+ <ActionItem [visibility]="userService.user.super == 2?'visible':'collapse'" ios.position="right" (tap)="listacidades('false',false)">
+  <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0c9;"></Button>
+ </ActionItem>
+ <ActionItem ios.position="right" (tap)="userService.logout()">
+  <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
+ </ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
-    <StackLayout [visibility]="carregando ? 'visible' : 'collapse'">
-        <ActivityIndicator height="100%" [busy]="carregando"></ActivityIndicator>
-    </StackLayout>
-    
-    <StackLayout [visibility]="!carregando ? 'visible' : 'collapse'" backgroundColor="transparent">
-       <GridLayout backgroundColor="transparent" id="container" [visibility]="tipo!='admin'?'visible':'collapse'"
-            rows="*, auto">
-            <StackLayout backgroundColor="transparent" row="0">
-                <ng-container *ngFor="let local of cidadesService.locais; let i = index">
-                    <StackLayout [visibility]="i==cidadesService.curlocal?'visible':'collapse'" class="fa" backgroundColor="transparent">
-                        <GridLayout rows="*,auto,auto" backgroundColor="transparent">
-                            <ScrollView style="margin-top: 10">
-                                <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
-                                    <Label class="whitetext" style="padding:10;font-size: 15" horizontalAlignment="center" textWrap="true" text="{{local.cidade + ' - '+local.uf}}"></Label>
-                                    <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
-                                        <ng-container *ngFor="let item of items">
-                                            <StackLayout (tap)="onclick(item)" (swipe)="onSwipe($event)" horizontalAlignment="center">
-                                                <Image width="25%" class="icones" src="{{ 'res://'+item.name}}"></Image>
-                                                <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
-                                            </StackLayout>
-                                        </ng-container>
-                                    </WrapLayout>
-                                </StackLayout>
-                            </ScrollView>
-                        </GridLayout>
-                    </StackLayout>
-                </ng-container>
-            </StackLayout>
-            <SegmentedBar id="segmbar" selectedBackgroundColor="white" row="1" [items]="myItems" [selectedIndex]="cidadesService.curlocal" (selectedIndexChange)="onSelectedIndexChange($event)" class="m-5 page fa">
-            </SegmentedBar>
-        </GridLayout>
+ <StackLayout [visibility]="carregando ? 'visible' : 'collapse'">
+  <ActivityIndicator height="100%" [busy]="carregando"></ActivityIndicator>
+ </StackLayout>
 
-        <GridLayout class="page" [visibility]="tipo=='admin'?'visible':'collapse'" rows="*,auto,auto" backgroundColor="transparent">
-            <ScrollView style="margin-top: 10">
-                <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
-                    <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
-                        <ng-container *ngFor="let item of items">
-                            <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(item)">
-                                <Image width="25%" class="icones" src="{{'res://'+item.name}}"></Image>
-                                <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
-                            </StackLayout>
-                        </ng-container>
-                    </WrapLayout>
-                </StackLayout>
-            </ScrollView>
-        </GridLayout>
+ <StackLayout [visibility]="!carregando ? 'visible' : 'collapse'" backgroundColor="transparent">
+  <GridLayout backgroundColor="transparent" id="container" [visibility]="tipo!='admin'?'visible':'collapse'" rows="*, auto">
+   <StackLayout backgroundColor="transparent" row="0">
+    <ng-container *ngFor="let local of cidadesService.locais; let i = index">
+     <StackLayout [visibility]="i==cidadesService.curlocal?'visible':'collapse'" class="fa" backgroundColor="transparent">
+      <GridLayout rows="*,auto,auto" backgroundColor="transparent">
+       <ScrollView style="margin-top: 10">
+        <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
+         <Label class="whitetext" style="padding:10;font-size: 15" horizontalAlignment="center" textWrap="true" text="{{local.cidade + ' - '+local.uf}}"></Label>
+         <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
+          <ng-container *ngFor="let item of items">
+           <StackLayout (tap)="onclick(item)" (swipe)="onSwipe($event)" horizontalAlignment="center">
+            <Image width="25%" class="icones" src="{{ 'res://'+item.name}}"></Image>
+            <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
+           </StackLayout>
+          </ng-container>
+         </WrapLayout>
+        </StackLayout>
+       </ScrollView>
+      </GridLayout>
+     </StackLayout>
+    </ng-container>
+   </StackLayout>
+   <SegmentedBar id="segmbar" selectedBackgroundColor="white" row="1" [items]="myItems" [selectedIndex]="cidadesService.curlocal" (selectedIndexChange)="onSelectedIndexChange($event)" class="m-5 page fa">
+   </SegmentedBar>
+  </GridLayout>
 
+  <GridLayout class="page" [visibility]="tipo=='admin'?'visible':'collapse'" rows="*,auto,auto" backgroundColor="transparent">
+   <ScrollView style="margin-top: 10">
+    <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
+     <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
+      <ng-container *ngFor="let item of items">
+       <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(item)">
+        <Image width="25%" class="icones" src="{{'res://'+item.name}}"></Image>
+        <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
+       </StackLayout>
+      </ng-container>
+     </WrapLayout>
     </StackLayout>
+   </ScrollView>
+  </GridLayout>
+
+ </StackLayout>
 </StackLayout>

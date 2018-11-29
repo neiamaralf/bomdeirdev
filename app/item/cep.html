@@ -1,8 +1,8 @@
 <ActionBar title="VERIFICAR CEP" class="action-bar bkg">
-    <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
+ <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
 </ActionBar>
 <StackLayout class="page bkg">
-    <TextField style="background-color: white" hint="Digite o CEP (só números)" keyboardType="number" [(ngModel)]="cep"></TextField>
-    <Label (tap)="buscacep()" text="Não sei o CEP" class="btn btn-primary btn-active roundbt"></Label>
-    <Label (tap)="continuar()" text="Continuar" class="btn btn-primary btn-active roundbt"></Label>
+ <TextField style="background-color: white" hint="Digite o CEP (só números)" keyboardType="number" [(ngModel)]="cep"></TextField>
+ <Label (tap)="buscacep()" text="Não sei o CEP" class="btn btn-primary btn-active roundbt"></Label>
+ <Label (tap)="continuar()" text="Continuar" class="btn btn-primary btn-active roundbt"></Label>
 </StackLayout>

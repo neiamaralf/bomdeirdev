@@ -1,39 +1,39 @@
 <ActionBar [title]="item.name" class="action-bar bkg">
-    <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
-    <ActionItem visibility="{{!showaddlocal?'visible':'collapse'}}" ios.position="right" (tap)="add()">
-        <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0fe;"></Button>
-    </ActionItem>
-    <ActionItem ios.position="right" (tap)="userService.logout()">
-        <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
-    </ActionItem>
+ <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
+ <ActionItem visibility="{{!showaddlocal?'visible':'collapse'}}" ios.position="right" (tap)="add()">
+  <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0fe;"></Button>
+ </ActionItem>
+ <ActionItem ios.position="right" (tap)="userService.logout()">
+  <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
+ </ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
-    <ActivityIndicator height="100%" [busy]="carregando" [visibility]="carregando ? 'visible' : 'collapse'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+ <ActivityIndicator height="100%" [busy]="carregando" [visibility]="carregando ? 'visible' : 'collapse'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 
-    <GridLayout style="background-color: transparent" (swipe)="onSwipe($event)" visibility="{{userService.user.super==0&&!carregando? 'visible': 'collapse'}}" rows="*,auto,auto">
-        <ScrollView style="margin-top: 10">
-            <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
-                <WrapLayout (swipe)="onSwipe($event)" horizontalAlignment="center" backgroundColor="transparent">
-                    <Label class="whitetext" horizontalAlignment="center" visibility="{{item.menu.length==0? 'visible': 'collapse'}}" text="NENHUM ESTILO ADICIONADO"></Label>
+ <GridLayout style="background-color: transparent" (swipe)="onSwipe($event)" visibility="{{userService.user.super==0&&!carregando? 'visible': 'collapse'}}" rows="*,auto,auto">
+  <ScrollView style="margin-top: 10">
+   <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
+    <WrapLayout (swipe)="onSwipe($event)" horizontalAlignment="center" backgroundColor="transparent">
+     <Label class="whitetext" horizontalAlignment="center" visibility="{{item.menu.length==0? 'visible': 'collapse'}}" text="NENHUM ESTILO ADICIONADO"></Label>
 
-                    <ng-container *ngFor="let est of item.menu">
-                        <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(est)">
-                            <Image width="25%" class="icones" src="{{userService.user.super==0? 'res://'+est.name:''}}"></Image>
-                            <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="est.name"></Label>
-                        </StackLayout>
-                    </ng-container>
-                </WrapLayout>
-            </StackLayout>
-        </ScrollView>
-    </GridLayout>
-    <Label class="whitetext" textWrap="true" textAlignment="center" horizontalAlignment="center" visibility="{{userService.user.super!=0&&item.menu.length==0&&!carregando? 'visible': 'collapse'}}" text="NADA ADICIONADO, CLIQUE NO + PARA ADICIONAR"></Label>
+     <ng-container *ngFor="let est of item.menu">
+      <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(est)">
+       <Image width="25%" class="icones" src="{{userService.user.super==0? 'res://'+est.name:''}}"></Image>
+       <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="est.name"></Label>
+      </StackLayout>
+     </ng-container>
+    </WrapLayout>
+   </StackLayout>
+  </ScrollView>
+ </GridLayout>
+ <Label class="whitetext" textWrap="true" textAlignment="center" horizontalAlignment="center" visibility="{{userService.user.super!=0&&item.menu.length==0&&!carregando? 'visible': 'collapse'}}" text="NADA ADICIONADO, CLIQUE NO + PARA ADICIONAR"></Label>
 
-    <ListView separatorColor="transparent" height="100%" id="lvId" style="background-color: transparent" visibility="{{userService.user.super!=0&&!carregando? 'visible': 'collapse'}}" [items]="item.menu" class="list-group" padding="5">
-        <ng-template let-item="item">
-            <GridLayout (swipe)="onSwipe($event)" (tap)="onclick(item)" columns="* auto" class="btn roundbt">
-                <Label col="0" [text]="item.name"></Label>
-                <Label verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" col="1" color="black"></Label>
-            </GridLayout>
-        </ng-template>
-    </ListView>
+ <ListView separatorColor="transparent" height="100%" id="lvId" style="background-color: transparent" visibility="{{userService.user.super!=0&&!carregando? 'visible': 'collapse'}}" [items]="item.menu" class="list-group" padding="5">
+  <ng-template let-item="item">
+   <GridLayout (swipe)="onSwipe($event)" (tap)="onclick(item)" columns="* auto" class="btn roundbt">
+    <Label col="0" [text]="item.name"></Label>
+    <Label verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" col="1" color="black"></Label>
+   </GridLayout>
+  </ng-template>
+ </ListView>
 </StackLayout>
