@@ -75,8 +75,9 @@ export class UserService {
   this.db.post({ key: 'logout', id: this.user.id, token: this.user.token })
    .subscribe(res => {
     if ((<any>res).status == 'success') {
-     console.log("logout")
-     appsettings.remove('usr');
+     console.log("logout");
+     appsettings.clear();
+     //appsettings.remove('usr');
      this.user.goodtoken = false;
      this.routerExtensions.navigate(["/"], { clearHistory: true });
     } else {

@@ -1,10 +1,8 @@
 <ActionBar title="BomDeIr" class="action-bar bkg">
  <ActionItem [visibility]="userService.user.super == 2?'visible':'collapse'" ios.position="right" (tap)="listacidades('false',false)">
-  <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0c9;"></Button>
+  <Button class="fa1 transpbutton" text="&#xf0c9;"></Button>
  </ActionItem>
- <ActionItem ios.position="right" (tap)="userService.logout()">
-  <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
- </ActionItem>
+ <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
  <StackLayout [visibility]="carregando ? 'visible' : 'collapse'">

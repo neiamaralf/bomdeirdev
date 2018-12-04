@@ -1,30 +1,26 @@
 <ActionBar [title]="item.name" class="action-bar bkg">
  <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
+ <ActionItem visibility="{{editaevento&&!carregando?'visible':'collapse'}}" ios.position="right" (tap)="addevento()">
+  <Button class="fa1 transpbutton" text="&#xf0fe;"></Button>
+ </ActionItem>
  <ActionItem visibility="{{!editaevento&&pagenumber==2&&!showwebview&&!showmap?'visible':'hidden'}}" ios.position="right" (tap)="abremapa()">
-  <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf041;"></Button>
+  <Button class="fa1 transpbutton" text="&#xf041;"></Button>
  </ActionItem>
- <ActionItem visibility="{{!carregando&&pagenumber==1?'visible':'hidden'}}" ios.position="right" (tap)="showCalendar()">
-  <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="{{showcalendar?'&#xf0ca;':'&#xf073;'}}"></Button>
+ <ActionItem visibility="{{!editaevento&&!carregando&&pagenumber==1?'visible':'hidden'}}" ios.position="right" (tap)="showCalendar()">
+  <Button class="fa1 transpbutton" text="{{showcalendar?'&#xf0ca;':'&#xf073;'}}"></Button>
  </ActionItem>
- <ActionItem visibility="{{!carregando&&pagenumber==1&&showcalendar?'visible':'hidden'}}" ios.position="right" (tap)="gotocurday()">
-  <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf05b;"></Button>
+ <ActionItem visibility="{{!editaevento&&!carregando&&pagenumber==1&&showcalendar?'visible':'hidden'}}" ios.position="right" (tap)="gotocurday()">
+  <Button class="fa1 transpbutton" text="&#xf05b;"></Button>
  </ActionItem>
-
- <ActionItem ios.position="right" (tap)="userService.logout()">
-  <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
- </ActionItem>
+  <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
  <ActivityIndicator [visibility]="carregando ? 'visible' : 'collapse'" height="100%" [busy]="carregando"></ActivityIndicator>
  <StackLayout visibility="{{!showwebview&&!showmap&&!carregando? 'visible': 'collapse'}}">
   <GridLayout (swipe)="onSwipe($event)" visibility="{{!editaevento&&pagenumber!=2?'visible':'collapse'}}" columns="auto,*,auto" rows="auto">
-
-   <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="prevevt()" color="{{cureventindex<=0?'gray':'white'}}" text="&#xf0a5;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="0"></Button>
-
+   <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="prevevt()" color="{{cureventindex<=0?'gray':'white'}}" text="&#xf0a5;" class="fa1 transpbutton" col="0"></Button>
    <Label class="whitetext" horizontalAlignment="center" col="1" style="padding:10;font-size: 15" text="{{route.snapshot.params[ 'cidade']+ '-'+route.snapshot.params['uf'] }}"></Label>
-
-   <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="nextevt()" color="{{cureventindex==_events.length-1?'gray':'white'}}" text="&#xf0a4;" class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" col="2"></Button>
-
+   <Button visibility="{{pagenumber==1&&showcalendar?'visible':'collapse'}}" (tap)="nextevt()" color="{{cureventindex==_events.length-1?'gray':'white'}}" text="&#xf0a4;" class="fa1 transpbutton" col="2"></Button>
   </GridLayout>
   <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber==0? 'visible': 'collapse'}}" rows="*,auto,auto">
    <ScrollView style="margin-top: 10">
@@ -44,7 +40,7 @@
   <StackLayout visibility="{{pagenumber==1?'visible':'collapse'}}">
    <ListView separatorColor="transparent" backgroundColor="transparent" (swipe)=" onSwipe($event)" height="100%" [items]="eventos" class="list-group " visibility="{{!showcalendar?'visible':'collapse'}}">
     <ng-template let-item="item">
-     <GridLayout class="itemlista" (swipe)="onSwipe($event)" (tap)="eventoclick(item)" columns="auto * auto">
+     <GridLayout class="itemlista" (tap)="eventoclick(item)" columns="auto * auto">
       <StackLayout col="0">
        <Label horizontalAlignment="center" text="{{item.row.ano }}" color="cyan"></Label>
        <Label horizontalAlignment="center" text="{{item.row.abrevmes }}" color="red" textWrap="true"></Label>

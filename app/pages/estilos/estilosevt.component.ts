@@ -3,7 +3,7 @@ import { Item } from "../../item/item";
 import { ItemService } from "../../item/item.service";
 import { UserService } from "../../shared/user/user.service";
 import { RouterExtensions } from "nativescript-angular/router";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { WebView } from "tns-core-modules/ui/web-view";
 import { LocationService, LocationData } from "../../shared/location/location.service";
 import { MapView, Marker, Position, Bounds } from 'nativescript-google-maps-sdk';
@@ -56,7 +56,8 @@ export class EstilosEvtComponent implements OnInit {
   private userService: UserService,
   private locationService: LocationService,
   private routerExtensions: RouterExtensions,
-  private route: ActivatedRoute) {
+  private route: ActivatedRoute,
+  private router: Router) {
   const id = this.route.snapshot.params["idcategoria"];
   this.tipo = this.route.snapshot.params["tipo"];
   this.item = this.itemService.getItem(id);
@@ -140,8 +141,48 @@ export class EstilosEvtComponent implements OnInit {
 
  editaitem(campo) {
   if (this.editaevento) {
-   switch (campo) { }
-   this.routerExtensions.navigate(["/editaeventos/" + campo + "/" + this.curevento.row.id],
+   var valor: any;
+   switch (campo) {
+    case "nome":
+     valor = this.curevento.row.nome;
+     break;
+    case "data":
+     valor = JSON.stringify(
+      {
+       data: this.curevento.row.datahorario,
+       datafim: this.curevento.row.datafim,
+      });
+
+     break;
+    case "horario":
+     valor = JSON.stringify(
+      {
+       hora: this.curevento.row.hora,
+       minutos: this.curevento.row.minutos,
+       horafim: this.curevento.row.horafim,
+       minutosfim: this.curevento.row.minutosfim
+      });
+     break;
+    case "local":
+     valor = this.curevento.row.local;
+     break;
+    case "site":
+     valor = this.curevento.row.site;
+     break;
+    case "fone":
+     valor = this.curevento.row.fone;
+     break;
+    case "descricao":
+     valor = this.curevento.row.descricao;
+     break;
+    case "estilo":
+     valor = this.curevento.row.estilo;
+     break;
+    case "artista":
+     valor = this.curevento.row.artista;
+     break;
+   }
+   this.routerExtensions.navigate(["/editaeventos/" + campo + "/" + this.curevento.row.id + "/" + valor],
     {
      clearHistory: false,
      transition: {
@@ -266,6 +307,10 @@ export class EstilosEvtComponent implements OnInit {
   item.row.ano = data.getUTCFullYear();
   item.row.data = diames + "\\" + mes + "\\" + data.getUTCFullYear() + " - " + semana[data.getDay()];
   item.row.time = hora + ":" + minutos;
+  item.row.hora = hora
+  item.row.minutos = minutos
+  item.row.horafim = horafim
+  item.row.minutosfim = minutosfim
   item.row.timefim = horafim + ":" + minutosfim;
   item.row.abrevmes = meses[data.getUTCMonth()];
 
@@ -284,6 +329,10 @@ export class EstilosEvtComponent implements OnInit {
  webViewPan(event) {
 
  }
+
+ addevento() {  
+   this.router.navigate(["/eventos/" + this.item.id + "/inserir/" + this.route.snapshot.params["idcategoria"] + "/" + this.userService.user.id]);
+  }
 
  gotocurday() {
   this._calendar.nativeElement.goToDate(new Date())
@@ -611,6 +660,9 @@ export class EstilosEvtComponent implements OnInit {
    this.showwebview = false;
   else if (this.showmap)
    this.showmap = false;
+  else if (this.editaevento && this.pagenumber == 1) {
+   this.routerExtensions.backToPreviousPage();
+  }
   else if (this.pagenumber == 0)
    this.routerExtensions.backToPreviousPage();
   else
@@ -632,7 +684,6 @@ export class EstilosEvtComponent implements OnInit {
      if (this.curevento != null)
       this.pagenumber++;
     }
-
     break;
   }
 

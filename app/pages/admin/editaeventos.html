@@ -1,22 +1,20 @@
-<ActionBar [title]="CAMPO" class="action-bar bkg">
+<ActionBar [title]="campo.toUpperCase()" class="action-bar bkg">
  <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
- <ActionItem ios.position="right" (tap)="userService.logout()">
-  <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
- </ActionItem>
+ <ActionItem text="SALVAR" visibility="{{oldvalor!=valor?'visible':'collapse'}}" ios.position="right" (tap)="save()"></ActionItem>
+ <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
-<!-- 
-    <GridLayout class="page bkg" rows="*,auto,auto">
-     <ScrollView style="margin-top: 10">
-      <StackLayout (swipe)="onSwipe($event)" backgroundColor="transparent">
-       <WrapLayout horizontalAlignment="center" backgroundColor="transparent">
-        <ng-container *ngFor="let item of item.menu">
-         <StackLayout (swipe)="onSwipe($event)" horizontalAlignment="center" (tap)="onclick(item)">
-          <Image width="25%" class="icones" src="{{ 'res://'+item.name}}"></Image>
-          <Label class="whitetext" horizontalAlignment="center" textWrap="true" [text]="item.name"></Label>
-         </StackLayout>
-        </ng-container>
-       </WrapLayout>
-      </StackLayout>
-     </ScrollView>
-    </GridLayout>
--->
+<StackLayout class="page bkg">
+ <TextView visibility="{{campo!='data'&&campo!='horario'?'visible':'collapse'}}" style="font-size: 18" id="txtvalor" [(ngModel)]="valor" textChange="OntextChange()" hint="Escreva aqui" editable="true" class="input input-border"></TextView>
+ <StackLayout padding="10" backgroundColor="transparent" color="white" visibility="{{campo=='data'?'visible':'collapse'}}">
+  <Label text="Data Inicial" horizontalAlignment="center"></Label>
+  <DatePicker (swipe)="onSwipe($event)" (loaded)="onDataIniLoaded($event)" (dateChange)="onDataIniChanged($event)"></DatePicker>
+  <Label text="Data Final" horizontalAlignment="center"></Label>
+  <DatePicker (swipe)="onSwipe($event)" (loaded)="onDataFimLoaded($event)" (dateChange)="onDataFimChanged($event)"></DatePicker>
+ </StackLayout>
+ <StackLayout padding="10" backgroundColor="transparent" color="white" visibility="{{campo=='horario'?'visible':'collapse'}}">
+  <Label text="Horário Inicial" horizontalAlignment="center"></Label>
+  <TimePicker (swipe)="onSwipe($event)" (loaded)="onHoraIniLoaded($event)" (timeChange)="onHoraIniChanged($event)" verticalAlignment="center"></TimePicker>
+  <Label text="Horário Final" horizontalAlignment="center"></Label>
+   <TimePicker (swipe)="onSwipe($event)" (loaded)="onHoraFimLoaded($event)" (timeChange)="onHoraFimChanged($event)" verticalAlignment="center"></TimePicker>
+ </StackLayout>
+</StackLayout>

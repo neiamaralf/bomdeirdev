@@ -1,11 +1,9 @@
 <ActionBar title="BomDeIr" class="action-bar bkg">
  <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
  <ActionItem visibility="{{!showaddlocal?'visible':'collapse'}}" ios.position="right" (tap)="add()">
-  <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0fe;"></Button>
+  <Button class="fa1 transpbutton"text="&#xf0fe;"></Button>
  </ActionItem>
- <ActionItem ios.position="right" (tap)="userService.logout()">
-  <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
- </ActionItem>
+  <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
  <StackLayout visibility="{{carregando ? 'visible' : 'collapse'}}">
@@ -29,7 +27,7 @@
     <ng-template let-item="item" let-i="index">
      <GridLayout class="itemlista" columns="*,auto" (swipe)="onSwipe($event)" (tap)="localclic(item,i)">
       <Label paddingLeft="10" col="0" verticalAlignment="center" text="{{ item.cidade+' - '+item.uf}}" class="list-group-item-heading whitetext"></Label>
-      <Button col="1" class="fa1" text="{{'\uf1f8'}}" backgroundColor="transparent" borderColor="transparent" borderWidth="1" color="red" (tap)="dellocal(i)"></Button>
+      <Button col="1" class="fa1 transpbutton" text="{{'\uf1f8'}}" color="red" (tap)="dellocal(i)"></Button>
      </GridLayout>
     </ng-template>
    </ListView>

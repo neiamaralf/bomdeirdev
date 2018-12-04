@@ -1,11 +1,9 @@
 <ActionBar [title]="item.name" class="action-bar bkg">
  <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
  <ActionItem visibility="{{!showaddlocal?'visible':'collapse'}}" ios.position="right" (tap)="add()">
-  <Button class="fa1" backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="&#xf0fe;"></Button>
+  <Button class="fa1 transpbutton" text="&#xf0fe;"></Button>
  </ActionItem>
- <ActionItem ios.position="right" (tap)="userService.logout()">
-  <Button backgroundColor="transparent" borderColor="transparent" borderWidth="1" text="SAIR"></Button>
- </ActionItem>
+ <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
  <ActivityIndicator height="100%" [busy]="carregando" [visibility]="carregando ? 'visible' : 'collapse'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>

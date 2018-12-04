@@ -108,16 +108,19 @@ export class CidadesComponent implements OnInit {
  }
 
  lvcidades(item) {
-  console.dir(item);
+  //console.dir(item);
   this.showaddlocal = false;
-  this.cidadesService.locais.push(
-   {
-    cidade: item.row.nome,
-    uf: item.row.uf
-   }
-  )
-  this.cidadesService.alterado = true;
-  this.cidadesService.curlocal = 0;
-  appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
+  if (this.cidadesService.locais.find(x => x.cidade == item.row.nome) == undefined) {
+   this.cidadesService.locais.push(
+    {
+     cidade: item.row.nome,
+     uf: item.row.uf
+    }
+   )
+   this.cidadesService.alterado = true;
+   this.cidadesService.curlocal = 0;
+   appsettings.setString("locais", JSON.stringify(this.cidadesService.locais));
+  }
+
  }
 }

@@ -217,15 +217,12 @@ export class EventosComponent implements OnInit {
     this.titulo = "DATA"
     break;
    case 4:
-    this.titulo = "HORÁRIO INÍCIO"
+    this.titulo = "HORÁRIO"
     break;
    case 5:
-    this.titulo = "HORÁRIO FIM"
-    break;
-   case 6:
     this.titulo = "IMAGEM"
     break;
-   case 7:
+   case 6:
     this.titulo = "DADOS DO EVENTO";
     var txt: TextField = <TextField>this.page.getViewById("titulo");
     setTimeout(() => {
@@ -381,32 +378,52 @@ export class EventosComponent implements OnInit {
 
  }
 
- onPickerLoaded(args) {
+ onDataIniLoaded(args) {
   let datePicker = <DatePicker>args.object;
   datePicker.minDate = new Date(Date.now());
-  datePicker.maxDate = new Date(2045, 4, 12);
   this.date = datePicker.date.toISOString().slice(0, 10);
  }
 
- onDateChanged(args) {
+ onDataIniChanged(args) {
   let datePicker = <DatePicker>args.object;
   this.date = datePicker.date.toISOString().slice(0, 10);
   console.log(this.date);
  }
 
- onDTPickerLoaded(args) {
+ onDataFimLoaded(args) {
+  let datePicker = <DatePicker>args.object;
+  datePicker.minDate = new Date(Date.now());
+  this.date = datePicker.date.toISOString().slice(0, 10);
+ }
+
+ onDataFimChanged(args) {
+  let datePicker = <DatePicker>args.object;
+  this.date = datePicker.date.toISOString().slice(0, 10);
+  console.log(this.date);
+ }
+
+ onHoraIniLoaded(args) {
   let timePicker = <TimePicker>args.object;
   timePicker.hour = 20;
   timePicker.minute = 0;
  }
 
- onTimeChanged(args) {
+ onHoraIniChanged(args) {
   let timePicker = <TimePicker>args.object;
-  if (this.pagenumber == 4)
-   this.time = timePicker.time.toTimeString().slice(0, 8);
-  else
-   this.timeend = timePicker.time.toTimeString().slice(0, 8);
+  this.time = timePicker.time.toTimeString().slice(0, 8);  
   console.log(this.time);
+ }
+
+ onHoraFimLoaded(args) {
+  let timePicker = <TimePicker>args.object;
+  timePicker.hour = 20;
+  timePicker.minute = 0;
+ }
+
+ onHoraFimChanged(args) {
+  let timePicker = <TimePicker>args.object;
+  this.timeend = timePicker.time.toTimeString().slice(0, 8);
+  console.log(this.timeend);
  }
 
 }
