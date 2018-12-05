@@ -1,6 +1,6 @@
 <ActionBar [title]="campo.toUpperCase()" class="action-bar bkg">
  <NavigationButton android.systemIcon="ic_menu_back" (tap)="goback()"></NavigationButton>
- <ActionItem text="SALVAR" visibility="{{oldvalor!=valor?'visible':'collapse'}}" ios.position="right" (tap)="save()"></ActionItem>
+ <ActionItem text="SALVAR" visibility="{{(oldvalor!=valor)?'visible':'collapse'}}" ios.position="right" (tap)="save()"></ActionItem>
  <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
 <StackLayout class="page bkg" (swipe)="onSwipe($event)">
@@ -15,9 +15,9 @@
  </StackLayout>
  <StackLayout padding="10" backgroundColor="transparent" color="white" visibility="{{campo=='horario'?'visible':'collapse'}}">
   <Label text="Horário Inicial" horizontalAlignment="center"></Label>
-  <TimePicker (loaded)="onHoraIniLoaded($event)" (timeChange)="onHoraIniChanged($event)" verticalAlignment="center"></TimePicker>
+  <TimePicker (loaded)="onHoraIniLoaded($event)" (timeChange)="onHoraIniChanged($event)"></TimePicker>
   <Label text="Horário Final" horizontalAlignment="center"></Label>
-  <TimePicker (loaded)="onHoraFimLoaded($event)" (timeChange)="onHoraFimChanged($event)" verticalAlignment="center"></TimePicker>
+  <TimePicker (loaded)="onHoraFimLoaded($event)" (timeChange)="onHoraFimChanged($event)"></TimePicker>
  </StackLayout>
  <SearchBar [hint]="Searchhint" backgroundColor="transparent" visibility="{{campo=='artista'||campo=='estilo'||campo=='local'?'visible':'collapse'}}" [text]="searchPhrase" (textChange)="onTextChanged($event)" (submit)="onSubmit($event)" color="black" textFieldBackgroundColor="white" textFieldHintColor="gray"></SearchBar>
  

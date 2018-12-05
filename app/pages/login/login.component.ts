@@ -27,10 +27,8 @@ export class LoginComponent implements OnInit {
   this.admin = !this.admin;
  }
 
-
  ngOnInit() {
   this.page.actionBarHidden = true;
-  //this.page.backgroundImage = "res://bg_login";
  }
 
  submit() {
@@ -39,7 +37,6 @@ export class LoginComponent implements OnInit {
   else
    this.userService.register(this);
  }
-
 
  toggleDisplay() {
   this.isLoggingIn = !this.isLoggingIn;

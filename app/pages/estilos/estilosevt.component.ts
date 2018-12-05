@@ -141,7 +141,7 @@ export class EstilosEvtComponent implements OnInit {
 
  editaitem(campo) {
   if (this.editaevento) {
-   var valor: any="indefinido";
+   var valor: any = "indefinido";
    switch (campo) {
     case "nome":
      valor = this.curevento.row.nome;
@@ -183,7 +183,7 @@ export class EstilosEvtComponent implements OnInit {
      valor = this.curevento.row.artista;
      break;
    }
-   if(valor=="")valor="indefinido"
+   if (valor == "") valor = "indefinido"
    this.routerExtensions.navigate(["/editaeventos/" + campo + "/" + this.curevento.row.id + "/" + valor + "/" + this.route.snapshot.params["idcategoria"] + "/" + this.userService.user.id],
     {
      clearHistory: false,
@@ -299,18 +299,19 @@ export class EstilosEvtComponent implements OnInit {
   var abrevsem = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"]
   var diames = data.getUTCDate() < 10 ? "0" + data.getUTCDate() : data.getUTCDate();
   var mes = data.getUTCMonth() < 9 ? "0" + (data.getUTCMonth() + 1) : (data.getUTCMonth() + 1);
-  var hora = data.getUTCHours() < 10 ? "0" + data.getUTCHours() : data.getUTCHours();
-  var minutos = data.getUTCMinutes() < 10 ? "0" + data.getUTCMinutes() : data.getUTCMinutes();
-  var horafim = datafim.getUTCHours() < 10 ? "0" + datafim.getUTCHours() : datafim.getUTCHours();
-  var minutosfim = datafim.getUTCMinutes() < 10 ? "0" + datafim.getUTCMinutes() : datafim.getUTCMinutes();
+  var hora = data.getUTCHours();
+  var minutos = data.getUTCMinutes();
+  var horafim = datafim.getUTCHours();
+  var minutosfim = datafim.getUTCMinutes();
   item.row.ano = data.getUTCFullYear();
   item.row.data = diames + "\\" + mes + "\\" + data.getUTCFullYear() + " - " + semana[data.getDay()];
-  item.row.time = hora + ":" + minutos;
-  item.row.hora = hora
-  item.row.minutos = minutos
-  item.row.horafim = horafim
-  item.row.minutosfim = minutosfim
-  item.row.timefim = horafim + ":" + minutosfim;
+  item.row.time = (hora < 10 ? "0" + hora : hora) + ":" + (minutos < 10 ? "0" + minutos : minutos);
+  item.row.realtime = data.toISOString();
+  item.row.hora = hora;
+  item.row.minutos = minutos;
+  item.row.horafim = horafim;
+  item.row.minutosfim = minutosfim;
+  item.row.timefim = (horafim < 10 ? "0" + horafim : horafim) + ":" + (minutosfim < 10 ? "0" + minutosfim : minutosfim);
   item.row.abrevmes = meses[data.getUTCMonth()];
 
   item.row.abrevsem = abrevsem[data.getDay()];

@@ -8,6 +8,7 @@ import { TimePicker } from "ui/time-picker";
 import { DatePicker } from "ui/date-picker";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
 import { SearchBar } from "ui/search-bar";
+import { UserService } from "../../shared/user/user.service";
 
 @Component({
  selector: "ns-editaeventos",
@@ -20,6 +21,7 @@ export class EditaEventoComponent implements OnInit {
  public valor: any;
  public lstpickeritems: any[];
  carregando: boolean = false;
+ alterado: boolean = false;
  searchPhrase = "";
  Searchhint = "";
 
@@ -27,16 +29,22 @@ export class EditaEventoComponent implements OnInit {
   private routerExtensions: RouterExtensions,
   private route: ActivatedRoute,
   private db: DbService,
-  private page: Page
+  private page: Page,
+  private userService: UserService
  ) {
   this.campo = this.route.snapshot.params["campo"];
-  this.Searchhint = "Digite o "+this.campo;
-  if (this.campo == 'data' || this.campo == 'horario')
+  this.Searchhint = "Digite o " + this.campo;
+  if (this.campo == 'data' || this.campo == 'horario') {
    this.valor = JSON.parse(this.route.snapshot.params["valor"]);
-  else
+   this.oldvalor = JSON.parse(this.route.snapshot.params["valor"]);
+  }
+  else {
    this.valor = this.route.snapshot.params["valor"];
-  if(this.valor=="indefinido")this.valor=""
-  this.oldvalor = this.valor;
+   this.oldvalor = this.route.snapshot.params["valor"];
+  }
+
+  if (this.valor == "indefinido") this.valor = ""
+
   console.log(this.campo)
   console.log(this.route.snapshot.params["iditem"])
  }
@@ -104,7 +112,7 @@ export class EditaEventoComponent implements OnInit {
   lstpick.items = items;
   lstpick.selectedIndex = 0;
   this.updatelstpickercurrent(lstpick);
-  if(text=="")this.setlistpickerrightindex(lstpick)
+  if (text == "") this.setlistpickerrightindex(lstpick)
  }
 
  setlistpickerrightindex(lstpicker) {
@@ -161,7 +169,9 @@ export class EditaEventoComponent implements OnInit {
   if (this.campo == 'data') {
    let datePicker = <DatePicker>args.object;
    this.valor.data = datePicker.date.toISOString().slice(0, 10);
+   //this.alterado=this.valor.data!=this.oldvalor.data;
    console.log(this.valor);
+   console.log(this.oldvalor);
   }
  }
 
@@ -183,21 +193,26 @@ export class EditaEventoComponent implements OnInit {
    console.log(this.valor);
   }
  }
-
+horainiloaded:boolean=false;
+horafimloaded:boolean=false;
  onHoraIniLoaded(args) {
   if (this.campo == 'horario') {
    let timePicker = <TimePicker>args.object;
    timePicker.hour = this.valor.hora;
    timePicker.minute = this.valor.minutos;
+   this.horainiloaded=true;
+   console.log(this.valor);
   }
 
  }
 
  onHoraIniChanged(args) {
-  if (this.campo == 'horario') {
+  if (this.horainiloaded&&this.campo == 'horario') {
    let timePicker = <TimePicker>args.object;
-   this.valor.hora = timePicker.time.toTimeString().slice(0, 8);
+   this.valor.hora = timePicker.hour;
+   this.valor.minutos = timePicker.minute;
    console.log(this.valor);
+   console.log(this.oldvalor);
   }
 
  }
@@ -207,13 +222,16 @@ export class EditaEventoComponent implements OnInit {
    let timePicker = <TimePicker>args.object;
    timePicker.hour = this.valor.horafim;
    timePicker.minute = this.valor.minutosfim;
+   this.horafimloaded=true;
+   console.log(this.valor);
   }
  }
 
  onHoraFimChanged(args) {
-  if (this.campo == 'horario') {
+  if (this.horafimloaded&&this.campo == 'horario') {
    let timePicker = <TimePicker>args.object;
-   this.valor.horafim = timePicker.time.toTimeString().slice(0, 8);
+   this.valor.horafim = timePicker.hour;
+   this.valor.minutosfim=timePicker.minute;
    console.log(this.valor);
   }
  }

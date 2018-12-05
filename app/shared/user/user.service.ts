@@ -76,8 +76,11 @@ export class UserService {
    .subscribe(res => {
     if ((<any>res).status == 'success') {
      console.log("logout");
+     appsettings.remove('usr');
+     appsettings.remove('locais');
      appsettings.clear();
-     //appsettings.remove('usr');
+     appsettings.flush();
+     //
      this.user.goodtoken = false;
      this.routerExtensions.navigate(["/"], { clearHistory: true });
     } else {
