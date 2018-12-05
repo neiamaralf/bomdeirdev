@@ -19,7 +19,7 @@ const routes: Routes = [
  { path: "estilos/:idcategoria/:cidade/:uf/:tipo", component: EstilosEvtComponent },
  { path: "subitem/:id", component: SubItemDetailComponent },
  { path: "item/:id", component: ItemDetailComponent },
- { path: "editaeventos/:campo/:iditem/:valor", component: EditaEventoComponent },
+ { path: "editaeventos/:campo/:iditem/:valor/:idcategoria/:idadmin", component: EditaEventoComponent },
  { path: "cep/:itemid/:idcategoria/:idadmin", component: CepComponent },
  { path: "eventos/:itemid/:acao/:idcategoria/:idadmin", component: EventosComponent },
  { path: "buscacep/:itemid/:idcategoria/:idadmin", component: BuscaCepComponent },

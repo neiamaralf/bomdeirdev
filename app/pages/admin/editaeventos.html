@@ -3,18 +3,28 @@
  <ActionItem text="SALVAR" visibility="{{oldvalor!=valor?'visible':'collapse'}}" ios.position="right" (tap)="save()"></ActionItem>
  <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
-<StackLayout class="page bkg">
- <TextView visibility="{{campo!='data'&&campo!='horario'?'visible':'collapse'}}" style="font-size: 18" id="txtvalor" [(ngModel)]="valor" textChange="OntextChange()" hint="Escreva aqui" editable="true" class="input input-border"></TextView>
+<StackLayout class="page bkg" (swipe)="onSwipe($event)">
+  <ActivityIndicator height="100%" [busy]="carregando" [visibility]="carregando ? 'visible' : 'collapse'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+
+ <TextView visibility="{{campo!='data'&&campo!='horario'&&campo!='local'&&campo!='estilo'&&campo!='artista'?'visible':'collapse'}}" style="font-size: 18" id="txtvalor" [(ngModel)]="valor" textChange="OntextChange()" hint="Escreva aqui" editable="true" class="input input-border"></TextView>
  <StackLayout padding="10" backgroundColor="transparent" color="white" visibility="{{campo=='data'?'visible':'collapse'}}">
   <Label text="Data Inicial" horizontalAlignment="center"></Label>
-  <DatePicker (swipe)="onSwipe($event)" (loaded)="onDataIniLoaded($event)" (dateChange)="onDataIniChanged($event)"></DatePicker>
+  <DatePicker (loaded)="onDataIniLoaded($event)" (dateChange)="onDataIniChanged($event)"></DatePicker>
   <Label text="Data Final" horizontalAlignment="center"></Label>
-  <DatePicker (swipe)="onSwipe($event)" (loaded)="onDataFimLoaded($event)" (dateChange)="onDataFimChanged($event)"></DatePicker>
+  <DatePicker (loaded)="onDataFimLoaded($event)" (dateChange)="onDataFimChanged($event)"></DatePicker>
  </StackLayout>
  <StackLayout padding="10" backgroundColor="transparent" color="white" visibility="{{campo=='horario'?'visible':'collapse'}}">
   <Label text="Horário Inicial" horizontalAlignment="center"></Label>
-  <TimePicker (swipe)="onSwipe($event)" (loaded)="onHoraIniLoaded($event)" (timeChange)="onHoraIniChanged($event)" verticalAlignment="center"></TimePicker>
+  <TimePicker (loaded)="onHoraIniLoaded($event)" (timeChange)="onHoraIniChanged($event)" verticalAlignment="center"></TimePicker>
   <Label text="Horário Final" horizontalAlignment="center"></Label>
-   <TimePicker (swipe)="onSwipe($event)" (loaded)="onHoraFimLoaded($event)" (timeChange)="onHoraFimChanged($event)" verticalAlignment="center"></TimePicker>
+  <TimePicker (loaded)="onHoraFimLoaded($event)" (timeChange)="onHoraFimChanged($event)" verticalAlignment="center"></TimePicker>
  </StackLayout>
+ <SearchBar [hint]="Searchhint" backgroundColor="transparent" visibility="{{campo=='artista'||campo=='estilo'||campo=='local'?'visible':'collapse'}}" [text]="searchPhrase" (textChange)="onTextChanged($event)" (submit)="onSubmit($event)" color="black" textFieldBackgroundColor="white" textFieldHintColor="gray"></SearchBar>
+ 
+ <ListPicker id="artista" visibility="{{campo=='artista'?'visible':'collapse'}}" (selectedIndexChange)="selectedIndexChanged($event)" class="transpwhite p-12">
+ </ListPicker>
+ <ListPicker id="estilo" visibility="{{campo=='estilo'?'visible':'collapse'}}" (selectedIndexChange)="selectedIndexChanged($event)" class="transpwhite p-12">
+ </ListPicker>
+ <ListPicker id="local" visibility="{{campo=='local'?'visible':'collapse'}}" (selectedIndexChange)="selectedIndexChanged($event)" class="transpwhite p-12">
+ </ListPicker>
 </StackLayout>

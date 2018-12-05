@@ -141,7 +141,7 @@ export class EstilosEvtComponent implements OnInit {
 
  editaitem(campo) {
   if (this.editaevento) {
-   var valor: any;
+   var valor: any="indefinido";
    switch (campo) {
     case "nome":
      valor = this.curevento.row.nome;
@@ -164,7 +164,8 @@ export class EstilosEvtComponent implements OnInit {
       });
      break;
     case "local":
-     valor = this.curevento.row.local;
+     valor = this.curevento.row.nomelocal;
+     console.dir(valor)
      break;
     case "site":
      valor = this.curevento.row.site;
@@ -182,7 +183,8 @@ export class EstilosEvtComponent implements OnInit {
      valor = this.curevento.row.artista;
      break;
    }
-   this.routerExtensions.navigate(["/editaeventos/" + campo + "/" + this.curevento.row.id + "/" + valor],
+   if(valor=="")valor="indefinido"
+   this.routerExtensions.navigate(["/editaeventos/" + campo + "/" + this.curevento.row.id + "/" + valor + "/" + this.route.snapshot.params["idcategoria"] + "/" + this.userService.user.id],
     {
      clearHistory: false,
      transition: {
@@ -259,7 +261,6 @@ export class EstilosEvtComponent implements OnInit {
 
  public tapevento(args: calendarModule.CalendarInlineEventSelectedData) {
   const calendar: RadCalendar = <RadCalendar>args.object;
-
   console.dir(<any>args.eventData);
   var s = args.eventData.title.split(/[:]/)
   for (var i = 0; i < this.eventos.length; i++) {
@@ -267,9 +268,7 @@ export class EstilosEvtComponent implements OnInit {
     this.cureventindex = i;
     break;
    }
-
   }
-
   this.eventoclick(this.eventos[this.cureventindex])
  }
 
@@ -330,9 +329,9 @@ export class EstilosEvtComponent implements OnInit {
 
  }
 
- addevento() {  
-   this.router.navigate(["/eventos/" + this.item.id + "/inserir/" + this.route.snapshot.params["idcategoria"] + "/" + this.userService.user.id]);
-  }
+ addevento() {
+  this.router.navigate(["/eventos/" + this.item.id + "/inserir/" + this.route.snapshot.params["idcategoria"] + "/" + this.userService.user.id]);
+ }
 
  gotocurday() {
   this._calendar.nativeElement.goToDate(new Date())

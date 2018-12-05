@@ -4,7 +4,7 @@
  <ActionItem visibility="{{!carregando&&artistas.length>0&&locais.length>0 &&pagenumber<6?'visible':'hidden'}}" text="PRÓXIMO" ios.position="right" (tap)="avancar()"></ActionItem>
  <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
-<StackLayout class="page bkg">
+<StackLayout class="page bkg" (swipe)="onSwipe($event,pagenumber==6)">
  <ActivityIndicator height="100%" [busy]="carregando" [visibility]="carregando ? 'visible' : 'collapse'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 
  <StackLayout [visibility]="!carregando&&(artistas.length==0||locais.length==0) ? 'visible' : 'collapse'">
@@ -12,30 +12,30 @@
  </StackLayout>
  <StackLayout [visibility]="!carregando&&artistas.length>0&&locais.length>0 ? 'visible' : 'hidden'" id="stck">
   <SearchBar [hint]="Searchhint" backgroundColor="transparent" visibility="{{pagenumber<3?'visible':'collapse'}}" [text]="searchPhrase" (textChange)="onTextChanged($event)" (submit)="onSubmit($event)" color="black" textFieldBackgroundColor="white" textFieldHintColor="gray"></SearchBar>
-  <ListPicker (swipe)="onSwipe($event)" id="artistas" visibility="{{pagenumber==0?'visible':'collapse'}}" backgroundColor="transparent" color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
+  <ListPicker id="artistas" visibility="{{pagenumber==0?'visible':'collapse'}}" (selectedIndexChange)="selectedIndexChanged($event)" class="transpwhite p-12">
   </ListPicker>
-  <ListPicker (swipe)="onSwipe($event)" id="estilos" visibility="{{pagenumber==1?'visible':'collapse'}}" backgroundColor="transparent" color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
+  <ListPicker id="estilos" visibility="{{pagenumber==1?'visible':'collapse'}}" (selectedIndexChange)="selectedIndexChanged($event)" class="transpwhite p-12">
   </ListPicker>
-  <ListPicker (swipe)="onSwipe($event)" id="locais" visibility="{{pagenumber==2?'visible':'collapse'}}" backgroundColor="transparent" color="white" (selectedIndexChange)="selectedIndexChanged($event)" class="p-12">
+  <ListPicker id="locais" visibility="{{pagenumber==2?'visible':'collapse'}}" (selectedIndexChange)="selectedIndexChanged($event)" class="transpwhite p-12">
   </ListPicker>
   <StackLayout class="transpwhite p-10" visibility="{{pagenumber==3?'visible':'collapse'}}">
    <Label text="Data Inicial" horizontalAlignment="center"></Label>
-   <DatePicker (swipe)="onSwipe($event)" (loaded)="onDataIniLoaded($event)" (dateChange)="onDataIniChanged($event)"></DatePicker>
+   <DatePicker (loaded)="onDataIniLoaded($event)" (dateChange)="onDataIniChanged($event)"></DatePicker>
    <Label text="Data Final" horizontalAlignment="center"></Label>
-   <DatePicker (swipe)="onSwipe($event)" (loaded)="onDataFimLoaded($event)" (dateChange)="onDataFimChanged($event)"></DatePicker>
+   <DatePicker (loaded)="onDataFimLoaded($event)" (dateChange)="onDataFimChanged($event)"></DatePicker>
   </StackLayout>
   <StackLayout padding="10" class="transpwhite" visibility="{{pagenumber==4?'visible':'collapse'}}">
    <Label text="Horário Inicial" horizontalAlignment="center"></Label>
-   <TimePicker (swipe)="onSwipe($event)" (loaded)="onHoraIniLoaded($event)" (timeChange)="onHoraIniChanged($event)" verticalAlignment="center"></TimePicker>
+   <TimePicker (loaded)="onHoraIniLoaded($event)" (timeChange)="onHoraIniChanged($event)" verticalAlignment="center"></TimePicker>
    <Label text="Horário Final" horizontalAlignment="center"></Label>
-    <TimePicker (swipe)="onSwipe($event)" (loaded)="onHoraFimLoaded($event)" (timeChange)="onHoraFimChanged($event)" verticalAlignment="center"></TimePicker>
+    <TimePicker (loaded)="onHoraFimLoaded($event)" (timeChange)="onHoraFimChanged($event)" verticalAlignment="center"></TimePicker>
   </StackLayout>
-  <GridLayout (swipe)="onSwipe($event)" visibility="{{pagenumber==5?'visible':'collapse'}}" height="50%" width="90%" margin="10" borderColor="black" borderWidth="1">
+  <GridLayout visibility="{{pagenumber==5?'visible':'collapse'}}" height="50%" width="90%" margin="10" borderColor="black" borderWidth="1">
    <Label visibility="{{imagemEvento==null?'visible':'collapse'}}" class="fa2" horizontalAlignment="center" verticalAlignment="center" text="&#xf03e;"></Label>
    <Image visibility="{{imagemEvento!=null?'visible':'collapse'}}" [src]="imageUrl" stretch="aspectFit" margin="10"></Image>
   </GridLayout>
-  <Button (swipe)="onSwipe($event)" (tap)="uploadfotodlg($event)" height="50%" color="blue" visibility="{{pagenumber==5?'visible':'collapse'}}" class="fa2 transpbutton" text="&#xf093;"></Button>
-  <StackLayout (swipe)="onSwipe($event,true)" visibility="{{pagenumber==6?'visible':'collapse'}}">
+  <Button (tap)="uploadfotodlg($event)" height="50%" color="blue" visibility="{{pagenumber==5?'visible':'collapse'}}" class="fa2 transpbutton" text="&#xf093;"></Button>
+  <StackLayout visibility="{{pagenumber==6?'visible':'collapse'}}">
    <TextField id="titulo" style="background-color: white" hint="Título" [(ngModel)]="evento.titulo"></TextField>
    <TextField id="descricao" style="background-color: white" hint="Descrição" [(ngModel)]="evento.descricao"></TextField>
    <Label class="whitetext" text="{{'Data   : '+date}}"></Label>
