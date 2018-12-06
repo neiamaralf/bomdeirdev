@@ -80,6 +80,7 @@
      <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.time+' - '+curevento.row.timefim:'' }}" textWrap="true" col="1"></Label>
      <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="2"></Label>
     </GridLayout>
+    
     <GridLayout class="h3 itemlista" row="3" rows="auto auto auto auto" columns="* auto">
      <GridLayout row="0" columns="auto *" (tap)="editaitem('local')">
       <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf041;" col="0"></Label>
