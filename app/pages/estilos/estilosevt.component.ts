@@ -3,7 +3,7 @@ import { Item } from "../../item/item";
 import { ItemService } from "../../item/item.service";
 import { UserService } from "../../shared/user/user.service";
 import { RouterExtensions } from "nativescript-angular/router";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { WebView } from "tns-core-modules/ui/web-view";
 import { LocationService, LocationData } from "../../shared/location/location.service";
 import { MapView, Marker, Position, Bounds } from 'nativescript-google-maps-sdk';
@@ -72,6 +72,57 @@ export class EstilosEvtComponent implements OnInit {
  }
 
  ngOnInit(): void {
+  this.router.events.subscribe((val) => {
+   if (val instanceof NavigationEnd) {
+
+    console.log(this.router.url);
+
+    if (this.itemService.campoalterado != "") {
+     var obj = JSON.parse(this.itemService.campoalterado);
+     console.dir(obj);
+     switch (obj.campo) {
+      case "nome":
+       this.curevento.row.nome = obj.valor;
+       break;
+      case "data":
+       var time = this.curevento.row.datahorario.slice(10, 20);
+       var timefim = this.curevento.row.datafim.slice(10, 20);
+       this.curevento.row.datahorario = obj.valor.data + time;
+       this.curevento.row.datafim = obj.valor.datafim + timefim;
+       this.configureevento(this.curevento);
+       break;
+      case "horario":
+       var ti = (obj.valor.hora < 10 ? "0" + obj.valor.hora : obj.valor.hora) + ":" + (obj.valor.minutos < 10 ? "0" + obj.valor.minutos : obj.valor.minutos) + ":00";
+       var tf = (obj.valor.horafim < 10 ? "0" + obj.valor.horafim : obj.valor.horafim) + ":" + (obj.valor.minutosfim < 10 ? "0" + obj.valor.minutosfim : obj.valor.minutosfim) + ":00";
+       var data = this.curevento.row.datahorario.slice(0, 11);
+       var datafim = this.curevento.row.datafim.slice(0, 11);
+       this.curevento.row.datahorario = data + ti.toString();
+       console.log(this.curevento.row.datahorario)
+       this.curevento.row.datafim = datafim + tf.toString();
+       this.configureevento(this.curevento);
+       break;
+      case "local":
+      this.curevento.row.logradouro=obj.valor.row.logradouro;
+      this.curevento.row.numero=obj.valor.row.numero;
+      this.curevento.row.complemento=obj.valor.row.complemento;
+      this.curevento.row.cep=obj.valor.row.cep;
+      this.curevento.row.bairro=obj.valor.row.bairro;
+      this.curevento.row.localidade=obj.valor.row.localidade;
+      this.curevento.row.uf=obj.valor.row.uf;
+      this.curevento.row.fone=obj.valor.row.fone;
+      this.curevento.row.site=obj.valor.row.site;
+       break;
+      case "descricao":
+       this.curevento.row.descricao = obj.valor;
+       break;
+      case "artista":
+      case "estilo":
+       this.curevento.row.estilo = obj.valor.row.nome;
+       break;
+     }
+    }
+   }
+  });
   if (this.userService.user.super == 2) {
    this.item.menu = [];
    this.loadlist(this.item.menu, "estilosevt", "-1");
@@ -149,8 +200,8 @@ export class EstilosEvtComponent implements OnInit {
     case "data":
      valor = JSON.stringify(
       {
-       data: this.curevento.row.datahorario,
-       datafim: this.curevento.row.datafim,
+       data: this.curevento.row.datahorario.slice(0, 10),
+       datafim: this.curevento.row.datafim.slice(0, 10),
       });
 
      break;
@@ -166,12 +217,6 @@ export class EstilosEvtComponent implements OnInit {
     case "local":
      valor = this.curevento.row.nomelocal;
      console.dir(valor)
-     break;
-    case "site":
-     valor = this.curevento.row.site;
-     break;
-    case "fone":
-     valor = this.curevento.row.fone;
      break;
     case "descricao":
      valor = this.curevento.row.descricao;
@@ -626,31 +671,30 @@ export class EstilosEvtComponent implements OnInit {
 
  eventoclick(item) {
   this.curevento = item;
-  this.userService.db
-   .geturl("https://www.athena3d.com.br/bomdeir/clima.php?cidade=" + item.row.localidade, "application/xml")
-   .subscribe(res => {
-    console.log("aqui")
-    var idcidade = 0;
-    if ((<any>res).cidade.length != undefined) {
-     console.dir((<any>res).cidade[0]);
-     for (let i = 0; i < (<any>res).cidade.length; i++) {
-      if ((<any>res).cidade[i].uf == item.row.uf && (<any>res).cidade[i].nome == item.row.localidade) {
-       idcidade = (<any>res).cidade[i].id;
-      }
-     };
-    }
-    else
-     idcidade = (<any>res).cidade.id;
-    this.userService.db
-     .geturl("https://www.athena3d.com.br/bomdeir/clima.php?idcidade=" + idcidade, "application/xml")
-     .subscribe(res => {
-      this.curevento.row.clima = (<any>res).previsao[0].tempo;
-      this.curevento.row.minima = (<any>res).previsao[0].minima;
-      this.curevento.row.maxima = (<any>res).previsao[0].maxima;
-      console.dir((<any>res).previsao[0]);
-     });
-   });
-
+  if (!this.editaevento) {
+   this.userService.db
+    .geturl("https://www.athena3d.com.br/bomdeir/clima.php?cidade=" + item.row.localidade, "application/xml")
+    .subscribe(res => {
+     var idcidade = 0;
+     if ((<any>res).cidade.length != undefined) {
+      for (let i = 0; i < (<any>res).cidade.length; i++) {
+       if ((<any>res).cidade[i].uf == item.row.uf && (<any>res).cidade[i].nome == item.row.localidade) {
+        idcidade = (<any>res).cidade[i].id;
+       }
+      };
+     }
+     else
+      idcidade = (<any>res).cidade.id;
+     this.userService.db
+      .geturl("https://www.athena3d.com.br/bomdeir/clima.php?idcidade=" + idcidade, "application/xml")
+      .subscribe(res => {
+       this.curevento.row.clima = (<any>res).previsao[0].tempo;
+       this.curevento.row.minima = (<any>res).previsao[0].minima;
+       this.curevento.row.maxima = (<any>res).previsao[0].maxima;
+       console.dir((<any>res).previsao[0]);
+      });
+    });
+  }
   this.pagenumber++;
   console.dir(this.curevento);
  }
@@ -670,11 +714,6 @@ export class EstilosEvtComponent implements OnInit {
  }
 
  onSwipe(args: SwipeGestureEventData) {
-  console.log("Swipe!");
-  console.log("Object that triggered the event: " + args.object);
-  console.log("View that triggered the event: " + args.view);
-  console.log("Event name: " + args.eventName);
-  console.log("Swipe Direction: " + args.direction);
   switch (args.direction) {
    case 1:
     this.goback();

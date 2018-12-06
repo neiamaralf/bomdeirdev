@@ -140,17 +140,11 @@ export class ItemsComponent implements OnInit {
       (<any>this.loc).uf = this.cidadesService.locais[this.cidadesService.curlocal].uf;
       this.carregaitems();
      }
-
-
      console.log(this.router.url)
     };
-
    }
   });
-
  }
-
-
 
  public onSubmit(args) {
 

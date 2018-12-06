@@ -4,6 +4,7 @@ import { UserService } from "../shared/user/user.service";
 
 @Injectable()
 export class ItemService {
+ public campoalterado="";
  private items = new Array<Item>(
  );
 

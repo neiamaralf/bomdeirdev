@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
-import { ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { DbService } from "../../shared/db/db.service";
 import { TextView } from "ui/text-view";
 import { Page } from "tns-core-modules/ui/page";
@@ -9,6 +9,7 @@ import { DatePicker } from "ui/date-picker";
 import { ListPicker } from "tns-core-modules/ui/list-picker";
 import { SearchBar } from "ui/search-bar";
 import { UserService } from "../../shared/user/user.service";
+import { ItemService } from "../../item/item.service";
 
 @Component({
  selector: "ns-editaeventos",
@@ -30,7 +31,9 @@ export class EditaEventoComponent implements OnInit {
   private route: ActivatedRoute,
   private db: DbService,
   private page: Page,
-  private userService: UserService
+  private userService: UserService,
+  private itemService:ItemService,
+  private router: Router
  ) {
   this.campo = this.route.snapshot.params["campo"];
   this.Searchhint = "Digite o " + this.campo;
@@ -49,6 +52,7 @@ export class EditaEventoComponent implements OnInit {
   console.log(this.route.snapshot.params["iditem"])
  }
  ngOnInit(): void {
+  
   if (this.campo != 'data' && this.campo != 'horario' && this.campo != 'local' && this.campo != 'estilo' && this.campo != 'artista') {
    var txt: TextView = <TextView>this.page.getViewById("txtvalor");
    setTimeout(() => {
@@ -152,9 +156,21 @@ export class EditaEventoComponent implements OnInit {
     valor: this.valor
    })
    .subscribe(res => {
+    ;
+    this.itemService.campoalterado=JSON.stringify(
+     {
+      campo: this.campo,
+      valor: this.valor,
+     });
     this.routerExtensions.backToPreviousPage();
    });
  }
+
+ horainiloaded: boolean = false;
+ horafimloaded: boolean = false;
+ datainiloaded: boolean = false;
+ datafimloaded: boolean = false;
+
  onDataIniLoaded(args) {
   if (this.campo == 'data') {
    let datePicker = <DatePicker>args.object;
@@ -162,11 +178,12 @@ export class EditaEventoComponent implements OnInit {
    //datePicker.maxDate = new Date(2045, 4, 12);
    var t = this.valor.data.split(/[- :]/);
    datePicker.date = new Date(Date.UTC(t[0], t[1] - 1, t[2], 23));
+   this.datainiloaded = true;
   }
  }
 
  onDataIniChanged(args) {
-  if (this.campo == 'data') {
+  if (this.datainiloaded && this.campo == 'data') {
    let datePicker = <DatePicker>args.object;
    this.valor.data = datePicker.date.toISOString().slice(0, 10);
    //this.alterado=this.valor.data!=this.oldvalor.data;
@@ -182,32 +199,31 @@ export class EditaEventoComponent implements OnInit {
    //datePicker.maxDate = new Date(2045, 4, 12);
    var t = this.valor.datafim.split(/[- :]/);
    datePicker.date = new Date(Date.UTC(t[0], t[1] - 1, t[2], 23));
-
+   this.datafimloaded = true;
   }
  }
 
  onDataFimChanged(args) {
-  if (this.campo == 'data') {
+  if (this.datafimloaded && this.campo == 'data') {
    let datePicker = <DatePicker>args.object;
    this.valor.datafim = datePicker.date.toISOString().slice(0, 10);
    console.log(this.valor);
   }
  }
-horainiloaded:boolean=false;
-horafimloaded:boolean=false;
+
  onHoraIniLoaded(args) {
   if (this.campo == 'horario') {
    let timePicker = <TimePicker>args.object;
    timePicker.hour = this.valor.hora;
    timePicker.minute = this.valor.minutos;
-   this.horainiloaded=true;
+   this.horainiloaded = true;
    console.log(this.valor);
   }
 
  }
 
  onHoraIniChanged(args) {
-  if (this.horainiloaded&&this.campo == 'horario') {
+  if (this.horainiloaded && this.campo == 'horario') {
    let timePicker = <TimePicker>args.object;
    this.valor.hora = timePicker.hour;
    this.valor.minutos = timePicker.minute;
@@ -222,16 +238,16 @@ horafimloaded:boolean=false;
    let timePicker = <TimePicker>args.object;
    timePicker.hour = this.valor.horafim;
    timePicker.minute = this.valor.minutosfim;
-   this.horafimloaded=true;
+   this.horafimloaded = true;
    console.log(this.valor);
   }
  }
 
  onHoraFimChanged(args) {
-  if (this.horafimloaded&&this.campo == 'horario') {
+  if (this.horafimloaded && this.campo == 'horario') {
    let timePicker = <TimePicker>args.object;
    this.valor.horafim = timePicker.hour;
-   this.valor.minutosfim=timePicker.minute;
+   this.valor.minutosfim = timePicker.minute;
    console.log(this.valor);
   }
  }
