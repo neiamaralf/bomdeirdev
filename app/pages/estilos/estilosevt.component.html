@@ -12,7 +12,7 @@
  <ActionItem visibility="{{!editaevento&&!carregando&&pagenumber==1&&showcalendar?'visible':'hidden'}}" ios.position="right" (tap)="gotocurday()">
   <Button class="fa1 transpbutton" text="&#xf05b;"></Button>
  </ActionItem>
-  <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
+ <ActionItem text="SAIR" ios.position="right" (tap)="userService.logout()"></ActionItem>
 </ActionBar>
 <StackLayout class="page bkg">
  <ActivityIndicator [visibility]="carregando ? 'visible' : 'collapse'" height="100%" [busy]="carregando"></ActivityIndicator>
@@ -60,11 +60,11 @@
   </StackLayout>
   <ScrollView visibility="{{pagenumber==2?'visible':'collapse'}}">
    <GridLayout (swipe)="onSwipe($event)" rows="auto auto auto auto auto auto auto auto auto auto">
-    <GridLayout class="h3 itemlista" columns="{{editaevento?'* auto':'*'}}" row="0" (tap)="editaitem('nome')">
+    <GridLayout class="h3 itemlista" row="0" columns="* auto" (tap)="editaitem('nome')">
      <Label class="whitetext" padding="10" style="font-weight: bold;font-size:18" text="{{curevento!=undefined?curevento.row.nome:''}}" textWrap="true" col="0"></Label>
      <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="1"></Label>
     </GridLayout>
-    <GridLayout class="h3 itemlista" row="1" columns="{{editaevento?'auto * auto':'auto *'}}" (tap)="editaitem('data')">
+    <GridLayout class="h3 itemlista" row="1" columns="auto * auto" (tap)="editaitem('data')">
      <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf073;" col="0"></Label>
      <StackLayout padding="10" horizontalAlignment="left" col="1">
       <Label horizontalAlignment="center" text="{{curevento!=undefined?curevento.row.ano:'' }}" color="cyan"></Label>
@@ -75,51 +75,51 @@
      </StackLayout>
      <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="2"></Label>
     </GridLayout>
-    <GridLayout class="h3 itemlista" row="2" columns="{{editaevento?'auto * auto':'auto *'}}" (tap)="editaitem('horario')">
+    <GridLayout class="h3 itemlista" row="2" columns="auto * auto" (tap)="editaitem('horario')">
      <Label padding="10" class="fa whitetext" verticalAlignment="center" text="&#xf017;" col="0"></Label>
      <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.time+' - '+curevento.row.timefim:'' }}" textWrap="true" col="1"></Label>
      <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="2"></Label>
     </GridLayout>
-    <GridLayout class="h3 itemlista" row="3" columns="{{editaevento?'auto * auto':'auto *'}}" (tap)="editaitem('local')">
-     <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf041;" col="0"></Label>
-     <StackLayout padding="10" col="1">
-      <Label class="whitetext" text="{{curevento!=undefined?curevento.row.nomelocal:'' }}" textWrap="true" style="font-weight: bold"></Label>
-      <Label style="color:aqua" text="{{curevento!=undefined?curevento.row.logradouro+', '+curevento.row.numero+' - '+curevento.row.complemento+' - '+curevento.row.cep+' - '+curevento.row.bairro+' - '+curevento.row.localidade+' - '+curevento.row.uf:'' }}" textWrap="true"></Label>
-     </StackLayout>
-     <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="2"></Label>
+    <GridLayout class="h3 itemlista" row="3" rows="auto auto auto auto" columns="* auto">
+     <GridLayout row="0" columns="auto *" (tap)="editaitem('local')">
+      <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf041;" col="0"></Label>
+      <StackLayout padding="10" col="1">
+       <Label class="whitetext" text="{{curevento!=undefined?curevento.row.nomelocal:'' }}" textWrap="true" style="font-weight: bold"></Label>
+       <Label style="color:aqua" text="{{curevento!=undefined?curevento.row.logradouro+', '+curevento.row.numero+' - '+curevento.row.complemento+' - '+curevento.row.cep+' - '+curevento.row.bairro+' - '+curevento.row.localidade+' - '+curevento.row.uf:'' }}" textWrap="true"></Label>
+      </StackLayout>
+     </GridLayout>
+     <GridLayout row="1" columns="auto *" (tap)="editaitem('site')">
+      <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf015;" col="0"></Label>
+      <Label padding="10" text="{{curevento!=undefined?curevento.row.site:'' }}" style="color:aqua" col="1"></Label>
+     </GridLayout>
+     <GridLayout row="2" columns="auto *" (tap)="editaitem('fone')">
+      <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf095;" col="0"></Label>
+      <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.fone:'' }}" style="color:aqua " col="1"></Label>
+     </GridLayout>
+     <Label visibility="{{editaevento?'visible':'collapse'}}" row="1" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="1"></Label>
     </GridLayout>
-    <GridLayout visibility="{{!editaevento?'visible':'collapse'}}" class="h3 itemlista" row="4" columns="{{editaevento?'auto * auto':'auto *'}}" (tap)="editaitem('site')">
-     <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf015;" col="0"></Label>
-     <Label padding="10" text="{{curevento!=undefined?curevento.row.site:'' }}" style="color:aqua" col="1"></Label>
-     <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="2"></Label>
-    </GridLayout>
-    <GridLayout visibility="{{!editaevento?'visible':'collapse'}}" class="h3 itemlista" row="5" columns="{{editaevento?'auto * auto':'auto *'}}" (tap)="editaitem('fone')">
-     <Label padding="10" class="fa whitetext" horizontalAlignment="center" verticalAlignment="center" text="&#xf095;" col="0"></Label>
-     <Label class="whitetext" padding="10" text="{{curevento!=undefined?curevento.row.fone:'' }}" style="color:aqua " col="1"></Label>
-     <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="2"></Label>
-    </GridLayout>
-    <GridLayout class="h3 itemlista" row="6" columns="{{editaevento?'* auto':'*'}}" (tap)="editaitem('descricao')">
+    <GridLayout class="h3 itemlista" row="4" columns="* auto" (tap)="editaitem('descricao')">
      <StackLayout col="0">
       <Label class="whitetext" text="Detalhes" style="font-weight: bold"></Label>
       <Label class="whitetext" text="{{curevento!=undefined?curevento.row.descricao:'' }}" textWrap="true"></Label>
      </StackLayout>
      <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="1"></Label>
     </GridLayout>
-    <GridLayout class="h3 itemlista" row="7" columns="{{editaevento?'* auto':'*'}}" (tap)="editaitem('estilo')">
+    <GridLayout class="h3 itemlista" row="5" columns="* auto" (tap)="editaitem('estilo')">
      <StackLayout col="0">
       <Label class="whitetext" text="Estilo " style="font-weight: bold"></Label>
       <Label class="whitetext" text="{{curevento!=undefined?curevento.row.estilo:'' }}" textWrap="true"></Label>
      </StackLayout>
      <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="1"></Label>
     </GridLayout>
-    <GridLayout class="h3 itemlista" row="8" columns="{{editaevento?'* auto':'*'}}" (tap)="editaitem('artista')">
+    <GridLayout class="h3 itemlista" row="6" columns="* auto" (tap)="editaitem('artista')">
      <StackLayout col="0">
       <Label class="whitetext" text="Artista " style="font-weight: bold"></Label>
       <Label class="whitetext" text="{{curevento!=undefined?curevento.row.artista:'' }}" textWrap="true"></Label>
      </StackLayout>
      <Label visibility="{{editaevento?'visible':'collapse'}}" verticalAlignment="center" paddingRight="5" class="fa" text="&#xf105;" color="white" col="1"></Label>
     </GridLayout>
-    <StackLayout visibility="{{!editaevento?'visible':'collapse'}}" class="h3 itemlista" row="9">
+    <StackLayout visibility="{{!editaevento?'visible':'collapse'}}" class="h3 itemlista" row="7">
      <Label class="whitetext" text="Clima " style="font-weight: bold"></Label>
      <GridLayout columns="*,auto">
       <StackLayout col="0">

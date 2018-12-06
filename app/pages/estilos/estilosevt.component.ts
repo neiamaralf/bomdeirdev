@@ -102,15 +102,16 @@ export class EstilosEvtComponent implements OnInit {
        this.configureevento(this.curevento);
        break;
       case "local":
-      this.curevento.row.logradouro=obj.valor.row.logradouro;
-      this.curevento.row.numero=obj.valor.row.numero;
-      this.curevento.row.complemento=obj.valor.row.complemento;
-      this.curevento.row.cep=obj.valor.row.cep;
-      this.curevento.row.bairro=obj.valor.row.bairro;
-      this.curevento.row.localidade=obj.valor.row.localidade;
-      this.curevento.row.uf=obj.valor.row.uf;
-      this.curevento.row.fone=obj.valor.row.fone;
-      this.curevento.row.site=obj.valor.row.site;
+       this.curevento.row.nomelocal = obj.valor.row.nome;
+       this.curevento.row.logradouro = obj.valor.row.logradouro;
+       this.curevento.row.numero = obj.valor.row.numero;
+       this.curevento.row.complemento = obj.valor.row.complemento;
+       this.curevento.row.cep = obj.valor.row.cep;
+       this.curevento.row.bairro = obj.valor.row.bairro;
+       this.curevento.row.localidade = obj.valor.row.localidade;
+       this.curevento.row.uf = obj.valor.row.uf;
+       this.curevento.row.fone = obj.valor.row.fone;
+       this.curevento.row.site = obj.valor.row.site;
        break;
       case "descricao":
        this.curevento.row.descricao = obj.valor;
@@ -213,6 +214,11 @@ export class EstilosEvtComponent implements OnInit {
        horafim: this.curevento.row.horafim,
        minutosfim: this.curevento.row.minutosfim
       });
+     break;
+    case "site":
+    case "fone":
+     campo = "local"
+     valor = this.curevento.row.nomelocal;
      break;
     case "local":
      valor = this.curevento.row.nomelocal;
